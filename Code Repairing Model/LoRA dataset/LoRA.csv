@@ -3,32 +3,27 @@
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-2,SyntaxError,3,"print(""I can"")
-print(""swim."")
+2,SyntaxError,1,"print('I can')
+print('swim.')
 my_age = 10
 print('my age:' my_age)","print('I can')
 print('swim.')
 my_age = 10
 print('my age:', my_age)"
-3,IndentationError,0,"# 在这里补全代码
- num_students=100
-print(num_students)","num_students = 100
-
-print(num_students)"
-4,IndentationError,0,"user_age = int(input())
+3,IndentationError,0,"user_age = int(input())
     if user_age == 18:
         num_candles = 18
     else:
@@ -39,21 +34,19 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-5,IndentationError,2,"film_rate = int(input())
+4,IndentationError,0,"film_rate = int(input())
 if film_rate > 7:
-print(""好看"")
+print('好看')
 else:
-print(""不好看"")","film_rate = int(input())
+print('不好看')","film_rate = int(input())
 
 if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-6,SyntaxError,2,"input_dict = input()
+5,SyntaxError,2,"input_dict = input()
 input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 user_info={}
 
 def log_user(user_name):
@@ -66,13 +59,11 @@ def print_user_log(user_name):
         print(user_info[user_name])
     else:
         print(0)
-# 请不要更改此行以下的代码
 for i in input_dict['log']:
     log_user(i)
 for i in input_dict['print']:
     print_user_log(i)","input_dict = input()
 input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
 
 user_info = {}
 def log_user(user_name):
@@ -87,23 +78,15 @@ def print_user_log(user_name):
     else:
         print(0)
 
-# 请不要更改此行以下的代码
 for i in input_dict['log']:
     log_user(i)
 for i in input_dict['print']:
     print_user_log(i)"
-7,IndentationError,0,"param = input()
+6,IndentationError,0,"param = input()
     print(param[4])","param = input()
 
 print(param[4])"
-8,SyntaxError,1,"print('I can')
-print('swim.')
-my_age = 10
-print('my age:' my_age)","print('I can')
-print('swim.')
-my_age = 10
-print('my age:', my_age)"
-9,SyntaxError,1,"user_age = int(input())
+7,SyntaxError,1,"user_age = int(input())
 if user_age == 18:
     num_candles = 18
 else
@@ -115,15 +98,7 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-10,IndentationError,0,"for i in range(0, 10):
-    print(i)
-    # 在这里补全代码
-    if(i==5):
-    break","for i in range(0, 10):
-    print(i)
-    if (i == 5):
-        break"
-11,SyntaxError,2,"user_age = int input()
+8,SyntaxError,2,"user_age = int input()
 if user_age == 18:
     num_candles = 18
 else:
@@ -134,60 +109,51 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-12,IndentationError,3,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
+9,IndentationError,3,"def welcome_to_circle_cat():
+print('Welcome to circle cat!')
 
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-13,IndentationError,0,"num_spiders = int(input())
+10,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
 if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-14,SyntaxError,4,"def welcome_to_circle_cat()：
-    print(""Welcome to circle cat!"")
+11,SyntaxError,4,"def welcome_to_circle_cat()：
+    print('Welcome to circle cat!')
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-15,SyntaxError,5,"input_int = int(input())
-# 请不要更改此行以上的代码
+12,SyntaxError,5,"input_int = int(input())
 
 def power_of_two(num):
-    if num == 0  # 在此补充:0
-        # 在此补充
+    if num == 0
         return 1
     else:
-        # 在此补充
         return power_of_two(num-1)*2
 
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def power_of_two(num):
     if num == 0:
@@ -195,100 +161,46 @@ def power_of_two(num):
     else:
         return 2 * power_of_two(num - 1)
 
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))"
-16,SyntaxError,4,"time=int(input())
+13,SyntaxError,2,"time=int(input())
 if: 
    8<time<22
-   print(""醒着"")
+   print('醒着')
 else:
-    print(""睡觉了"")","time = int(input())
+    print('睡觉了')","time = int(input())
 if 8 < time < 22:
     print('醒着')
 else:
     print('睡觉了')"
-17,SyntaxError,2,print('生日快乐！'）,"print(""生日快乐！"")"
-18,TabError,4,"for i in range(1,8):
+14,SyntaxError,1,print('生日快乐！'）,print('生日快乐！')
+15,TabError,4,"for i in range(1,8):
     if i == 4:
 		continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-19,IndentationError,3,"def welcome_to_circle_cat():
-print (""Welcome to circle cat!"")
+16,IndentationError,3,"def welcome_to_circle_cat():
+print ('Welcome to circle cat!')
 welcome_to_circle_cat()
 
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-20,SyntaxError,1,"# 在这里编写代码
-def welcome_to_circle_cat()
- print(""Welcome to circle cat!"")
+17,SyntaxError,1,"def welcome_to_circle_cat()
+ print('Welcome to circle cat!')
 welcome_to_circle_cat() 
 welcome_to_circle_cat() 
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-21,IndentationError,3,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")# 在这里编写代码
-
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-22,SyntaxError,1,"num_spiders = int(input())
-num_cats = int(input())
-#在这里补全代码
-if num_spiders>10：
-    if num_cats>num_spiders: 
-    print(""猫会吃掉蜘蛛"")
-    else:
-    print(""猫吃不完蜘蛛"")
-else:
-print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-23,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-#在这里补全代码
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-24,IndentationError,2,"num_animals = int(input())
+18,IndentationError,2,"num_animals = int(input())
 if num_animals >= 30:
     forest_size = 3
 else:
@@ -301,7 +213,7 @@ else:
     forest_size = 1
 
 print(forest_size)"
-25,IndentationError,0,"param = int(input())
+19,IndentationError,0,"param = int(input())
 
 def convert_num(input_num):
     if (input_num >= 10):
@@ -316,52 +228,64 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-26,SyntaxError,2,"my_list = input().split(',')
+20,SyntaxError,2,"my_list = input().split(',')
 new_list = []
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 for i in range(0，len(my_list)):
     new_list.append(my_list.pop())
 
-# 请不要更改此行以下的代码
-print("","".join(new_list))","my_list = input().split(',')
+print(','.join(new_list))","my_list = input().split(',')
 new_list = []
-# 请不要更改此行以上的代码
 
 for i in range(0, len(my_list)):
     new_list.append(my_list.pop())
 
-# 请不要更改此行以下的代码
-print("","".join(new_list))"
-27,SyntaxError,3,"for i in range(1,8):
+print(','.join(new_list))"
+21,SyntaxError,3,"for i in range(1,8):
     if i == 4
         continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-28,IndentationError,0,"num_spiders = int(input())
+22,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
     else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-29,SyntaxError,4,"print('你好'\'我在吃饭')
-print()","print(""你好"")
-print(""我在吃饭"")"
-30,SyntaxError,0,"user_age = int(input())
+23,SyntaxError,3,"print('你好'\'我在吃饭')
+print()","print('你好')
+print('我在吃饭')"
+24,SyntaxError,1,"num_spiders = int(input())
+num_cats = int(input())
+if num_spiders > 10：
+    if num_cats > num_spiders: 
+    print('猫会吃掉蜘蛛')
+    else:
+    print('猫吃不完蜘蛛')
+else:
+print('蜘蛛很少')","num_spiders = int(input())
+num_cats = int(input())
+if num_spiders > 10:
+    if num_cats > num_spiders:
+        print('猫会吃掉蜘蛛')
+    else:
+        print('猫吃不完蜘蛛')
+else:
+    print('蜘蛛很少')"
+25,SyntaxError,0,"user_age = int(input())
 if user_age == 18:
     num_candles = 18
     else:
@@ -372,79 +296,75 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-31,SyntaxError,0,"num_spiders = int(input())
+26,SyntaxError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-32,SyntaxError,1,"input_int = int(input())
-# 请不要更改此行以上的代码
+27,SyntaxError,1,"input_int = int(input())
 
 def days_left_to_sunday(day):
     if day < 7:
-        print(""还有"" + str(7 - day) + ""天到周日"")
+        print('还有' + str(7 - day) + '天到周日')
         days_left_to_sunday(day+1):
     else:
-        print(""到周日了!"")
+        print('到周日了!')
 
-# 请不要更改此行以下的代码
 days_left_to_sunday(input_int)","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def days_left_to_sunday(day):
     if day < 7:
-        print(""还有"" + str(7 - day) + ""天到周日"")
+        print('还有' + str(7 - day) + '天到周日')
         days_left_to_sunday(day + 1)
     else:
-        print(""到周日了!"")
+        print('到周日了!')
 
-# 请不要更改此行以下的代码
 days_left_to_sunday(input_int)"
-33,IndentationError,0,"num_spiders = int(input())
+28,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-34,SyntaxError,3,"print('你好')
+29,SyntaxError,5,"int(input())
+int=film_rate；
+if film_rate>7:
+    print('好看')
+else:
+    print('不好看')","film_rate = int(input())
+
+if film_rate > 7:
+    print('好看')
+else:
+    print('不好看')"
+30,SyntaxError,1,"print('你好')
 print('我在吃饭')
-print（）","print(""你好"")
-print(""我在吃饭"")"
-35,IndentationError,2,"for i in range(1,8):
-    if(i == 4):
-        continue
-      print(i)
-    # 在此处补全代码","for i in range(1,8):
-    if (i == 4):
-        continue
-    print(i)"
-36,SyntaxError,4,"input_int = int(input())
-# 请不要更改此行以上的代码
+print（）","print('你好')
+print('我在吃饭')"
+31,SyntaxError,4,"input_int = int(input())
 
 def fibonacci(num):
    if num == 0:
@@ -452,11 +372,9 @@ def fibonacci(num):
    elif num == 1:
       return 1
    else:
-      return （num-2) + (num-1)# 在这里补充代码
+      return （num-2) + (num-1)
 
-# 请不要更改此行以下的代码
 print(fibonacci(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def fibonacci(num):
    if num == 0:
@@ -466,9 +384,8 @@ def fibonacci(num):
    else:
       return fibonacci(num-2) + fibonacci(num-1)
 
-# 请不要更改此行以下的代码
 print(fibonacci(input_int))"
-37,SyntaxError,1,"num_students = int(input())
+32,SyntaxError,1,"num_students = int(input())
 if num_students < 50,
     print('没到齐')
 else: print('到齐了')","num_students = int(input())  
@@ -477,31 +394,25 @@ if num_students < 50:
     print('没到齐')
 else:
     print('到齐了')"
-38,SyntaxError,5,"num_students = int(input())
+33,SyntaxError,3,"num_students = int(input())
 if num_students < 50：
-    print(""没到齐"")
+    print('没到齐')
 else：
-    print(""到齐了"")","num_students = int(input())  
+    print('到齐了')","num_students = int(input())  
 
 if num_students < 50:
     print('没到齐')
 else:
     print('到齐了')"
-39,SyntaxError,5,"input_int = int(input())
-# 请不要更改此行以上的代码
+34,SyntaxError,5,"input_int = int(input())
 
 def power_of_two(num):
     if num == 0：
         return 1
-    # 在此补充:
-        # 在此补充
     else:
         return power_of_two(num-1)*2
-        # 在此补充
 
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def power_of_two(num):
     if num == 0:
@@ -509,91 +420,43 @@ def power_of_two(num):
     else:
         return 2 * power_of_two(num - 1)
 
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))"
-40,IndentationError,3,"# 在这里编写代码
-def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-# 请不要更改此行以下的代码
+35,IndentationError,3,"def welcome_to_circle_cat():
+print('Welcome to circle cat!')
 welcome_to_circle_cat()
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-41,SyntaxError,3,"input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-# 在这里编写代码
-user_info = {}
-
-def add_user(user_name, pass_word):
-    user_info[user_name]=pass_word
-    
-def verify_user(user_name, pass_word:
-    if user_name in user_info:
-        if user_info[user_name]==pass_word:
-            return True
-    return False
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))","input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-user_info = {}
-
-def add_user(user_name, pass_word):
-    user_info[user_name] = pass_word
-
-def verify_user(user_name, pass_word):
-    if user_name in user_info:
-        if user_info[user_name] == pass_word:
-            return True
-    return False
-
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))"
-42,IndentationError,2,"for i in range(1,8):
-    # 在此处补全代码
+36,IndentationError,2,"for i in range(1,8):
     if i == 4:
     continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-43,IndentationError,1,"def welcome_to_circle_cat():
+37,SyntaxError,2,"input_int = int(input())
+
+num_to_word = {1: '一'，2: '二', 3: '三', 4: '四', 5: '五', 6: '六', 7: '七', 8: '八', 9: '九', 10: '十'}
+
+print(num_to_word[input_int])","input_int = int(input())
+
+num_to_word = {1:'一', 2:'二', 3:'三', 4:'四', 5:'五', 6:'六', 7:'七', 8:'八', 9:'九', 10:'十'}
+
+print(num_to_word[input_int])"
+38,IndentationError,0,"def welcome_to_circle_cat():
 print('Welcome to circle cat!')
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()
 welcome_to_circle_cat()
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-44,IndentationError,0,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-45,SyntaxError,5,"num_spiders = int(input())
+39,SyntaxError,5,"num_spiders = int(input())
 
 if num_spiders != 15;
     web_size = 20
@@ -609,38 +472,12 @@ else:
 
 web_size = 2 * web_size 
 print(web_size)"
-46,SyntaxError,1,"x = int(input())
-y = int(input())
+40,SyntaxError,2,"param = int(input())
 
-# 在此处补全代码
-x=//y
-print(x)
-x=x//y
-print(x)
-x=x//y
-print(x)","x = int(input())
-y = int(input())
-
-x = x // y
-print(x)
-x = x // y
-print(x)
-x = x // y
-print(x)"
-47,SyntaxError,4,"print(""I can"")
-print(""swim."")
-my_age = 10
-print(""my age:"" my_age)","print('I can')
-print('swim.')
-my_age = 10
-print('my age:', my_age)"
-48,SyntaxError,2,"param = int(input())
-
-# 在此处编写代码
 def(count_ones(param)):
     count = 0
     for i in str(param):
-        if i == ""1"":
+        if i == '1':
             count += 1
     return count
 
@@ -649,13 +486,12 @@ print(count_ones(param))","param = int(input())
 def count_ones(param):
     count = 0
     for i in str(param):
-        if i == ""1"":
+        if i == '1':
             count += 1
     return count
     
 print(count_ones(param))"
-49,SyntaxError,3,"input_int = int(input())
-# 请不要更改此行以上的代码
+41,SyntaxError,3,"input_int = int(input())
 
 def fib_3(num):
    if num == 0
@@ -667,9 +503,7 @@ def fib_3(num):
    else:
       return fib_3(num-1)+fib_3(num-2)+fib_3(num-3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
  
 def fib_3(num):
    if num == 0:
@@ -681,24 +515,20 @@ def fib_3(num):
    else:
       return fib_3(num - 2) + fib_3(num - 1) + fib_3(num - 3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))"
-50,SyntaxError,5,"input_int = int(input())
-# 请不要更改此行以上的代码
+42,SyntaxError,5,"input_int = int(input())
 
 def fib_3(num):
-   if num == 0： # 在这里补充代码:
-      return 1 # 在这里补充代码
-   elif num == 1：# 在这里补充代码:
-      return 1 # 在这里补充代码
-   elif num ==2： # 在这里补充代码:
-       return 1 # 在这里补充代码
+   if num == 0：
+      return 1
+   elif num == 1：
+      return 1
+   elif num ==2：
+       return 1
    else:
-      return fib_3(num-1)+fib_3(num-2)+fib_3(num-3)# 在这里补充代码
+      return fib_3(num-1)+fib_3(num-2)+fib_3(num-3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
  
 def fib_3(num):
    if num == 0:
@@ -710,83 +540,27 @@ def fib_3(num):
    else:
       return fib_3(num - 2) + fib_3(num - 1) + fib_3(num - 3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))"
-51,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-print('蜘蛛很少')#在这里补全代码","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-52,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-#在这里补全代码
-if num_spiders > 10:
-if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
-else:
-    print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-53,IndentationError,0,"my_list = input().split(',')
-new_list = []
-# 请不要更改此行以上的代码
-# 在这里编写代码
-for i in range(0,len(my_list)):
-new_list.append(my_list.pop())
-# 请不要更改此行以下的代码
-print("","".join(new_list))","my_list = input().split(',')
-new_list = []
-# 请不要更改此行以上的代码
-
-for i in range(0, len(my_list)):
-    new_list.append(my_list.pop())
-
-# 请不要更改此行以下的代码
-print("","".join(new_list))"
-54,SyntaxError,2,"print('I can')
+43,SyntaxError,2,"print('I can')
 print('swim.'')
 my_age = 10
 print('my age:' my_age)","print('I can')
 print('swim.')
 my_age = 10
 print('my age:', my_age)"
-55,SyntaxError,1,"import ast
+44,SyntaxError,1,"import ast
 input_list_1 = ast.literal_eval(input())
 input_list_2 = ast.literal_eval(input())
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 def add_matrix(matrix_1, matrix_2):
     for i in range(0, len(matrix_1)):
         for j in range(0, len(matrix_1[i]))
         matrix_1[i][j] = matrix_1[i][j] + matrix_2[i][j]
     return matrix_1
 
-# 请不要更改此行以下的代码
 print(add_matrix(input_list_1, input_list_2))","import ast
 input_list_1 = ast.literal_eval(input())
 input_list_2 = ast.literal_eval(input())
-# 请不要更改此行以上的代码
 
 def add_matrix(matrix_1, matrix_2):
     for i in range(0, len(matrix_1)):
@@ -794,29 +568,27 @@ def add_matrix(matrix_1, matrix_2):
             matrix_1[i][j] = matrix_1[i][j] + matrix_2[i][j]
     return matrix_1
 
-# 请不要更改此行以下的代码
 print(add_matrix(input_list_1, input_list_2))"
-56,IndentationError,2,"i = int(input())
+45,IndentationError,2,"i = int(input())
 
 def is_leap_year(year):
-    # 在这里补全代码
     if (year % 4 == 0 and year % 100 !=0) or (year % 400 == 0) :
-    return ""是闰年""
+    return '是闰年'
     else:
-    return ""不是闰年""
+    return '不是闰年'
 
 print(is_leap_year(i))","i = int(input())
 
 def is_leap_year(year):
     if ((year % 4 == 0 and year % 100 != 0) or year % 400 == 0):
-        return ""是闰年""
+        return '是闰年'
     else:
-        return ""不是闰年""
+        return '不是闰年'
 
 print(is_leap_year(i))"
-57,SyntaxError,3,"film_rate = int(input())
+46,SyntaxError,2,"film_rate = int(input())
 if film_rate > 7:
-    print(""好看"")
+    print('好看')
 else：
     print('不好看')","film_rate = int(input())
 
@@ -824,27 +596,23 @@ if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-58,SyntaxError,4,"def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+47,SyntaxError,4,"def welcome_to_cirlcle_cat():
+    print('Welcome to circle cat!')
     welcome_to_cirlcle_cat():
-# 在这里编写代码
 
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-59,SyntaxError,1,"param = input()
+48,SyntaxError,1,"param = input()
 for i in param
-    print(i)
-# 在此处补全答案","param = input()
+    print(i)","param = input()
 
 for i in param:
     print(i)"
-60,IndentationError,2,"param = int(input())
+49,IndentationError,2,"param = int(input())
 
 def convert_num(input_num):
     if (input_num >= 10):
@@ -860,11 +628,9 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-61,TabError,4,"input_dict = input()
+50,TabError,4,"input_dict = input()
 input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 user_info={}
 
 def log_user(user_name):
@@ -877,13 +643,11 @@ def print_user_log(user_name):
 		print(user_info[user_name])
 	else:
 		print(0)
-# 请不要更改此行以下的代码
 for i in input_dict['log']:
     log_user(i)
 for i in input_dict['print']:
     print_user_log(i)","input_dict = input()
 input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
 
 user_info = {}
 def log_user(user_name):
@@ -898,142 +662,100 @@ def print_user_log(user_name):
     else:
         print(0)
 
-# 请不要更改此行以下的代码
 for i in input_dict['log']:
     log_user(i)
 for i in input_dict['print']:
     print_user_log(i)"
-62,IndentationError,2,"for i in range(1,8):
+51,IndentationError,2,"for i in range(1,8):
    if (i == 4):
         continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-63,SyntaxError,2,"film_rate = int(input()) 
-if film_rate > 7:
-    print('好看')
-else：
-    print('不好看')","film_rate = int(input())
-
-if film_rate > 7:
-    print('好看')
-else:
-    print('不好看')"
-64,SyntaxError,2,"param = input()
-print param[4]
-# 在此处补全代码","param = input()
+52,SyntaxError,2,"param = input()
+print param[4]","param = input()
 
 print(param[4])"
-65,SyntaxError,3,"print('你好')
-print('我在吃饭'\ )","print(""你好"")
-print(""我在吃饭"")"
-66,SyntaxError,5,"print('你好')
+53,SyntaxError,1,"print('你好')
+print('我在吃饭'\ )","print('你好')
+print('我在吃饭')"
+54,SyntaxError,3,"print('你好')
 print('我在吃饭'）
-print( )","print(""你好"")
-print(""我在吃饭"")"
-67,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-print('蜘蛛很少')
-#在这里补全代码","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-68,SyntaxError,4,"print('你好'）
-print('我在吃饭'）","print(""你好"")
-print(""我在吃饭"")"
-69,IndentationError,0,"# 在这里编写代码
-def welcome_to_cirlcle_cat():
-print(""Welcome to circle cat!"")
+print( )","print('你好')
+print('我在吃饭')"
+55,SyntaxError,2,"print('你好'）
+print('我在吃饭'）","print('你好')
+print('我在吃饭')"
+56,IndentationError,0,"def welcome_to_cirlcle_cat():
+print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-70,SyntaxError,3,"for i in range(1,8):
+57,SyntaxError,3,"for i in range(1,8):
     if i == 4：
     continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-71,IndentationError,2,"# 在这里编写代码
-def welcome_to_cirlcle_cat():
-print(""Welcome to circle cat!"")
+58,IndentationError,2,"def welcome_to_cirlcle_cat():
+print('Welcome to circle cat!')
 welcome_to_cirlcle_cat():
 welcome_to_cirlcle_cat():
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-72,SyntaxError,4,"# 在这里编写代码
-def welcome_to_circle_cat()
- print(""Welcome to circle cat!"")
+59,SyntaxError,4,"def welcome_to_circle_cat()
+ print('Welcome to circle cat!')
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-73,IndentationError,0,"num_spiders = int(input())
+60,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-74,SyntaxError,1,"def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+61,SyntaxError,1,"def welcome_to_circle_cat():
+    print('Welcome to circle cat!')
     
 welcome_to_circle_cat()
-welcome_to_circle_cat():# 在这里编写代码
+welcome_to_circle_cat():
 
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-75,SyntaxError,2,"param = int(input())
+62,SyntaxError,2,"param = int(input())
 
 def convert_num(input_num):
     if (input_num >= 10):
@@ -1047,7 +769,7 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-76,SyntaxError,2,"
+63,SyntaxError,2,"
 user_age = int(input)
 
 if user_age == 18:
@@ -1060,24 +782,24 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-77,IndentationError,0,"num_spiders = int(input())
+64,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
   if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
   else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-78,IndentationError,2,"user_age=int(input())
+65,IndentationError,2,"user_age=int(input())
  if user_age == 18
     num_candles=18
  else num_candles=3
@@ -1087,59 +809,52 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-79,IndentationError,2,"for i in range(0, 10):
+66,IndentationError,2,"for i in range(0, 10):
     print(i)
     if i==5:
     break","for i in range(0, 10):
     print(i)
     if (i == 5):
         break"
-80,IndentationError,0,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
+67,IndentationError,0,"def welcome_to_circle_cat():
+print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
 
 
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-81,SyntaxError,2,"# 在这里编写代码
-def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+68,SyntaxError,2,"def welcome_to_cirlcle_cat():
+    print('Welcome to circle cat!')
 welcome_to_cirlcle_cat():
 welcome_to_cirlcle_cat():
 
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-82,IndentationError,0,"param = input()
+69,IndentationError,0,"param = input()
 
-# 在此处补全代码
 
     print(param[4])","param = input()
 
 print(param[4])"
-83,SyntaxError,1,"for i in range(0, 10):
+70,SyntaxError,1,"for i in range(0, 10):
     print(i)
-    # 在这里补全代码
     if (i==5)
     break","for i in range(0, 10):
     print(i)
     if (i == 5):
         break"
-84,SyntaxError,3,"param = int(input())
+71,SyntaxError,3,"param = int(input())
 
-# 在此处补全代码
 def get_discount(height)
     if height<140:
         return 0
@@ -1155,7 +870,7 @@ def get_discount(height):
         return 100
     
 print(get_discount(param))"
-85,SyntaxError,1,"film_rate = int((input())
+72,SyntaxError,1,"film_rate = int((input())
 if film_rate > 7:
     print('好看')
 else:
@@ -1165,59 +880,40 @@ if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-86,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-#在这里补全代码
-if num_spiders > 10:
-    if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
-    else:
-    print(""猫吃不完蜘蛛"")
-else:
-print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-87,SyntaxError,2,"param = input()
-print len(param)
-# 在此处补全代码","param = input()
+73,SyntaxError,2,"param = input()
+print len(param)","param = input()
 
 print(len(param))"
-88,IndentationError,4,"num_spiders = int(input())
+74,IndentationError,4,"num_spiders = int(input())
 num_cats = int(input())
 if(num_spiders>10):
 if(num_cats>num_spiders):
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-89,SyntaxError,4,"age = int(input())
+75,SyntaxError,4,"age = int(input())
 
-print(""my age is "" +str（age）)","age = int(input())
+print('my age is ' +str（age）)","age = int(input())
 
-print(""my age is "" + str(age))"
-90,SyntaxError,3,"for i in range(0, 10):
+print('my age is ' + str(age))"
+76,SyntaxError,3,"for i in range(0, 10):
     print(i)
     if i==5：
-        break# 在这里补全代码","for i in range(0, 10):
+        break","for i in range(0, 10):
     print(i)
     if (i == 5):
         break"
-91,SyntaxError,3,"user_age = int(input()):
+77,SyntaxError,3,"user_age = int(input()):
 
 if (user_age == 18):
     num_candles = 18
@@ -1230,28 +926,7 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-92,SyntaxError,1,"temp_list = input().split(',')
-
-def count_negative(my_list):
-    count=0
-    for i in my_list:
-        if int(i)<0
-        count+=1
-    return count
-        
-print(count_negative(temp_list))","temp_list = input().split(',')
-# 请不要更改此行以上的代码
-
-def count_negative(my_list):
-    count = 0
-    for i in my_list:
-        if int(i) < 0:
-            count += 1
-    return count
-
-# 请不要更改此行以下的代码
-print(count_negative(temp_list))"
-93,SyntaxError,2,"user_age = int(input())
+78,SyntaxError,2,"user_age = int(input())
 if user_age == 18
 num_candles = 18
 else
@@ -1262,7 +937,7 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-94,IndentationError,2,"param = int(input())
+79,IndentationError,2,"param = int(input())
 
 def print_num(input_num):
     if input_num == 10:
@@ -1275,19 +950,11 @@ def print_num(input_num):
         print(input_num)
 
 print_num(param)"
-95,IndentationError,2,"for i in range(0, 10):
-    print(i)
-    # 在这里补全代码
-    if i==5:
-    break","for i in range(0, 10):
-    print(i)
-    if (i == 5):
-        break"
-96,SyntaxError,4,"print(""你好""
-print(""我在吃饭"")
-print()","print(""你好"")
-print(""我在吃饭"")"
-97,SyntaxError,1,"age = int(input())
+80,SyntaxError,4,"print('你好'
+print('我在吃饭')
+print()","print('你好')
+print('我在吃饭')"
+81,SyntaxError,1,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
@@ -1302,87 +969,46 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-98,SyntaxError,4,"print('你好')
-print（""我在吃饭""\ ）","print(""你好"")
-print(""我在吃饭"")"
-99,IndentationError,0,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
+82,SyntaxError,3,"print('你好')
+print（'我在吃饭'\ ）","print('你好')
+print('我在吃饭')"
+83,IndentationError,0,"def welcome_to_circle_cat():
+print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
 
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-100,IndentationError,2,"# 在这里编写代码
-def welcome_to_cirlcle_cat():
-print(""Welcome to circle cat!"")
+84,IndentationError,2,"def welcome_to_cirlcle_cat():
+print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat():
 
 welcome_to_cirlcle_cat():
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-101,IndentationError,3,"def welcome_to_circle_cat():
-print (""Welcome to circle cat!"")
-welcome_to_circle_cat()
-
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-102,IndentationError,0,"def welcome_to_circle_cat():# 在这里编写代码
-print(""Welcome to circle cat!"")
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-103,IndentationError,3,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-104,SyntaxError,5,"input_int = int(input())
-# 请不要更改此行以上的代码
+85,SyntaxError,5,"input_int = int(input())
 
 def fib_3(num):
-   if num == 0 # 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num == 1# 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num == 2# 在这里补充代码:
-      return 1# 在这里补充代码
+   if num == 0
+      return 1
+   elif num == 1
+      return 1
+   elif num == 2
+      return 1
    else:
-      return fib_3(num-1)+fib_3(num-2)+fib_3(num-3) # 在这里补充代码
+      return fib_3(num-1)+fib_3(num-2)+fib_3(num-3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
  
 def fib_3(num):
    if num == 0:
@@ -1394,83 +1020,42 @@ def fib_3(num):
    else:
       return fib_3(num - 2) + fib_3(num - 1) + fib_3(num - 3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))"
-105,IndentationError,0,"temp_list = input().split(',')
-
-def count_negative(my_list):
-    count=0
-    for i in my_list:
-        if int(i)<0:
-        count+=1
-    return count
-        
-print(count_negative(temp_list))","temp_list = input().split(',')
-# 请不要更改此行以上的代码
-
-def count_negative(my_list):
-    count = 0
-    for i in my_list:
-        if int(i) < 0:
-            count += 1
-    return count
-
-# 请不要更改此行以下的代码
-print(count_negative(temp_list))"
-106,SyntaxError,4,"num_spiders = int(input())
-num_cats = int(input())
-#在这里补全代码
-if num_spiders >10:
-    if num_cats > num_spiders:
-        print('猫会吃掉蜘蛛')
-    else:
-        print('猫吃不完蜘蛛')
-else：
-    print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-107,IndentationError,0,"num_spiders = int(input())
+86,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
     if num_spiders > 10:
         if num_cats > num_spiders:
-            print(""猫会吃掉蜘蛛"")
+            print('猫会吃掉蜘蛛')
         else:
-            print(""猫吃不完蜘蛛"")
+            print('猫吃不完蜘蛛')
     else:
         print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-108,IndentationError,0,"num_spiders = int(input())
+87,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
-print('蜘蛛很少')
-#在这里补全代码","num_spiders = int(input())
+print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-109,SyntaxError,1,"num_students = int(input())
+88,SyntaxError,1,"num_students = int(input())
 if num_students < 50:
     print('没到齐')
 else:
@@ -1480,40 +1065,11 @@ if num_students < 50:
     print('没到齐')
 else:
     print('到齐了')"
-110,SyntaxError,3,"input_int = int(input())
-# 请不要更改此行以上的代码
-
-def fib_3(num):
-   if num == 0# 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num ==1 # 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num == 2# 在这里补充代码:
-      return 1# 在这里补充代码
-   else:
-      return fib_3(num-2)+fib_3(num-1)+fib_3(num-3)# 在这里补充代码
-# 请不要更改此行以下的代码
-print(fib_3(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
- 
-def fib_3(num):
-   if num == 0:
-      return 1
-   elif num == 1:
-      return 1
-   elif num == 2:
-      return 1
-   else:
-      return fib_3(num - 2) + fib_3(num - 1) + fib_3(num - 3)
-
-# 请不要更改此行以下的代码
-print(fib_3(input_int))"
-111,SyntaxError,5,"age = int(input())
+89,SyntaxError,5,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
 
-# 在此处补全代码
 calories_burned=((age*0.2757+weight*0.03295+heart_rate*1.0781)-75.4991))*time/8.368
 print(calories_burned)","age = int(input())
 weight = int(input())
@@ -1523,22 +1079,19 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-112,SyntaxError,4,"input_int = int(input())
-# 请不要更改此行以上的代码
+90,SyntaxError,4,"input_int = int(input())
 
 def fib_3(num):
-   if num == 0:# 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num == 1# 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num == 2# 在这里补充代码:
-      return 1# 在这里补充代码
+   if num == 0:
+      return 1
+   elif num == 1
+      return 1
+   elif num == 2
+      return 1
    else:
-      return fib_3(num-1) + fib_3(num-2) + fib_3(num-3)# 在这里补充代码
+      return fib_3(num-1) + fib_3(num-2) + fib_3(num-3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
  
 def fib_3(num):
    if num == 0:
@@ -1550,46 +1103,33 @@ def fib_3(num):
    else:
       return fib_3(num - 2) + fib_3(num - 1) + fib_3(num - 3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))"
-113,SyntaxError,3,"film_rate = int((input())
-if film_rate > 7:
-    print(""好看"")
-else:
-    print(""不好看"")","film_rate = int(input())
-
-if film_rate > 7:
-    print('好看')
-else:
-    print('不好看')"
-114,SyntaxError,4,"print（'你好'）
-print(""我在吃饭"")","print(""你好"")
-print(""我在吃饭"")"
-115,IndentationError,0,"num_spiders = int(input())
+91,SyntaxError,3,"print（'你好'）
+print('我在吃饭')","print('你好')
+print('我在吃饭')"
+92,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 if num_spiders > 10:
 if num_cats > num_spiders:    
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-116,IndentationError,0,"param = input()
+93,IndentationError,0,"param = input()
 
     print(param[4])","param = input()
 
 print(param[4])"
-117,SyntaxError,3,"input_int = int(input())
-# 请不要更改此行以上的代码
+94,SyntaxError,3,"input_int = int(input())
 
 def fibonacci(num):
    if num == 0:
@@ -1597,11 +1137,9 @@ def fibonacci(num):
    elif num == 1:
       return 1
    else:
-      return （(num-2)+(num-1))# 在这里补充代码
+      return （(num-2)+(num-1))
 
-# 请不要更改此行以下的代码
 print(fibonacci(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def fibonacci(num):
    if num == 0:
@@ -1611,49 +1149,28 @@ def fibonacci(num):
    else:
       return fibonacci(num-2) + fibonacci(num-1)
 
-# 请不要更改此行以下的代码
 print(fibonacci(input_int))"
-118,IndentationError,0,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-119,SyntaxError,1,"my_list = input().split(',')
+95,SyntaxError,1,"my_list = input().split(',')
 new_list = []
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 for i in range(0,len(my_list))
 new_list.append(my_list.pop())
-# 请不要更改此行以下的代码
-print("","".join(new_list))","my_list = input().split(',')
+print(','.join(new_list))","my_list = input().split(',')
 new_list = []
-# 请不要更改此行以上的代码
 
 for i in range(0, len(my_list)):
     new_list.append(my_list.pop())
 
-# 请不要更改此行以下的代码
-print("","".join(new_list))"
-120,SyntaxError,1,"input_int = int(input())
-# 请不要更改此行以上的代码
+print(','.join(new_list))"
+96,SyntaxError,1,"input_int = int(input())
 
 def power_of_two(num):
-    if num == 0 # 在此补充:
-        return 1 # 在此补充
+    if num == 0
+        return 1
     else:
-        return 2 * power_of_two(num - 1)  # 在此补充
+        return 2 * power_of_two(num - 1)
         
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def power_of_two(num):
     if num == 0:
@@ -1661,53 +1178,39 @@ def power_of_two(num):
     else:
         return 2 * power_of_two(num - 1)
 
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))"
-121,SyntaxError,1,"def welcome_to_cirlcle_cat()：
-    print(""Welcome to circle cat!"")
+97,SyntaxError,1,"def welcome_to_cirlcle_cat()：
+    print('Welcome to circle cat!')
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-122,SyntaxError,3,"print（""I am Python!""）","print(""I am Python!"")"
-123,SyntaxError,1,"print (""       你好\n再见""）","print(""       你好\n再见"")"
-124,SyntaxError,1,"input_int = int(input())
-# 请不要更改此行以上的代码
+98,SyntaxError,3,print（'I am Python!'）,print('I am Python!')
+99,SyntaxError,1,print ('       你好\n再见'）,print('       你好\n再见')
+100,SyntaxError,1,"input_int = int(input())
 
 def days_left_to_sunday(day):
     if day < 7:
-        print(""还有"" + str(7 - day) + ""天到周日"")
-        days_left_to_sunday(day+1))#在这里添加一行代码
+        print('还有' + str(7 - day) + '天到周日')
+        days_left_to_sunday(day+1))
     else:
-        print(""到周日了!"")
+        print('到周日了!')
 
-# 请不要更改此行以下的代码
 days_left_to_sunday(input_int)","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def days_left_to_sunday(day):
     if day < 7:
-        print(""还有"" + str(7 - day) + ""天到周日"")
+        print('还有' + str(7 - day) + '天到周日')
         days_left_to_sunday(day + 1)
     else:
-        print(""到周日了!"")
+        print('到周日了!')
 
-# 请不要更改此行以下的代码
 days_left_to_sunday(input_int)"
-125,SyntaxError,2,"print('I can')
-print(""swim."")
-my_age = 10
-print('my age:' my_age)","print('I can')
-print('swim.')
-my_age = 10
-print('my age:', my_age)"
-126,SyntaxError,1,"film_rate = int(input())
+101,SyntaxError,1,"film_rate = int(input())
 
 if film_rate > 7
   print('好看')
@@ -1718,52 +1221,46 @@ if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-127,SyntaxError,1,"param = input()
-print(param.[4])
-
-# 在此处补全代码","param = input()
+102,SyntaxError,1,"param = input()
+print(param.[4])","param = input()
 
 print(param[4])"
-128,SyntaxError,4,"# 在这里编写代码
-def welcome_to_cirlcle_cat()：
-    print (""Welcome to circle cat!"")
+103,SyntaxError,4,"def welcome_to_cirlcle_cat()：
+    print ('Welcome to circle cat!')
 
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-129,SyntaxError,1,"# 在这里补全代码
-num_students = 100；
+104,SyntaxError,1,"num_students = 100；
 print(num_students)","num_students = 100
 
 print(num_students)"
-130,IndentationError,0,"param = int(input())
+105,IndentationError,0,"param = int(input())
 
 def get_age_status(age):
     if age < 18:
-    return ""未成年人""
+    return '未成年人'
     elif age < 65:
-    return ""工作中""
+    return '工作中'
     else:
-    return ""退休了""
+    return '退休了'
 
 print(get_age_status(param))","param = int(input())
 
 def get_age_status(age):
     if age < 18:
-        return ""未成年人""
+        return '未成年人'
     elif age < 65:
-        return ""工作中""
+        return '工作中'
     else:
-        return ""退休了""
+        return '退休了'
 
 print(get_age_status(param))"
-131,SyntaxError,1,"num_animals=int(input())
+106,SyntaxError,1,"num_animals=int(input())
 if num_animals>=30:
     forest_size=3
 else forest_size=1
@@ -1775,90 +1272,31 @@ else:
     forest_size = 1
 
 print(forest_size)"
-132,IndentationError,2,"input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-# 在这里编写代码
-user_info={}
-def add_user(user_name,pass_word):
-    user_info[user_name]=pass_word
-def verify_user(user_name,pass_word):
-    if user_name in user_info:
-        if user_info[user_name]==pass_word:
-            return True
-         return False
-    
-       
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))","input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-user_info = {}
-
-def add_user(user_name, pass_word):
-    user_info[user_name] = pass_word
-
-def verify_user(user_name, pass_word):
-    if user_name in user_info:
-        if user_info[user_name] == pass_word:
-            return True
-    return False
-
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))"
-133,IndentationError,0,"num_spiders = int(input())
+107,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
     else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
-    print('蜘蛛很少')
-#在这里补全代码","num_spiders = int(input())
+    print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-134,SyntaxError,3,"print（""生日快乐！""","print(""生日快乐！"")"
-135,SyntaxError,3,"input_list_0 = input().split(',')
-input_list_1 = input().split(',')
-# 请不要更改此行以上的代码
-my_list=（input_list_0）+（input_list_1）
-del my_list[0]
-my_list[0]=""x""
-# 在这里编写代码
-
-# 请不要更改此行以下的代码
-print("","".join(my_list))","input_list_0 = input().split(',')
-input_list_1 = input().split(',')
-# 请不要更改此行以上的代码
-
-my_list = input_list_0 + input_list_1
-del my_list[0]
-my_list[0] = 'x'
-
-# 请不要更改此行以下的代码
-print("","".join(my_list))"
-136,IndentationError,0," num_students = 100
+108,SyntaxError,3,print（'生日快乐！',print('生日快乐！')
+109,IndentationError,0," num_students = 100
 
 print(num_students)","num_students = 100
 
 print(num_students)"
-137,SyntaxError,2,print('       你好\n再见',"print(""       你好\n再见"")"
-138,IndentationError,0,"param = int(input())
+110,SyntaxError,1,print('       你好\n再见',print('       你好\n再见')
+111,IndentationError,0,"param = int(input())
 
 def convert_num(input_num):
     if (input_num >= 10):
@@ -1872,38 +1310,36 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-139,SyntaxError,3,"print（""生日快乐！""）","print(""生日快乐！"")"
-140,IndentationError,4,"for i in range(1,8):
+112,SyntaxError,3,print（'生日快乐！'）,print('生日快乐！')
+113,IndentationError,4,"for i in range(1,8):
         if i == 4:
     continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-141,IndentationError,0,"num_spiders = int(input())
+114,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-142,SyntaxError,5,"age = int(input())
+115,SyntaxError,5,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
 
-# 在此处补全代码
 calories_burned)=((age*0.2757+weight*0.03295+heart_rate*1.0781)-75.4991)*time/8.368
 print(calories_burned)","age = int(input())
 weight = int(input())
@@ -1913,48 +1349,42 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-143,SyntaxError,1,"my_list = input().split(',')
+116,SyntaxError,1,"my_list = input().split(',')
 new_list = []
-# 请不要更改此行以上的代码
 
 for i in range(0,len(my_list):
     new_list.append(my_list.pop())
     
-# 在这里编写代码
 
-# 请不要更改此行以下的代码
-print("","".join(new_list))","my_list = input().split(',')
+print(','.join(new_list))","my_list = input().split(',')
 new_list = []
-# 请不要更改此行以上的代码
 
 for i in range(0, len(my_list)):
     new_list.append(my_list.pop())
 
-# 请不要更改此行以下的代码
-print("","".join(new_list))"
-144,IndentationError,0,"num_spiders = int(input())
+print(','.join(new_list))"
+117,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-print(""猫吃不完蜘蛛"")
+print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-145,SyntaxError,4,"age = int(input())
+118,SyntaxError,4,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
 
-# 在此处补全代码
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368 print(calories_burned)
 print(calories_burned)","age = int(input())
 weight = int(input())
@@ -1964,15 +1394,23 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-146,IndentationError,4,"for i in range(1,8):
-    # 在此处补全代码
+119,IndentationError,4,"for i in range(1,8):
      if i == 4:  
-        continue  # 如果数字是4，跳过当前的迭代  
+        continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-147,IndentationError,1,"user_age=int(input())
+120,SyntaxError,3,"input_int = int(input())
+
+num_to_word={1:'一'，2:'二',3:'三',4:'四',5:'五',6:'六',7:'七',8:'八',9:'九',10:'十',}
+
+print(num_to_word[input_int])","input_int = int(input())
+
+num_to_word = {1:'一', 2:'二', 3:'三', 4:'四', 5:'五', 6:'六', 7:'七', 8:'八', 9:'九', 10:'十'}
+
+print(num_to_word[input_int])"
+121,IndentationError,1,"user_age=int(input())
  if
  user_age == 18
  num_candles=18
@@ -1984,13 +1422,12 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-148,SyntaxError,5,"age = int(input())
+122,SyntaxError,5,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
 
 calories_burned = ((age*0.2757+weight*0.03295+heart_rate*1.0781)-75.4991)*time)/8.368
-# 在此处补全代码
 
 print(calories_burned)","age = int(input())
 weight = int(input())
@@ -2000,72 +1437,53 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-149,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-#在这里补全代码
-if num_spiders > 10:
-    if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
-    else:
-    print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-150,SyntaxError,1,"age = int((input())
+123,SyntaxError,1,"age = int((input())
 
-print(""my age is "" + str(age))","age = int(input())
+print('my age is ' + str(age))","age = int(input())
 
-print(""my age is "" + str(age))"
-151,IndentationError,0,"num_spiders = int(input())
+print('my age is ' + str(age))"
+124,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
 else:
-print(""猫吃不完蜘蛛"")
+print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-152,IndentationError,0,"num_spiders = int(input())
+125,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
     if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
     else:
         print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-153,SyntaxError,4,"print(""I can"")
-print(""swim."")
+126,SyntaxError,1,"print('I can')
+print('swim.')
 my_age = 10
-print(""my age:"" :my_age)","print('I can')
+print('my age:' :my_age)","print('I can')
 print('swim.')
 my_age = 10
 print('my age:', my_age)"
-154,SyntaxError,1,"age = int(input())
+127,SyntaxError,1,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
@@ -2080,8 +1498,8 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-155,SyntaxError,3,"print（""       你好\n再见""）","print(""       你好\n再见"")"
-156,SyntaxError,2,"param = int(input())
+128,SyntaxError,3,print（'       你好\n再见'）,print('       你好\n再见')
+129,SyntaxError,2,"param = int(input())
 
 def print_num(input_num):
     if (input_num == 10):
@@ -2094,36 +1512,19 @@ def print_num(input_num):
         print(input_num)
 
 print_num(param)"
-157,IndentationError,0,"# 在这里编写代码
-def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-158,IndentationError,0,"import ast
+130,IndentationError,0,"import ast
 input_list_1 = ast.literal_eval(input())
 input_list_2 = ast.literal_eval(input())
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 def add_matrix(matrix_1, matrix_2):
     for i in range(0, len(matrix_1)):
         for j in range(0, len(matrix_1[i])):
         matrix_1[i][j] = matrix_1[i][j] + matrix_2[i][j]
     return matrix_1
 
-# 请不要更改此行以下的代码
 print(add_matrix(input_list_1, input_list_2))","import ast
 input_list_1 = ast.literal_eval(input())
 input_list_2 = ast.literal_eval(input())
-# 请不要更改此行以上的代码
 
 def add_matrix(matrix_1, matrix_2):
     for i in range(0, len(matrix_1)):
@@ -2131,29 +1532,26 @@ def add_matrix(matrix_1, matrix_2):
             matrix_1[i][j] = matrix_1[i][j] + matrix_2[i][j]
     return matrix_1
 
-# 请不要更改此行以下的代码
 print(add_matrix(input_list_1, input_list_2))"
-159,IndentationError,0," def welcome_to_circle_cat():
-  print(""Welcome to circle cat!"")
+131,IndentationError,0," def welcome_to_circle_cat():
+  print('Welcome to circle cat!')
   
 
   
 welcome_to_circle_cat()	
 welcome_to_circle_cat() 
 
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-160,SyntaxError,5,"print('你好')
+132,SyntaxError,4,"print('你好')
 print（'我在吃饭'）
-print（）","print(""你好"")
-print(""我在吃饭"")"
-161,IndentationError,3,"film_rate=int(input())
+print（）","print('你好')
+print('我在吃饭')"
+133,IndentationError,3,"film_rate=int(input())
 if (film_rate>7):
 print ('好看')
 else: ('不好看')","film_rate = int(input())
@@ -2162,47 +1560,43 @@ if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-162,SyntaxError,2,"time=int(input())
+134,SyntaxError,0,"time=int(input())
 if
    8<time<22:
-   print(""醒着"")
+   print('醒着')
 else:
-    print(""睡觉了"")","time = int(input())
+    print('睡觉了')","time = int(input())
 if 8 < time < 22:
     print('醒着')
 else:
     print('睡觉了')"
-163,IndentationError,2,"for i in range(0, 10):
+135,IndentationError,2,"for i in range(0, 10):
     print(i)
     if i == 5:
     break","for i in range(0, 10):
     print(i)
     if (i == 5):
         break"
-164,IndentationError,5,"film_rate = int(input())
+136,IndentationError,3,"film_rate = int(input())
   if int(film_rate) > 7:
-    print(""好看"")
+    print('好看')
   else:
-    print(""不好看"")","film_rate = int(input())
+    print('不好看')","film_rate = int(input())
 
 if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-165,IndentationError,0,"temp_list = input().split(',')
-# 请不要更改此行以上的代码
+137,IndentationError,0,"temp_list = input().split(',')
 
-# 在这里编写代码
 def count_negative(my_list):
     count = 0
-    for i in my_list:  #疑问，为什么是形参my_list,其实temp_list也可以
+    for i in my_list:
         if int(i) < 0:
         count += 1
     return count
         
-# 请不要更改此行以下的代码
 print(count_negative(temp_list))","temp_list = input().split(',')
-# 请不要更改此行以上的代码
 
 def count_negative(my_list):
     count = 0
@@ -2211,103 +1605,66 @@ def count_negative(my_list):
             count += 1
     return count
 
-# 请不要更改此行以下的代码
 print(count_negative(temp_list))"
-166,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
-    else:
-    print(""猫吃不完蜘蛛"")
-else:
-print('蜘蛛很少')#在这里补全代码","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-167,SyntaxError,3,"time = int(input())
+138,SyntaxError,1,"time = int(input())
 if time 8<time<22:
-    print(""醒着"")
+    print('醒着')
 else:
-    print(""睡觉了"")","time = int(input())
+    print('睡觉了')","time = int(input())
 if 8 < time < 22:
     print('醒着')
 else:
     print('睡觉了')"
-168,SyntaxError,2,"print(""I can"")
-print('swim.')
-my_age = 10
-print('my age:' my_age)","print('I can')
-print('swim.')
-my_age = 10
-print('my age:', my_age)"
-169,SyntaxError,4,"film_rate = int(input())
+139,SyntaxError,2,"film_rate = int(input())
 if film_rate>7
-    print(""好看"")
-else print(""不好看"")","film_rate = int(input())
+    print('好看')
+else print('不好看')","film_rate = int(input())
 
 if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-170,SyntaxError,4,"print(""你好"")
-print（""我在吃饭""）
-print()","print(""你好"")
-print(""我在吃饭"")"
-171,IndentationError,3,"# 在这里编写代码
-def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-172,IndentationError,0,"num_spiders = int(input())
+140,SyntaxError,4,"print('你好')
+print（'我在吃饭'）
+print()","print('你好')
+print('我在吃饭')"
+141,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-173,SyntaxError,4,"num_students = int(input())
+142,SyntaxError,2,"num_students = int(input())
 if num_students < 50
-   print(""没到齐"")
+   print('没到齐')
 else
-   print(""到齐了"")","num_students = int(input())  
+   print('到齐了')","num_students = int(input())  
 
 if num_students < 50:
     print('没到齐')
 else:
     print('到齐了')"
-174,SyntaxError,3,"time = int(input())
+143,SyntaxError,1,"time = int(input())
 if 8<time<22：
-    print(""醒着"")
+    print('醒着')
 else:
-    print(""睡觉了"")","time = int(input())
+    print('睡觉了')","time = int(input())
 if 8 < time < 22:
     print('醒着')
 else:
     print('睡觉了')"
-175,SyntaxError,5,"param = int(input())
+144,SyntaxError,5,"param = int(input())
 
 def convert_num(param):
     if param >= 10：
@@ -2322,40 +1679,35 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-176,SyntaxError,4,"print(""00000"");
-print(""0 0 0"");
-print（""00000"");","print(""00000"")
-print(""0 0 0"")
-print(""00000"")"
-177,SyntaxError,2,"# 在这里编写代码
-def welcome_to_cirlcle_cat():
-    print ""Welcome to circle cat!""
+145,SyntaxError,4,"print('00000');
+print('0 0 0');
+print（'00000');","print('00000')
+print('0 0 0')
+print('00000')"
+146,SyntaxError,2,"def welcome_to_cirlcle_cat():
+    print 'Welcome to circle cat!'
 
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-178,IndentationError,0,"def welcome_to_cirlcle_cat():
-print(""Welcome to circle cat!"")
+147,IndentationError,0,"def welcome_to_cirlcle_cat():
+print('Welcome to circle cat!')
 
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-179,IndentationError,0,"param = int(input())
+148,IndentationError,0,"param = int(input())
 
 def convert_num(input_num):
     if (input_num >= 10):
@@ -2370,20 +1722,17 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-180,SyntaxError,2,"print(""你好"");
-print(""我在吃饭"")；","print(""你好"")
-print(""我在吃饭"")"
-181,SyntaxError,3,"input_int = int(input())
-# 请不要更改此行以上的代码
+149,SyntaxError,2,"print('你好');
+print('我在吃饭')；","print('你好')
+print('我在吃饭')"
+150,SyntaxError,3,"input_int = int(input())
 
 def power_of_two(num):
     if num == 0
         return 1
     else:
         return int（2 * power_of_two(num-1)）
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
 
 def power_of_two(num):
     if num == 0:
@@ -2391,61 +1740,53 @@ def power_of_two(num):
     else:
         return 2 * power_of_two(num - 1)
 
-# 请不要更改此行以下的代码
 print(power_of_two(input_int))"
-182,IndentationError,3,"def welcome_to_circle_cat():
-print (""Welcome to circle cat!"")
+151,IndentationError,3,"def welcome_to_circle_cat():
+print ('Welcome to circle cat!')
 welcome_to_circle_cat()
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-183,SyntaxError,3,"time = int(input())
+152,SyntaxError,1,"time = int(input())
 if 8 < time < 22
-    print(""醒着"")
+    print('醒着')
 else:
-    print(""睡觉了"")","time = int(input())
+    print('睡觉了')","time = int(input())
 if 8 < time < 22:
     print('醒着')
 else:
     print('睡觉了')"
-184,SyntaxError,1,"param = input()
-print(len.(param))
-# 在此处补全代码","param = input()
+153,SyntaxError,1,"param = input()
+print(len.(param))","param = input()
 
 print(len(param))"
-185,SyntaxError,3,"def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+154,SyntaxError,3,"def welcome_to_cirlcle_cat():
+    print('Welcome to circle cat!')
 welcome_to_cirlcle_cat():
 welcome_to_cirlcle_cat():
 welcome_to_cirlcle_cat():","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-186,SyntaxError,4,"input_int = int(input())
-# 请不要更改此行以上的代码
+155,SyntaxError,4,"input_int = int(input())
 
 def fib_3(num):
-   if num == 0# 在这里补充代码:
-      return 1# 在这里补充代码
-   elif num ==1 # 在这里补充代码:
-      return 1# 在这里补充代码
+   if num == 0
+      return 1
+   elif num ==1
+      return 1
    elif num == 2:
-       return 1# 在这里补充代码:
-      # 在这里补充代码
+       return 1
    else:
        
-      return fib_3(num-1)+fib_3(num-2)+fib_3(num-3)# 在这里补充代码
+      return fib_3(num-1)+fib_3(num-2)+fib_3(num-3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))","input_int = int(input())
-# 请不要更改此行以上的代码
  
 def fib_3(num):
    if num == 0:
@@ -2457,109 +1798,92 @@ def fib_3(num):
    else:
       return fib_3(num - 2) + fib_3(num - 1) + fib_3(num - 3)
 
-# 请不要更改此行以下的代码
 print(fib_3(input_int))"
-187,SyntaxError,5,"# 在这里补全代码
-
+156,SyntaxError,5,"
 print(num_students)=100","num_students = 100
 
 print(num_students)"
-188,SyntaxError,2,"param = input()
+157,SyntaxError,2,"param = input()
 
 for i in param:
-    print i
-# 在此处补全答案","param = input()
+    print i","param = input()
 
 for i in param:
     print(i)"
-189,SyntaxError,4,"age = int(input())
+158,SyntaxError,4,"age = int(input())
 
-print(""my age is "" + str（int（age））)","age = int(input())
+print('my age is ' + str（int（age））)","age = int(input())
 
-print(""my age is "" + str(age))"
-190,SyntaxError,4,"num_students = int(input())
+print('my age is ' + str(age))"
+159,SyntaxError,2,"num_students = int(input())
 if num_students < 50:
-    print(""没到齐"")
+    print('没到齐')
 else：
-    print(""到齐了"")","num_students = int(input())  
+    print('到齐了')","num_students = int(input())  
 
 if num_students < 50:
     print('没到齐')
 else:
     print('到齐了')"
-191,SyntaxError,2,"param = input()
+160,SyntaxError,2,"param = input()
 for i in param；
-    print(i)
-# 在此处补全答案","param = input()
+    print(i)","param = input()
 
 for i in param:
     print(i)"
-192,SyntaxError,2,"# 在这里编写代码
-def welcome_to_circle_cat():
-    print ""Welcome to circle cat!""
+161,SyntaxError,2,"def welcome_to_circle_cat():
+    print 'Welcome to circle cat!'
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_circle_cat()
 welcome_to_circle_cat()
-# 请不要更改此行以下的代码
 welcome_to_circle_cat()"
-193,SyntaxError,5,"my_list = [10, 75, 94]
+162,SyntaxError,3,"my_list = [10, 75, 94]
 my_guess = int(input())
 if (my_guess in my_list)：
-    print(""猜对了"")
+    print('猜对了')
 else:
-    print(""猜错了"")","my_list = [10, 75, 94]
+    print('猜错了')","my_list = [10, 75, 94]
 my_guess = int(input())
 
 if  my_guess in my_list:
     print('猜对了')
 else:
     print('猜错了')"
-194,SyntaxError,1,"print(""生日快乐！"")；","print(""生日快乐！"")"
-195,SyntaxError,1,"input_list_0 = input().split(',')
+163,SyntaxError,1,print('生日快乐！')；,print('生日快乐！')
+164,SyntaxError,1,"input_list_0 = input().split(',')
 input_list_1 = input().split(',')
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 my_list = input_list_0 + input_list_1
 del.my_list[0]
 my_list[0] = 'x'
 
-# 请不要更改此行以下的代码
-print("","".join(my_list))","input_list_0 = input().split(',')
+print(','.join(my_list))","input_list_0 = input().split(',')
 input_list_1 = input().split(',')
-# 请不要更改此行以上的代码
 
 my_list = input_list_0 + input_list_1
 del my_list[0]
 my_list[0] = 'x'
 
-# 请不要更改此行以下的代码
-print("","".join(my_list))"
-196,SyntaxError,4,"input_list_0 = input().split(',')
+print(','.join(my_list))"
+165,SyntaxError,4,"input_list_0 = input().split(',')
 input_list_1 = input().split(',')
-# 请不要更改此行以上的代码
 
-# 在这里编写代码
 my_list = input_list_0 + input_list_1
 del my_list[0]
 'x' = my_list[0]
-# 请不要更改此行以下的代码
-print("","".join(my_list))","input_list_0 = input().split(',')
+print(','.join(my_list))","input_list_0 = input().split(',')
 input_list_1 = input().split(',')
-# 请不要更改此行以上的代码
 
 my_list = input_list_0 + input_list_1
 del my_list[0]
 my_list[0] = 'x'
 
-# 请不要更改此行以下的代码
-print("","".join(my_list))"
-197,IndentationError,0,"param = int(input())
+print(','.join(my_list))"
+166,IndentationError,0,"param = int(input())
 
 def convert_num(input_num):
     if (input_num >= 10):
@@ -2575,20 +1899,16 @@ def convert_num(input_num):
     print(input_num)
 
 convert_num(param)"
-198,SyntaxError,1,"temp_list = input().split(',')
-# 请不要更改此行以上的代码
+167,SyntaxError,1,"temp_list = input().split(',')
 
-# 在这里编写代码
 def count_negative(my_list):
     count = 0
-    for i in my_list:  #疑问，为什么是形参my_list,其实temp_list也可以
+    for i in my_list:
         if int(i) < 0：
         count += 1
     return count
         
-# 请不要更改此行以下的代码
 print(count_negative(temp_list))","temp_list = input().split(',')
-# 请不要更改此行以上的代码
 
 def count_negative(my_list):
     count = 0
@@ -2597,139 +1917,107 @@ def count_negative(my_list):
             count += 1
     return count
 
-# 请不要更改此行以下的代码
 print(count_negative(temp_list))"
-199,IndentationError,1,"my_list = input().split(',')
-new_list = []
-# 请不要更改此行以上的代码
-for i in range(0,len(my_list)):
-my_list.append(my_list.pop())
-# 在这里编写代码
-
-# 请不要更改此行以下的代码
-print("","".join(new_list))","my_list = input().split(',')
-new_list = []
-# 请不要更改此行以上的代码
-
-for i in range(0, len(my_list)):
-    new_list.append(my_list.pop())
-
-# 请不要更改此行以下的代码
-print("","".join(new_list))"
-200,SyntaxError,4,"def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+168,SyntaxError,4,"def welcome_to_cirlcle_cat():
+    print('Welcome to circle cat!')
 welcome_to_cirlcle_cat():
 welcome_to_cirlcle_cat():","def welcome_to_cirlcle_cat():
-    print(""Welcome to circle cat!"")
+    print('Welcome to circle cat!')
 
 welcome_to_cirlcle_cat()
 welcome_to_cirlcle_cat()
-# 请不要更改此行以下的代码
 welcome_to_cirlcle_cat()"
-201,IndentationError,4,"for i in range(1,8):
-    # 在此处补全代码
+169,SyntaxError,1,"temp_list = input().split(',')
+
+def count_negative(my_list):
+    count = 0
+    for i in my_list:
+        if int(i) < 0
+        count += 1
+    return count
+        
+print(count_negative(temp_list))","temp_list = input().split(',')
+
+def count_negative(my_list):
+    count = 0
+    for i in my_list:
+        if int(i) < 0:
+            count += 1
+    return count
+
+print(count_negative(temp_list))"
+170,IndentationError,4,"for i in range(1,8):
         if i == 4:
         continue
     print(i)","for i in range(1,8):
     if (i == 4):
         continue
     print(i)"
-202,SyntaxError,5,"print（""你好""）
-print（""我在吃饭""\ ）","print(""你好"")
-print(""我在吃饭"")"
-203,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-    print(""猫吃不完蜘蛛"")
+171,SyntaxError,5,"print（'你好'）
+print（'我在吃饭'\ ）","print('你好')
+print('我在吃饭')"
+172,SyntaxError,5,"int(input())
+film_rate=int；
+if film_rate>7:
+    print('好看')
 else:
-    print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
+    print('不好看')","film_rate = int(input())
+
+if film_rate > 7:
+    print('好看')
 else:
-    print('蜘蛛很少')"
-204,SyntaxError,4,print('       你好\n再见')print(),"print(""       你好\n再见"")"
-205,IndentationError,0,"param = input()
-
-# 在此处补全代码
-    print(param[4])","param = input()
-
-print(param[4])"
-206,SyntaxError,3,"for i in range(0, 10):
+    print('不好看')"
+173,SyntaxError,3,print('       你好\n再见')print(),print('       你好\n再见')
+174,SyntaxError,3,"for i in range(0, 10):
     print(i)
     if i == 5
         break","for i in range(0, 10):
     print(i)
     if (i == 5):
         break"
-207,IndentationError,0,"param = input()
+175,IndentationError,0,"param = input()
 
  for i in param:
 	print(i)","param = input()
 
 for i in param:
     print(i)"
-208,IndentationError,0,"num_spiders = int(input())
+176,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 
 if num_spiders > 10:
 if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
 else:
-    print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')","num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
-    else:
-        print(""猫吃不完蜘蛛"")
-else:
-    print('蜘蛛很少')"
-209,IndentationError,0,"num_spiders = int(input())
-num_cats = int(input())
-if num_spiders > 10:
-    if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
-else:
-    print(""猫吃不完蜘蛛"")
+    print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-210,IndentationError,0,"num_spiders = int(input())
+177,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
-#在这里补全代码
 if num_spiders > 10:
 if num_cats > num_spiders:
-print(""猫会吃掉蜘蛛"")
+print('猫会吃掉蜘蛛')
 else:
-print(""猫吃不完蜘蛛"")
+print('猫吃不完蜘蛛')
 else:
 print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-211,SyntaxError,1,"age = int(input())
+178,SyntaxError,1,"age = int(input())
 weight = int(input())
 heart_rate = int(input())
 time = int(int(input()))
@@ -2744,15 +2032,15 @@ time = int(int(input()))
 calories_burned = ((age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991) * time / 8.368
 
 print(calories_burned)"
-212,IndentationError,0,"param = input()
-for i in param:
-print (i)
+179,SyntaxError,4,"input_int = int(input())
+num_to_word={1:'一'，2:'二'，3:'三',4:'四',5:'五',6:'六',7:'七',8:'八',9:'九',10:'十'}
 
-# 在此处补全答案","param = input()
+print(num_to_word[input_int])","input_int = int(input())
 
-for i in param:
-    print(i)"
-213,SyntaxError,3,"film_rate=int(input())
+num_to_word = {1:'一', 2:'二', 3:'三', 4:'四', 5:'五', 6:'六', 7:'七', 8:'八', 9:'九', 10:'十'}
+
+print(num_to_word[input_int])"
+180,SyntaxError,3,"film_rate=int(input())
 if film_rate>7
 print ('好看')
 else ('不好看')","film_rate = int(input())
@@ -2761,48 +2049,7 @@ if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-214,SyntaxError,3,"print(""你好""\""我在吃饭"")
-print()","print(""你好"")
-print(""我在吃饭"")"
-215,SyntaxError,1,"input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-user_info={}
-def add_user(user_name,pass_word):
-    user_info[user_name]=:pass_word
-def verify_user(user_name,pass_word):
-    if user_name in user_info:
-        if user_info[user_name]==pass_word:
-            return True
-    return False
-    
-# 在这里编写代码
-
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))","input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-user_info = {}
-
-def add_user(user_name, pass_word):
-    user_info[user_name] = pass_word
-
-def verify_user(user_name, pass_word):
-    if user_name in user_info:
-        if user_info[user_name] == pass_word:
-            return True
-    return False
-
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))"
-216,SyntaxError,4,"param = int(input())
+181,SyntaxError,4,"param = int(input())
 
 def print_num(input_num):
     if input_num == 10:
@@ -2814,7 +2061,16 @@ def print_num(input_num):
         print(input_num)
 
 print_num(param)"
-217,SyntaxError,1,"user_age = int(input())
+182,SyntaxError,2,"input_int = int(input())
+num_to_word = {1:'一',2:'二',3:'三',4:'四'5:'五',6:'六',7:'七'8:'八',9:'九',10:'十'
+}
+
+print(num_to_word[input_int])","input_int = int(input())
+
+num_to_word = {1:'一', 2:'二', 3:'三', 4:'四', 5:'五', 6:'六', 7:'七', 8:'八', 9:'九', 10:'十'}
+
+print(num_to_word[input_int])"
+183,SyntaxError,1,"user_age = int(input())
 if user_age ==18：
     num_candles = 18
 else:
@@ -2826,52 +2082,7 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-218,SyntaxError,1,"input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-# 在这里编写代码
-user_info ={}
-def log_user(user_name):
-    if user_name in user_info:
-        user_info[user_name]+=1
-    else:
-        user_info[user_name]=1
-
-def print_user_log(user_name):
-    if user_name in user_info:
-        print(user_info[user_name]]
-    else:
-        print(0)
-
-
-# 请不要更改此行以下的代码
-for i in input_dict['log']:
-    log_user(i)
-for i in input_dict['print']:
-    print_user_log(i)","input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-user_info = {}
-def log_user(user_name):
-    if user_name in user_info:
-        user_info[user_name] += 1
-    else:
-        user_info[user_name] = 1
-        
-def print_user_log(user_name):
-    if user_name in user_info:
-        print(user_info[user_name])
-    else:
-        print(0)
-
-# 请不要更改此行以下的代码
-for i in input_dict['log']:
-    log_user(i)
-for i in input_dict['print']:
-    print_user_log(i)"
-219,SyntaxError,1,"user_age = int(input())
+184,SyntaxError,1,"user_age = int(input())
 if user_age == 18 
     num_candles = 18
 else:
@@ -2882,7 +2093,7 @@ if user_age == 18:
 else:
     num_candles = 3
 print(num_candles)"
-220,SyntaxError,1,"num_animals = int(input())
+185,SyntaxError,1,"num_animals = int(input())
 
 if num_animals >= 30：
     forest_size = 3
@@ -2896,100 +2107,46 @@ else:
     forest_size = 1
 
 print(forest_size)"
-221,IndentationError,0,"input_dict = input()
-input_dict = eval(input_dict)
-user_info={}
-def add_user(user_name,pass_word):
-	user_info[user_name]=pass_word
-def verify_user(user_name,pass_word):
-	if user_name in user_info:
-		if user_info[user_name]==pass_word:
-			return True
-	return False
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-print(verify_user(i[0], i[1]))","input_dict = input()
-input_dict = eval(input_dict)
-# 请不要更改此行以上的代码
-
-user_info = {}
-
-def add_user(user_name, pass_word):
-    user_info[user_name] = pass_word
-
-def verify_user(user_name, pass_word):
-    if user_name in user_info:
-        if user_info[user_name] == pass_word:
-            return True
-    return False
-
-# 请不要更改此行以下的代码
-for i in input_dict['add']:
-    add_user(i[0], i[1])
-for i in input_dict['verify']:
-    print(verify_user(i[0], i[1]))"
-222,IndentationError,2,"for i in range(1,8):
-    # 在此处补全代码
-  
-    if(i == 4):
-        continue
-      print(i)","for i in range(1,8):
-    if (i == 4):
-        continue
-    print(i)"
-223,IndentationError,4,"my_list = [10, 75, 94]
+186,IndentationError,2,"my_list = [10, 75, 94]
 my_guess = int(input())
  if （my_guess in my_list）:
-    print(""猜对了"")
+    print('猜对了')
  else:
-     print(""猜错了"")","my_list = [10, 75, 94]
+     print('猜错了')","my_list = [10, 75, 94]
 my_guess = int(input())
 
 if  my_guess in my_list:
     print('猜对了')
 else:
     print('猜错了')"
-224,IndentationError,0,"def welcome_to_circle_cat():
-print(""Welcome to circle cat!"")
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-225,SyntaxError,5,"film_rate = int(input())
+187,SyntaxError,3,"film_rate = int(input())
 if film_rate > 7：
-    print(""好看"")
+    print('好看')
 else：
-    print(""不好看"")","film_rate = int(input())
+    print('不好看')","film_rate = int(input())
 
 if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-226,IndentationError,0,"num_spiders = int(input())
+188,IndentationError,0,"num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-    print(""猫会吃掉蜘蛛"")
+    print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')","num_spiders = int(input())
 num_cats = int(input())
 if num_spiders > 10:
     if num_cats > num_spiders:
-        print(""猫会吃掉蜘蛛"")
+        print('猫会吃掉蜘蛛')
     else:
-        print(""猫吃不完蜘蛛"")
+        print('猫吃不完蜘蛛')
 else:
     print('蜘蛛很少')"
-227,SyntaxError,3,"film_rate=int(input())
+189,SyntaxError,3,"film_rate=int(input())
 if (film_rate>7):
  print ('好看')
  else: ('不好看')","film_rate = int(input())
@@ -2998,18 +2155,7 @@ if film_rate > 7:
     print('好看')
 else:
     print('不好看')"
-228,IndentationError,1,"def welcome_to_circle_cat():
-print('Welcome to circle cat!')
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-welcome_to_circle_cat()","def welcome_to_circle_cat():
-    print(""Welcome to circle cat!"")
-
-welcome_to_circle_cat()
-welcome_to_circle_cat()
-# 请不要更改此行以下的代码
-welcome_to_circle_cat()"
-229,SyntaxError,4,"int user_age = input()
+190,SyntaxError,4,"int user_age = input()
 if user_age == 18:
     num_candles = 18
 else:
