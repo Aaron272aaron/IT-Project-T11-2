@@ -1,0 +1,11 @@
+# questions/q3/cases.yaml
+entry: reverse_words
+cases:
+  - name: basic
+    args: ["hello world"]
+    expected: "world hello"
+    marks: 2
+  - name: empty
+    args: [""]
+    expected: ""
+    marks: 1
