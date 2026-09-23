@@ -1,0 +1,4 @@
+# Install the platform-specific PyTorch build first; see README.md.
+transformers>=4.57.2,<6
+accelerate>=1.1,<2
+safetensors>=0.5,<1
