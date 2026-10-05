@@ -9,6 +9,7 @@ Usage:
 
 import argparse
 import json
+import math
 import pathlib
 import re
 import sys
@@ -22,6 +23,7 @@ TIMED_OUT = "timed_out"
 CRASHED = "crashed"
 PARTIAL = "partial"
 ALL_PASSED = "all_passed"
+RUNNER_ERROR = "runner_error"
 
 VERDICT_TEXT = {
     DID_NOT_COMPILE: "Did not compile - no case was ever executed",
@@ -31,6 +33,7 @@ VERDICT_TEXT = {
     CRASHED: "Raised an exception before returning",
     PARTIAL: "Ran, some cases failed",
     ALL_PASSED: "All cases passed",
+    RUNNER_ERROR: "The marking run did not produce valid results",
 }
 
 
@@ -61,7 +64,7 @@ def error_of(test):
 def classify(tests):
     """Decide one verdict for the whole submission."""
     if not tests:
-        return NO_SUBMISSION
+        return RUNNER_ERROR
 
     errors = [error_of(t) for t in tests]
     outcomes = [t.get("outcome") for t in tests]
@@ -71,7 +74,7 @@ def classify(tests):
         return ALL_PASSED
     if re.search(r"\b(SyntaxError|IndentationError|TabError)\b", joined):
         return DID_NOT_COMPILE
-    if "ModuleNotFoundError" in joined:
+    if re.search(r"ModuleNotFoundError: No module named ['\"]submission['\"]", joined):
         return NO_SUBMISSION
     if "has no attribute" in joined or "AttributeError: module" in joined:
         return ENTRY_NOT_FOUND
@@ -81,30 +84,94 @@ def classify(tests):
         return PARTIAL
     # Nothing passed and it is not a compile problem: distinguish a raised
     # exception from a plain wrong answer.
-    if re.search(r"\b(TypeError|ValueError|IndexError|KeyError|ZeroDivisionError|NameError)\b", joined):
+    if re.search(
+        r"\b(TypeError|ValueError|IndexError|KeyError|ZeroDivisionError|NameError|"
+        r"ModuleNotFoundError|ImportError|AttributeError|RuntimeError)\b",
+        joined,
+    ):
         return CRASHED
     return PARTIAL
 
 
 def load_marks(cases_path):
-    """{case_name: marks} from cases.yaml, or {} if unavailable."""
+    """Read the configured marks; fail if a requested configuration is unusable."""
     if not cases_path:
         return {}
     p = pathlib.Path(cases_path)
-    if not p.exists():
-        print(f"warning: {p} not found, marks omitted", file=sys.stderr)
-        return {}
     try:
         import yaml
-    except ImportError:
-        print("warning: pyyaml not installed, marks omitted", file=sys.stderr)
-        return {}
-    spec = yaml.safe_load(p.read_text()) or {}
-    return {c["name"]: c.get("marks", 0) for c in spec.get("cases", [])}
+    except ImportError as exc:
+        raise RuntimeError("PyYAML is required to load case marks") from exc
+    try:
+        spec = yaml.safe_load(p.read_text())
+    except yaml.YAMLError as exc:
+        raise ValueError(f"Invalid cases.yaml: {exc}") from exc
+    if not isinstance(spec, dict) or not isinstance(spec.get("cases"), list) or not spec["cases"]:
+        raise ValueError("cases.yaml must contain a non-empty cases list")
+    marks = {}
+    for case in spec["cases"]:
+        if not isinstance(case, dict) or not isinstance(case.get("name"), str):
+            raise ValueError("each case needs a string name")
+        name = case["name"]
+        value = case.get("marks", 0)
+        if (
+            not name or name in marks or isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(value) or value < 0
+        ):
+            raise ValueError(f"invalid or duplicate marks for case {name!r}")
+        marks[name] = value
+    return marks
+
+
+def runner_failure(code, message, marks=None, duration=0.0):
+    """A failed runner has no earned mark, even if cases have configured marks."""
+    return {
+        "status": RUNNER_ERROR,
+        "verdict": RUNNER_ERROR,
+        "verdict_text": VERDICT_TEXT[RUNNER_ERROR],
+        "passed": 0,
+        "total": 0,
+        "marks_earned": None,
+        "marks_available": sum(marks.values()) if marks else None,
+        "duration": round(duration, 3),
+        "cases": [],
+        "error": {"code": code, "message": message},
+    }
 
 
 def summarise(report, marks):
-    tests = report.get("tests", [])
+    if not isinstance(report, dict) or not isinstance(report.get("tests"), list):
+        return runner_failure("invalid_report", "The report has no tests list", marks)
+    tests = report["tests"]
+    duration = report.get("duration", 0.0)
+    collectors = report.get("collectors", [])
+    if not isinstance(collectors, list) or not all(isinstance(c, dict) for c in collectors):
+        return runner_failure("invalid_report", "The report has an invalid collectors list", marks)
+    if not all(isinstance(t, dict) and isinstance(t.get("nodeid"), str) for t in tests):
+        return runner_failure("invalid_report", "The report has invalid test cases", marks)
+    if any(
+        not isinstance(t.get(phase, {}), dict)
+        for t in tests for phase in ("setup", "call", "teardown")
+    ):
+        return runner_failure("invalid_report", "A test has an invalid phase result", marks)
+    if any(t.get("outcome") not in ("passed", "failed") for t in tests):
+        return runner_failure("invalid_report", "A test has an invalid outcome", marks)
+    if any(
+        t.get(phase, {}).get("outcome") == "failed"
+        for t in tests for phase in ("setup", "teardown")
+    ):
+        return runner_failure("test_setup_failed", "Test setup or cleanup failed", marks)
+    if not isinstance(duration, (int, float)) or not math.isfinite(duration) or duration < 0:
+        return runner_failure("invalid_report", "The report has an invalid duration", marks)
+    if any(c.get("outcome") == "failed" for c in collectors):
+        return runner_failure("collection_failed", "Pytest could not collect the test cases", marks, duration)
+    if not tests:
+        return runner_failure("no_tests", "The runner did not execute any test cases", marks, duration)
+
+    names = [case_name(t["nodeid"]) for t in tests]
+    if marks and (len(names) != len(set(names)) or set(names) != set(marks)):
+        return runner_failure("case_mismatch", "Reported cases do not match cases.yaml", marks, duration)
     verdict = classify(tests)
 
     rows = []
@@ -123,19 +190,26 @@ def summarise(report, marks):
     earned = sum(r["marks_earned"] for r in rows) if marks else None
 
     return {
+        "status": "completed",
         "verdict": verdict,
         "verdict_text": VERDICT_TEXT[verdict],
         "passed": sum(1 for r in rows if r["outcome"] == "passed"),
         "total": len(rows),
         "marks_earned": earned,
         "marks_available": available,
-        "duration": round(report.get("duration", 0.0), 3),
+        "duration": round(duration, 3),
         "cases": rows,
+        "error": None,
     }
 
 
 def render(s):
+    if s["status"] == RUNNER_ERROR:
+        message = f"{s['verdict_text']}: {s['error']['message']}"
+        return f"Run {s['run_id']}\n{message}" if "run_id" in s else message
     out = []
+    if "run_id" in s:
+        out.append(f"Run {s['run_id']}")
     head = f"{s['verdict_text']}   ({s['passed']}/{s['total']} cases"
     if s["marks_available"] is not None:
         head += f", {s['marks_earned']}/{s['marks_available']} marks"
@@ -171,17 +245,23 @@ def main():
 
     path = pathlib.Path(args.report)
     if not path.exists():
-        # A missing report is itself a result: the container produced nothing.
-        result = {"verdict": NO_SUBMISSION,
-                  "verdict_text": "No report produced - the container failed to run",
-                  "passed": 0, "total": 0, "cases": []}
-        print(json.dumps(result) if args.json else result["verdict_text"])
+        result = runner_failure("report_missing", "The container produced no report")
+        print(json.dumps(result) if args.json else render(result))
         return 2
 
-    report = json.loads(path.read_text())
-    s = summarise(report, load_marks(args.cases))
+    try:
+        report = json.loads(path.read_text())
+    except (OSError, ValueError) as exc:
+        s = runner_failure("invalid_report", str(exc))
+    else:
+        try:
+            marks = load_marks(args.cases)
+        except (OSError, ValueError, RuntimeError) as exc:
+            s = runner_failure("invalid_configuration", str(exc))
+        else:
+            s = summarise(report, marks)
     print(json.dumps(s, indent=2) if args.json else render(s))
-    return 0
+    return 2 if s["status"] == RUNNER_ERROR else 0
 
 
 if __name__ == "__main__":
