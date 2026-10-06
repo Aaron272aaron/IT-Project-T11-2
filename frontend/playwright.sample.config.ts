@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-// Exercise the real default sample using independent ports and browser storage.
+// Exercise the bundled sample without starting Python, using isolated browser storage.
 export default defineConfig({
   testDir: "./e2e",
   testMatch: "sample-exam.spec.ts",
@@ -12,14 +12,13 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: "python3 ../backend/server.py --port 8102",
-      url: "http://127.0.0.1:8102/api/health",
-      reuseExistingServer: false,
-    },
-    {
       command: "npm run dev -- --port 5275 --strictPort",
       url: "http://127.0.0.1:5275",
-      env: { API_PROXY_TARGET: "http://127.0.0.1:8102" },
+      // Any accidental API dependency must fail even if a local backend is running.
+      env: {
+        API_PROXY_TARGET: "http://127.0.0.1:1",
+        VITE_LOAD_SAMPLE_EXAM: "true",
+      },
       reuseExistingServer: false,
     },
   ],

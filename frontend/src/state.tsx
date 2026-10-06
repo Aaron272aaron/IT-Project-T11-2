@@ -79,12 +79,21 @@ function useStore() {
     const controller = new AbortController();
     setSampleLoading(true);
     setSampleError("");
+    // Load the bundled fixture from Vite/static hosting; the demo needs no Python API.
     // Upgrade only the old Final exam, once. Later user edits and marks are retained.
-    fetch("/api/demo/sample-exam", { signal: controller.signal })
+    fetch(`${import.meta.env.BASE_URL}demo/sample-exam.json`, {
+      signal: controller.signal,
+    })
       .then(async (response) => {
-        const exam = await response.json();
         if (!response.ok)
-          throw new Error(exam.message ?? "Sample exam is unavailable.");
+          throw new Error(
+            "The bundled sample could not be loaded. Refresh and retry.",
+          );
+        const exam = await response.json().catch(() => {
+          throw new Error(
+            "The bundled sample file is invalid. Restore frontend/public/demo/sample-exam.json and retry.",
+          );
+        });
         if (
           exam.id !== "final" ||
           exam.sampleVersion !== 1 ||
@@ -109,7 +118,7 @@ function useStore() {
           setSampleError(
             error instanceof Error
               ? error.message
-              : "Could not load sample. Start Python and retry.",
+              : "Could not load the bundled sample. Refresh and retry.",
           );
       })
       .finally(() => {

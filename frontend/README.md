@@ -7,7 +7,7 @@ Implemented from the Figma `Prototype Pages (Copy)` design (file `RkRQ0I0xUoWPdV
 Requires Node.js 22.13+ or 24+ (PDF.js requirement; verified locally with Node 24).
 
 ```bash
-cd /Users/oubunsen/Desktop/IT-Project-T11-2/frontend
+cd frontend
 npm ci
 npm run dev
 ```
@@ -171,14 +171,19 @@ Additional code: `src/rubricDocument.ts` validates documents and calls conversio
 
 The default COMP10001 workspace now replaces the old six-question Final exam with **Sample exam** at `#/exam/final`. It has 4 students, 37 questions and 100 possible marks, using the original Canvas report and Word marking guide. Other exams and workspaces are retained. The old default exam record is upgraded once per browser tab; subsequent marks, rubric changes and page assignments are not reset on reload.
 
-The local fixture is prepared with:
+The sample is bundled in the tracked static file `frontend/public/demo/sample-exam.json`, including the saved answers, categories, page mappings, original DOCX and converted PDF. Vite serves it directly and copies it into the production build. **Customers only need `npm ci` and `npm run dev` in `frontend`; Python and LibreOffice are not needed for the sample demo.** Production builds can also be served with `npm run build` followed by `npm run preview`, or deployed to static hosting.
+
+The bundled file contains the supplied student answers and rubric and is included in the downloadable frontend assets. It is demo content, not access-controlled storage. The original CSV and DOCX remain unchanged. Uploading a new Canvas CSV or converting a new DOCX still requires the Python backend; viewing and marking the bundled sample does not.
+
+For maintainers only, to regenerate the bundled sample after reviewing source changes (Python and LibreOffice required on the maintainer's machine):
 
 ```bash
+# Run from the repository root.
 python3 backend/build_sample_exam.py
-python3 backend/server.py
+python3 -c "import shutil; shutil.copyfile('backend/demo/sample-exam.json', 'frontend/public/demo/sample-exam.json')"
 ```
 
-This has already been run on this machine. The builder validates the CSV with the existing Python module and converts Word locally. It writes `backend/demo/sample-exam.json`, which is deliberately ignored by git because it contains local student data. `GET /api/demo/sample-exam` supplies it to the default workspace. The original CSV and DOCX are unchanged. No student files are bundled into the static production build or sent to an external viewer.
+Commit the updated frontend fixture with the code so teammates receive it on pull. The builder's intermediate `backend/demo/` output remains ignored. The frontend no longer calls `GET /api/demo/sample-exam`.
 
 `backend/sample_rubric.json` contains the categories transcribed from the provided guide and its source hash. The page mapping is manually checked against the 24-page preview: Q1–9 share pages 7–8; Q10–13 share 9–10; Q14–17 use 10; Q18–22 use 11; later questions use their corresponding pages through 22. Pages 23–24 contain additional material not represented by the CSV questions. If the source Word file or question IDs change, the builder stops for review rather than reusing these mappings blindly.
 
@@ -190,7 +195,7 @@ Validation commands:
 
 ```bash
 npm run test
-npm run test:e2e:sample  # New default sample, separate backend and Vite ports
+npm run test:e2e:sample  # Bundled sample; API calls blocked and no backend started
 npm run test:e2e         # Existing workflow regressions using isolated legacy fixtures
 npm run build
 ```

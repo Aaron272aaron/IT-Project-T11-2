@@ -1,6 +1,19 @@
 import { test, expect } from "@playwright/test";
 
+// Track and reject every API call: all sample workflows must remain frontend-only.
+const apiRequests = new WeakMap<object, string[]>();
+
+test.afterEach(async ({ page }) => {
+  expect(apiRequests.get(page) ?? []).toEqual([]);
+});
+
 test.beforeEach(async ({ page }) => {
+  const requests: string[] = [];
+  apiRequests.set(page, requests);
+  await page.route("**/api/**", async (route) => {
+    requests.push(route.request().url());
+    await route.abort();
+  });
   await page.goto("/");
   await page.getByRole("button", { name: "Explore demo workspace" }).click();
   await expect(
