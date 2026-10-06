@@ -1,0 +1,1098 @@
+{
+  "docxSha256": "b0d2c357e222ac293cc7d284719b75abfdc8f0cadf439958ddc0e8b163c9e74a",
+  "pageCount": 24,
+  "categoriesByQuestionNumber": {
+    "1": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "2": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "3": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "4": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "5": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "6": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "7": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "8": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "9": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Both value and type are correct, a perfect answer"
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Value correct and type seems to be correct, but some lingering doubt (eg, ambiguity between () and [] brackets, or exact locations of spaces in strings, or whether string quotes are matching, or very messy writing that marks it hard to tell exactly whether it is truly right)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Value correct and major type is correct (list, set, tuple, etc), but some components/elements within that correct major type are incorrect,"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "value incorrect, but (major) type correct"
+      },
+      {
+        "id": "category-5",
+        "score": 1.0,
+        "description": "value correct, but major type incorrect"
+      },
+      {
+        "id": "category-6",
+        "score": 0.5,
+        "description": "evidence of some knowledge of what computation is taking place, but neither value nor type (convincingly) correct"
+      },
+      {
+        "id": "category-7",
+        "score": 0.5,
+        "description": "multiple answers provided, one of which is (mostly) correct"
+      },
+      {
+        "id": "category-8",
+        "score": 0.0,
+        "description": "blank, or completely off track"
+      }
+    ],
+    "10": [
+      {
+        "id": "category-1",
+        "score": 4.0,
+        "description": "One assignment statement, clear and obviously correct, using standard Python techniques,"
+      },
+      {
+        "id": "category-2",
+        "score": 3.5,
+        "description": "An answer that, after considerable thought or checking, is correct, but is substantially more complex or convoluted than is required, and takes a long-way-round to get to the required calculation (uses a sledgehammer to open a nut), involves considerable redundancy in some way"
+      },
+      {
+        "id": "category-3",
+        "score": 3.0,
+        "description": "Correct RHS expression in a single line, but incorrect or no LHS variable in assignment"
+      },
+      {
+        "id": "category-4",
+        "score": 3.0,
+        "description": "Correct LHS variable and correct RHS expression in terms of structure/calculation, but wrong variable used in RHS"
+      },
+      {
+        "id": "category-5",
+        "score": 3.0,
+        "description": "One assignment statement, and correct logical computation structure, but a single mistake that means wrong value is (perhaps only sometimes) assigned, for example, off-by-one somewhere in counting or slicing, or reversal of True/False outcomes"
+      },
+      {
+        "id": "category-6",
+        "score": 2.5,
+        "description": "Multiple assignment statements, but correct value being computed and assigned"
+      },
+      {
+        "id": "category-7",
+        "score": 2.0,
+        "description": "General intentions are in right direction, but execution contains misconceptions that are bigger than “a single mistake”; a moderate amount of further refinement necessary before it could be regarded as being “approaching correct” (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-8",
+        "score": 1.0,
+        "description": "A start towards getting it right, but significant further refinement necessary before it could be regarded as being “approaching correct”; for example, mention of at least one useful component or function that would assist towards achieving the stipulated goal (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-9",
+        "score": 0.5,
+        "description": "A faint glimmer of hope."
+      },
+      {
+        "id": "category-10",
+        "score": 0.0,
+        "description": "Blank, or not even a glimmer of hope."
+      }
+    ],
+    "11": [
+      {
+        "id": "category-1",
+        "score": 4.0,
+        "description": "One assignment statement, clear and obviously correct, using standard Python techniques,"
+      },
+      {
+        "id": "category-2",
+        "score": 3.5,
+        "description": "An answer that, after considerable thought or checking, is correct, but is substantially more complex or convoluted than is required, and takes a long-way-round to get to the required calculation (uses a sledgehammer to open a nut), involves considerable redundancy in some way"
+      },
+      {
+        "id": "category-3",
+        "score": 3.0,
+        "description": "Correct RHS expression in a single line, but incorrect or no LHS variable in assignment"
+      },
+      {
+        "id": "category-4",
+        "score": 3.0,
+        "description": "Correct LHS variable and correct RHS expression in terms of structure/calculation, but wrong variable used in RHS"
+      },
+      {
+        "id": "category-5",
+        "score": 3.0,
+        "description": "One assignment statement, and correct logical computation structure, but a single mistake that means wrong value is (perhaps only sometimes) assigned, for example, off-by-one somewhere in counting or slicing, or reversal of True/False outcomes"
+      },
+      {
+        "id": "category-6",
+        "score": 2.5,
+        "description": "Multiple assignment statements, but correct value being computed and assigned"
+      },
+      {
+        "id": "category-7",
+        "score": 2.0,
+        "description": "General intentions are in right direction, but execution contains misconceptions that are bigger than “a single mistake”; a moderate amount of further refinement necessary before it could be regarded as being “approaching correct” (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-8",
+        "score": 1.0,
+        "description": "A start towards getting it right, but significant further refinement necessary before it could be regarded as being “approaching correct”; for example, mention of at least one useful component or function that would assist towards achieving the stipulated goal (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-9",
+        "score": 0.5,
+        "description": "A faint glimmer of hope."
+      },
+      {
+        "id": "category-10",
+        "score": 0.0,
+        "description": "Blank, or not even a glimmer of hope."
+      }
+    ],
+    "12": [
+      {
+        "id": "category-1",
+        "score": 4.0,
+        "description": "One assignment statement, clear and obviously correct, using standard Python techniques,"
+      },
+      {
+        "id": "category-2",
+        "score": 3.5,
+        "description": "An answer that, after considerable thought or checking, is correct, but is substantially more complex or convoluted than is required, and takes a long-way-round to get to the required calculation (uses a sledgehammer to open a nut), involves considerable redundancy in some way"
+      },
+      {
+        "id": "category-3",
+        "score": 3.0,
+        "description": "Correct RHS expression in a single line, but incorrect or no LHS variable in assignment"
+      },
+      {
+        "id": "category-4",
+        "score": 3.0,
+        "description": "Correct LHS variable and correct RHS expression in terms of structure/calculation, but wrong variable used in RHS"
+      },
+      {
+        "id": "category-5",
+        "score": 3.0,
+        "description": "One assignment statement, and correct logical computation structure, but a single mistake that means wrong value is (perhaps only sometimes) assigned, for example, off-by-one somewhere in counting or slicing, or reversal of True/False outcomes"
+      },
+      {
+        "id": "category-6",
+        "score": 2.5,
+        "description": "Multiple assignment statements, but correct value being computed and assigned"
+      },
+      {
+        "id": "category-7",
+        "score": 2.0,
+        "description": "General intentions are in right direction, but execution contains misconceptions that are bigger than “a single mistake”; a moderate amount of further refinement necessary before it could be regarded as being “approaching correct” (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-8",
+        "score": 1.0,
+        "description": "A start towards getting it right, but significant further refinement necessary before it could be regarded as being “approaching correct”; for example, mention of at least one useful component or function that would assist towards achieving the stipulated goal (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-9",
+        "score": 0.5,
+        "description": "A faint glimmer of hope."
+      },
+      {
+        "id": "category-10",
+        "score": 0.0,
+        "description": "Blank, or not even a glimmer of hope."
+      }
+    ],
+    "13": [
+      {
+        "id": "category-1",
+        "score": 4.0,
+        "description": "One assignment statement, clear and obviously correct, using standard Python techniques,"
+      },
+      {
+        "id": "category-2",
+        "score": 3.5,
+        "description": "An answer that, after considerable thought or checking, is correct, but is substantially more complex or convoluted than is required, and takes a long-way-round to get to the required calculation (uses a sledgehammer to open a nut), involves considerable redundancy in some way"
+      },
+      {
+        "id": "category-3",
+        "score": 3.0,
+        "description": "Correct RHS expression in a single line, but incorrect or no LHS variable in assignment"
+      },
+      {
+        "id": "category-4",
+        "score": 3.0,
+        "description": "Correct LHS variable and correct RHS expression in terms of structure/calculation, but wrong variable used in RHS"
+      },
+      {
+        "id": "category-5",
+        "score": 3.0,
+        "description": "One assignment statement, and correct logical computation structure, but a single mistake that means wrong value is (perhaps only sometimes) assigned, for example, off-by-one somewhere in counting or slicing, or reversal of True/False outcomes"
+      },
+      {
+        "id": "category-6",
+        "score": 2.5,
+        "description": "Multiple assignment statements, but correct value being computed and assigned"
+      },
+      {
+        "id": "category-7",
+        "score": 2.0,
+        "description": "General intentions are in right direction, but execution contains misconceptions that are bigger than “a single mistake”; a moderate amount of further refinement necessary before it could be regarded as being “approaching correct” (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-8",
+        "score": 1.0,
+        "description": "A start towards getting it right, but significant further refinement necessary before it could be regarded as being “approaching correct”; for example, mention of at least one useful component or function that would assist towards achieving the stipulated goal (doesn’t matter whether two statements or one)"
+      },
+      {
+        "id": "category-9",
+        "score": 0.5,
+        "description": "A faint glimmer of hope."
+      },
+      {
+        "id": "category-10",
+        "score": 0.0,
+        "description": "Blank, or not even a glimmer of hope."
+      }
+    ],
+    "18": [
+      {
+        "id": "category-1",
+        "score": 3.0,
+        "description": "Completely correct, including all syntactic details (for example, the : at the end in the lines where it is required)."
+      },
+      {
+        "id": "category-2",
+        "score": 2.5,
+        "description": "Correct intention, and nearly correct execution, but some syntactic issue (such as missing : at the end, or mismatched parentheses, or incorrect spelling of the correct variable name)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Correct intention (knowing what had to happen at that point of the code), but incorrect execution of that intention, for example, in part (a) initializing to None rather than False; or being off by one in an index; or doing the right thing with the wrong variables"
+      },
+      {
+        "id": "category-4",
+        "score": 0.5,
+        "description": "Incorrect understanding of what was to happen at that point, but at least they had a go and wrote something"
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "Blank."
+      }
+    ],
+    "19": [
+      {
+        "id": "category-1",
+        "score": 3.0,
+        "description": "Completely correct, including all syntactic details (for example, the : at the end in the lines where it is required)."
+      },
+      {
+        "id": "category-2",
+        "score": 2.5,
+        "description": "Correct intention, and nearly correct execution, but some syntactic issue (such as missing : at the end, or mismatched parentheses, or incorrect spelling of the correct variable name)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Correct intention (knowing what had to happen at that point of the code), but incorrect execution of that intention, for example, in part (a) initializing to None rather than False; or being off by one in an index; or doing the right thing with the wrong variables"
+      },
+      {
+        "id": "category-4",
+        "score": 0.5,
+        "description": "Incorrect understanding of what was to happen at that point, but at least they had a go and wrote something"
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "Blank."
+      }
+    ],
+    "20": [
+      {
+        "id": "category-1",
+        "score": 3.0,
+        "description": "Completely correct, including all syntactic details (for example, the : at the end in the lines where it is required)."
+      },
+      {
+        "id": "category-2",
+        "score": 2.5,
+        "description": "Correct intention, and nearly correct execution, but some syntactic issue (such as missing : at the end, or mismatched parentheses, or incorrect spelling of the correct variable name)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Correct intention (knowing what had to happen at that point of the code), but incorrect execution of that intention, for example, in part (a) initializing to None rather than False; or being off by one in an index; or doing the right thing with the wrong variables"
+      },
+      {
+        "id": "category-4",
+        "score": 0.5,
+        "description": "Incorrect understanding of what was to happen at that point, but at least they had a go and wrote something"
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "Blank."
+      }
+    ],
+    "21": [
+      {
+        "id": "category-1",
+        "score": 3.0,
+        "description": "Completely correct, including all syntactic details (for example, the : at the end in the lines where it is required)."
+      },
+      {
+        "id": "category-2",
+        "score": 2.5,
+        "description": "Correct intention, and nearly correct execution, but some syntactic issue (such as missing : at the end, or mismatched parentheses, or incorrect spelling of the correct variable name)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Correct intention (knowing what had to happen at that point of the code), but incorrect execution of that intention, for example, in part (a) initializing to None rather than False; or being off by one in an index; or doing the right thing with the wrong variables"
+      },
+      {
+        "id": "category-4",
+        "score": 0.5,
+        "description": "Incorrect understanding of what was to happen at that point, but at least they had a go and wrote something"
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "Blank."
+      }
+    ],
+    "22": [
+      {
+        "id": "category-1",
+        "score": 3.0,
+        "description": "Completely correct, including all syntactic details (for example, the : at the end in the lines where it is required)."
+      },
+      {
+        "id": "category-2",
+        "score": 2.5,
+        "description": "Correct intention, and nearly correct execution, but some syntactic issue (such as missing : at the end, or mismatched parentheses, or incorrect spelling of the correct variable name)"
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Correct intention (knowing what had to happen at that point of the code), but incorrect execution of that intention, for example, in part (a) initializing to None rather than False; or being off by one in an index; or doing the right thing with the wrong variables"
+      },
+      {
+        "id": "category-4",
+        "score": 0.5,
+        "description": "Incorrect understanding of what was to happen at that point, but at least they had a go and wrote something"
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "Blank."
+      }
+    ],
+    "23": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "Actual unambiguously correct."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "Actual seemingly correct but some sort of ambiguity is present, e.g. a \"typo\" or messy handwriting or partially correct"
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "24": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "Expected unambiguously correct."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "Expected seemingly correct but some sort of ambiguity is present, e.g. a \"typo\" or messy handwriting or partially correct"
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "25": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "Actual unambiguously correct."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "Actual seemingly correct but some sort of ambiguity is present, e.g. a \"typo\" or messy handwriting or partially correct"
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "26": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "Expected unambiguously correct."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "Expected seemingly correct but some sort of ambiguity is present, e.g. a \"typo\" or messy handwriting or partially correct"
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "27": [
+      {
+        "id": "category-1",
+        "score": 2.0,
+        "description": "Line and replacement line both unambiguously correct."
+      },
+      {
+        "id": "category-2",
+        "score": 1.5,
+        "description": "Line and replacement line both seemingly correct but some sort of ambiguity is present, e.g. a \"typo\" or partially correct."
+      },
+      {
+        "id": "category-3",
+        "score": 1.5,
+        "description": "Missing or incorrect number but fixed line is unambiguously correct (i.e. under the assumption that the line with the actual error is being replaced)."
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "Correct line, partially correct fix."
+      },
+      {
+        "id": "category-5",
+        "score": 0.5,
+        "description": "Correct line, incorrect fix."
+      },
+      {
+        "id": "category-6",
+        "score": 0.0,
+        "description": "Blank/all aspects incorrect."
+      }
+    ],
+    "28": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "One of the other two errors is unambiguously revealed with the given function call."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "One of the other two errors is seemingly revealed by the given function call but some minor ambiguity is present"
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "29": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "Both the actual and expected values align with the function call."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "One of the actual or expected values is correct, and the other incorrect"
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "30": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "A single line and replacement line is given that fixes the error."
+      },
+      {
+        "id": "category-2",
+        "score": 0.5,
+        "description": "The correct line is identified, and the fix is partially correct."
+      },
+      {
+        "id": "no-credit",
+        "score": 0,
+        "description": "No credit awarded after checking the rubric."
+      }
+    ],
+    "31": [
+      {
+        "id": "category-1",
+        "score": 1.0,
+        "description": "The final error (not previously specified in the student's responses) is clearly identified and unambiguously described in one sentence."
+      },
+      {
+        "id": "category-2",
+        "score": 0.75,
+        "description": "The final error (not previously specified in the student's responses) is identified but the answer has a minor ambiguity or is unnecessarily long winded."
+      },
+      {
+        "id": "category-3",
+        "score": 0.5,
+        "description": "The final error (not previously specified in the student's responses) is seemingly identified but the answer is somewhat ambiguous."
+      },
+      {
+        "id": "category-4",
+        "score": 0.25,
+        "description": "A number of ambiguities are present, and parts of the response may be missing, but the answer is suggestive of identification of one of the remaining errors."
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "Blank/all aspects incorrect"
+      }
+    ],
+    "32": [
+      {
+        "id": "category-1",
+        "score": 6.0,
+        "description": "Fully correct function with a nested loop over board. Counts number of matching characters."
+      },
+      {
+        "id": "category-2",
+        "score": 5.0,
+        "description": "Correct logic but minor issues, such as unnecessary checks or minor syntax errors that don’t impact functionality"
+      },
+      {
+        "id": "category-3",
+        "score": 4.0,
+        "description": "Mostly correct logic but contains unnecessary complexity or redundant checks. OR, one “silly” logic error such as:"
+      },
+      {
+        "id": "category-4",
+        "score": 3.0,
+        "description": "Partial correctness. The function updates some characters' defeated status but misses edge cases or contains significant inefficiencies. OR, one or two “big” logic errors"
+      },
+      {
+        "id": "category-5",
+        "score": 2.0,
+        "description": "General attempt with relevant syntax and partial logic, but contains substantial errors in the logic. OR, many logic errors or contain “structural issue”"
+      },
+      {
+        "id": "category-6",
+        "score": 1.0,
+        "description": "Minimal attempt that shows some understanding, such as defining the function or initializing variables but lacks functional code. OR, no loop involved or hard-coded solution."
+      },
+      {
+        "id": "category-7",
+        "score": 0.0,
+        "description": "No attempt or completely incorrect code."
+      }
+    ],
+    "33": [
+      {
+        "id": "category-1",
+        "score": 8.0,
+        "description": "Fully correct function that counts the occurrences of each character and returns the most frequent. The alphabetically first is favoured in ties."
+      },
+      {
+        "id": "category-2",
+        "score": 7.0,
+        "description": "simple syntax errors, ambiguous handwriting or unnecessary calculations"
+      },
+      {
+        "id": "category-3",
+        "score": 6.0,
+        "description": "one logic error, such as:  Not handling ties correctly  Sorting in the wrong direction"
+      },
+      {
+        "id": "category-4",
+        "score": 5.0,
+        "description": "2 or 3 logic errors, or multiple major syntax errors"
+      },
+      {
+        "id": "category-5",
+        "score": 4.0,
+        "description": "structural problem or many major logic errors"
+      },
+      {
+        "id": "category-6",
+        "score": 2.0,
+        "description": "a faint glimmer of hope"
+      },
+      {
+        "id": "category-7",
+        "score": 0.0,
+        "description": "no attempt or completely incorrect/irrelavant code"
+      }
+    ],
+    "34": [
+      {
+        "id": "category-1",
+        "score": 8.0,
+        "description": "Fully correct function that calculates the points for each possible word, and sorts words by highest to lowest scores."
+      },
+      {
+        "id": "category-2",
+        "score": 7.0,
+        "description": "simple syntax errors, ambiguous handwriting or unnecessary calculations"
+      },
+      {
+        "id": "category-3",
+        "score": 6.0,
+        "description": "one logic error, such as:  Sorting in wrong direction  Indexing off the board  Calculating the scores per word wrong"
+      },
+      {
+        "id": "category-4",
+        "score": 5.0,
+        "description": "2 or 3 logic errors, or multiple major syntax errors"
+      },
+      {
+        "id": "category-5",
+        "score": 4.0,
+        "description": "structural problem or many major logic errors"
+      },
+      {
+        "id": "category-6",
+        "score": 2.0,
+        "description": "a faint glimmer of hope"
+      },
+      {
+        "id": "category-7",
+        "score": 0.0,
+        "description": "no attempt or completely incorrect/irrelevant code Part 7 (11 marks) – Response to short answer questions Write a response to each of the short answer questions below."
+      }
+    ],
+    "35": [
+      {
+        "id": "category-1",
+        "score": 4.0,
+        "description": "Complete and accurate answer that correctly identifies the issues with this approach (historic bias present in the training data could be replicated into the future) and provides a relevant example illustrating the difference."
+      },
+      {
+        "id": "category-2",
+        "score": 3.0,
+        "description": "Mostly correct answer with an explanation of potential issues, but with minor omissions in the example or explanation."
+      },
+      {
+        "id": "category-3",
+        "score": 2.0,
+        "description": "Partially correct answer, with an attempt to explain potential issues but missing key details or providing an unclear example."
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "Minimal understanding, providing a vague or inaccurate description of potential issues without an example or meaningful comparison."
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "No answer or completely incorrect response."
+      }
+    ],
+    "36": [
+      {
+        "id": "category-1",
+        "score": 4.0,
+        "description": "Correct unambiguous answer."
+      },
+      {
+        "id": "category-2",
+        "score": 3.0,
+        "description": "Same digits in different order"
+      },
+      {
+        "id": "category-3",
+        "score": 2.0,
+        "description": "One missing, incorrect, or extra digit"
+      },
+      {
+        "id": "category-4",
+        "score": 1.0,
+        "description": "Two missing, incorrect or extra digits"
+      },
+      {
+        "id": "category-5",
+        "score": 0.0,
+        "description": "No answer or completely incorrect response."
+      }
+    ],
+    "37": [
+      {
+        "id": "criteria-3",
+        "score": 3,
+        "description": "3 of the 3 criteria satisfied: suitable example, randomness, and repeated simulation."
+      },
+      {
+        "id": "criteria-2",
+        "score": 2,
+        "description": "2 of the 3 criteria satisfied: suitable example, randomness, and repeated simulation."
+      },
+      {
+        "id": "criteria-1",
+        "score": 1,
+        "description": "1 of the 3 criteria satisfied: suitable example, randomness, and repeated simulation."
+      },
+      {
+        "id": "criteria-0",
+        "score": 0,
+        "description": "0 of the 3 criteria satisfied: suitable example, randomness, and repeated simulation."
+      }
+    ]
+  },
+  "autoMarkedQuestionNumbers": [
+    14,
+    15,
+    16,
+    17
+  ]
+}
