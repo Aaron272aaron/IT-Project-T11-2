@@ -1,10 +1,10 @@
-# AutoMarktic React 前端
+# AutoMarktic React Frontend
 
-根据 Figma 的 `Prototype Pages (Copy)`（文件 `RkRQ0I0xUoWPdVjxhvnvf4`）实现。技术栈是 **React + TypeScript + Vite + 普通 CSS**。原项目的 `marking/`、`Code Repairing Model/` 保持独立。
+Implemented from the Figma `Prototype Pages (Copy)` design (file `RkRQ0I0xUoWPdVjxhvnvf4`). The stack is **React + TypeScript + Vite + plain CSS**. The existing `marking/` and `Code Repairing Model/` modules remain separate.
 
-## 运行
+## Running the app
 
-需要 Node.js 20.19+ 或 22.12+（本机已用 Node 24 验证）。
+Requires Node.js 22.13+ or 24+ (PDF.js requirement; verified locally with Node 24).
 
 ```bash
 cd /Users/oubunsen/Desktop/IT-Project-T11-2/frontend
@@ -12,57 +12,89 @@ npm ci
 npm run dev
 ```
 
-打开终端显示的本地地址，默认 `http://127.0.0.1:5173`。登录页可以点击 **Explore demo workspace**，或使用用户名 `demo`、密码 `demo1234`。
+Open the local URL shown in the terminal, which defaults to `http://127.0.0.1:5173`. On the login page, click **Explore demo workspace**, or use the username `demo` and password `demo1234`.
 
 ```bash
-npm run test        # CSV 和评分规则单元测试
-npm run test:e2e    # Chrome 中的实际页面/流程测试，需要安装 Google Chrome
-npm run build      # TypeScript 检查及生产构建，输出 dist/
-npm run preview    # 预览已构建的版本
-npm run format     # 格式化代码
+npm run test        # Unit tests for CSV validation and marking rules
+npm run test:e2e    # Browser page and workflow tests; requires Google Chrome
+npm run build      # TypeScript checks and production build; outputs to dist/
+npm run preview    # Preview the production build
+npm run format     # Format the code
 ```
 
-`test:e2e` 会自动启动本地开发服务器；已经运行的同端口服务器也可以复用。浏览器测试配置见 `playwright.config.ts`。
+`test:e2e` automatically starts a separate Python service (8001) and frontend development server (5174). It does not reuse manually started services. See `playwright.config.ts` for the browser test configuration.
 
-## 已实现的页面与设计对应
+## Python CSV service
 
-URL 使用 hash 路由，例如 `http://127.0.0.1:5173/#/members`。首次访问需先进入 demo。
+In another terminal, run `python3 backend/server.py` from the repository root, then start the frontend as described above. From the demo Subject dashboard, click **Create exam** or open an existing exam. Within the exam, click **Upload answer CSV**, select a file, and click **Validate and preview**. The page sends the file to the local Python service, which calls `csv import.py` and returns the answers for display. See the [backend documentation](../backend/README.md) for full startup instructions, a walkthrough, and troubleshooting.
 
-| 页面/状态 | 路由 | Figma node |
+The old Python connection test button and its dedicated code have been removed. The upload workflow itself reports connection failures. The backend `/api/health` endpoint remains only as a readiness check when automated tests start the service.
+
+## Implemented pages and design mapping
+
+URLs use hash routing, for example `http://127.0.0.1:5173/#/members`. Enter the demo before visiting these pages for the first time.
+
+| Page or state | Route | Figma node |
 | --- | --- | --- |
-| 登录正常、错误状态 | `#/login`、`#/login/error` | `2205:5`、`2205:44` |
-| 旧 Ocean 登录配色入口 | `#/login/ocean` | `1:2`（复用登录表单，保留配色变体） |
+| Login: normal and error states | `#/login`, `#/login/error` | `2205:5`, `2205:44` |
+| Legacy Ocean login color variant | `#/login/ocean` | `1:2` (reuses the login form with an alternative color scheme) |
 | Subject dashboard | `#/dashboard` | `4259:143` |
-| 创建工作区 | `#/create-workspace` | `4267:192` |
-| 成员列表、管理成员弹窗 | `#/members` | `4259:145`、`4261:197` |
-| 工作区设置 | `#/workspace-settings` | `4259:146` |
-| 个人设置 | `#/user-settings` | `6218:244` |
-| 考试总览 | `#/exam/final` | `4249:2` |
-| 导入：上传、校验错误、待导入、进度、完成 | `#/import` 内的真实流程 | `4254:528`、`4254:602`、`4254:677`、`4254:747`、`4254:808` |
-| 短答案分组总览 | `#/question/1` | `4275:301` |
-| 短答案评分 | `#/question/1/mark/demo001` | `4275:492` |
-| 编程答案总览 | `#/question/5` | `4275:772` |
-| 函数答案与 AI 对照评分 | `#/question/5/mark/demo001` | `4276:262` |
-| 可执行代码评分 | `#/question/3/mark/demo001` | `4276:361` |
+| Create workspace | `#/create-workspace` | `4267:192` |
+| Member list and member management modal | `#/members` | `4259:145`, `4261:197` |
+| Workspace settings | `#/workspace-settings` | `4259:146` |
+| User settings | `#/user-settings` | `6218:244` |
+| Exam overview | `#/exam/final` | `4249:2` |
+| Import: upload, validation errors, ready to import, progress, and completion | Interactive workflow within `#/exam/final/import` | `4254:528`, `4254:602`, `4254:677`, `4254:747`, `4254:808` |
+| Short-answer group overview | `#/question/1` | `4275:301` |
+| Short-answer marking | `#/question/1/mark/demo001` | `6256:336` (original `4275:492` retained) |
+| Programming answer overview | `#/question/5` | `4275:772` |
+| Function answer marking with AI comparison | `#/question/5/mark/demo001` | `6256:484` (original `4276:262` retained) |
+| Coordinator score review | `#/exam/final/review` | `6257:393` (confirmation modal `6258:427`, completed state `6262:417`) |
+| Executable-code marking | `#/question/3/mark/demo001` | `6256:644` (original `4276:361` retained) |
 
-另有 `#/exams` 考试列表、`#/exam/midterm` 已归档预览和 `#/exam/practice` 草稿预览。完整可交互演示集中在 **Final exam**。题目 2、4、6 分别复用对应题型页面。原 Figma 中只有空容器的成员管理区域补成了可用弹窗。
+Additional routes include the exam list at `#/exams`, an archived preview at `#/exam/midterm`, and a draft preview at `#/exam/practice`. The complete interactive demo is centered on **Final exam**. Questions 2, 4, and 6 reuse the pages for their respective question types. The member management area, which was an empty container in the original Figma design, has been implemented as a working modal.
 
-侧栏、按钮、表单、表格和卡片为共用组件；手机屏幕使用可展开侧栏，宽表格在容器内横向滚动。进度数值由演示答案实际计算，因此不强行复制 Figma 中互不一致的静态计数。旧 Ocean 页面是共享登录表单的配色变体，不是旧稿的逐像素复刻。
+The sidebar, buttons, forms, tables, and cards are shared components. Mobile screens use a collapsible sidebar, and wide tables scroll horizontally within their containers. Progress figures are calculated from the demo answers rather than copying inconsistent static counts from Figma. The legacy Ocean page is a color variant of the shared login form, not a pixel-for-pixel recreation of the old design.
 
-## 可以实际操作什么
+## Available interactions
 
-- 创建/切换工作区；新工作区的答案与其他工作区分开。
-- 修改工作区和个人资料；刷新当前标签页后仍保留会话数据。
-- 搜索、添加、调整角色、移除演示成员；不会发送真实邮件。
-- 按学生 ID、评分状态、答案组过滤；分页；查看原答案。
-- CSV 拖入/选择、校验、下载问题清单、导入；提供正常和错误示例入口。
-- 填写分数/评语，确认保存，确认并跳到下一条未评分答案。
-- 对相同短答案整组评分：先显示影响人数及覆盖已有分数的提示，跳过锁定的演示答案。
-- 导出已确认分数 CSV；文本字段做公式注入转义。
+- Create and switch workspaces; answers in a new workspace are separate from those in other workspaces.
+- Edit workspace and user profiles; session data persists when the current tab is refreshed.
+- Search, add, change roles, and remove demo members; no real emails are sent.
+- Filter by student ID, marking status, or answer group; navigate pages and inspect original answers.
+- Drag and drop or select a CSV, validate it, download an issue list, and import it; valid and invalid examples are provided.
+- Choose one rubric category for the whole answer, add a comment, and confirm the mark or move to the next unmarked answer.
+- As a Subject coordinator, open **Review rubric scores** from the exam overview, adjust category scores by question, preview changes to student totals, enter a reason, and confirm recalculation. Change records are saved in the current session.
+- Mark an entire group of identical short answers after reviewing the affected count and the warning about replacing existing marks. Locked demo answers are skipped.
+- Export confirmed marks as CSV, including the rubric category, score at category selection, and current score. Text fields are escaped to prevent formula injection.
 
-## 导入格式
+## Category marking and score review
 
-本版读取“一行一条答案”的标准化 CSV；**不是任意 Canvas 原始导出都可以直接导入**。请先将 Canvas 导出转换成以下列名，页面可下载模板：
+Each question currently has three categories: Fully correct, Partially correct, and Incorrect. Their default scores are full marks, half marks, and zero. Each answer receives one category. The **Assessment guidance** on the left supports that decision; its items are not scored separately and added together.
+
+For example, changing Q5's Partially correct score from 7.5 to 9 sets all already marked Q5 answers in that category within the workspace to 9. Other questions, other categories, and unmarked answers remain unchanged. Future selections of that category also receive 9. Before applying the change, the coordinator can review affected counts and student totals. Confirmation records the actor, reason, before-and-after values, and affected students. Scores must be between zero and the question maximum, with at most two decimal places. If any affected answer is locked, the entire adjustment is blocked.
+
+Numeric marks from older sessions that have no category are retained and clearly flagged; the system does not infer categories from old scores. Totals for students whose marking is incomplete are labeled **Provisional** and include confirmed marks only. Category settings, answers, and adjustment records are isolated by workspace.
+
+## Creating exams, rubrics, and answer files
+
+Click **Create exam** from the Subject dashboard or Exams page to open `#/create-exam`. An exam name is required. The rubric is an optional Word or PDF file (`.docx` or `.pdf`, up to 2 MB); an exam can be created without one. Rubric and criteria refer to the same document here, not a CSV file.
+
+After creation, the app opens `#/exam/<id>`. On the exam page, a rubric can be added or a replacement selected. It is saved only when **Save rubric / Replace rubric** is clicked. An invalid file or insufficient browser storage leaves the previous file intact. A saved rubric can be downloaded unchanged. It serves as a reference document and does not automatically generate categories or change confirmed marks.
+
+Answer uploads belong to a specific exam: **Upload answer CSV** → `#/exam/<id>/answers/upload` → select a file → **Validate and preview** → **Save answers to exam**. If the exam already has answers, a confirmation dialog appears before replacement. After saving, return to the exam and click **View uploaded answers** to inspect the original text. Files are isolated by exam and workspace.
+
+Answer files are read and validated by Python's `csv import.py`. It supports Canvas **Quiz Student Analysis Report** files, with one student per row and paired question/score columns. Files must use UTF-8 and contain no more than 10,000 students or 10 MB. The supplied sample contains 4 students, 37 questions, and 7 instructional sections: 148 gradable answers, or 176 entries including instructional sections.
+
+Exam details, original rubric files, and confirmed answer results are stored in the current tab's `sessionStorage` (`automarktic-exams-v1`). They can be restored after a refresh, but retention after closing the tab is not guaranteed. This is not database or server storage. Multiple files may reach the browser's total storage limit. Save failures are reported explicitly, and the last successfully saved data is retained. Unsaved previews are discarded when navigating away or refreshing.
+
+The legacy `#/import/canvas` URL returns to the exam list to prevent uploads without an associated exam. The standardized CSV import for the original six-question demo is at `#/exam/final/import`; old `#/import` bookmarks redirect there. Demo marking records remain separate from newly uploaded raw Canvas answers.
+
+Code responsibilities: `src/pages/ExamSetup.tsx` creates exams and manages files; `src/components/RubricPicker.tsx` reads Word/PDF files; `src/exams.ts` manages exam data; `src/state.tsx` stores data for the current tab; `src/pages/CanvasUpload.tsx` uploads, previews, and saves answers; and `src/api.ts` calls Python's `POST /api/canvas/preview`. The original CSV module and test materials have not been rewritten.
+
+## Import format
+
+The standardized import reads CSV files with one answer per row. **It cannot directly import arbitrary raw Canvas exports.** First convert the Canvas export to the following column names. A template is available for download on the page:
 
 ```csv
 student_id,question_id,answer
@@ -71,42 +103,96 @@ student241,5,"def clean_text(s):
     return s.strip().lower()"
 ```
 
-- `question_id` 为 1–6；每文件最多 10,000 行、10 MB。
-- 支持引号、逗号和多行代码；保留答案原始空格、缩进与换行。
-- 缺列、缺学生 ID、空答案、非法题号、重复学生/题目记录会阻止导入。
-- 同一考试中已经存在的学生/题目不会被导入覆盖。
-- 短答案仅以完整文本完全相同分组，不擅自忽略可能有意义的空格。
+- `question_id` must be 1–6; each file may contain up to 10,000 rows and 10 MB.
+- Quotes, commas, and multiline code are supported. Original spaces, indentation, and line breaks are preserved.
+- Missing columns, missing student IDs, empty answers, invalid question IDs, or duplicate student/question records block the import.
+- Existing student/question records in the same exam are not overwritten by an import.
+- Short answers are grouped only when their full text matches exactly; potentially meaningful whitespace is not ignored.
 
-## 我怎样组织代码
+## Code organization
 
-| 文件 | 职责 |
+| File | Responsibility |
 | --- | --- |
-| `src/main.tsx` | 入口及路由，决定当前显示哪一个页面 |
-| `src/components/Layout.tsx` | 统一侧栏、工作区切换、账户入口、手机导航 |
-| `src/components/UI.tsx` | 共用卡片、按钮、表单、对话框、进度条 |
-| `src/pages/Workspace.tsx` | 工作区创建/设置、成员管理、个人设置 |
-| `src/pages/Exams.tsx` | Dashboard、考试列表和考试总览 |
-| `src/pages/Import.tsx` | 五阶段导入流程 |
-| `src/pages/Questions.tsx` | 分组/编程答案总览和三类评分页面 |
-| `src/pages/Login.tsx` | 演示登录及错误/帮助状态 |
-| `src/domain.ts` | 数据类型、示例题目、CSV 校验、分组、评分约束 |
-| `src/state.tsx` | React 共享状态及 sessionStorage 保存 |
-| `src/styles.css` | Figma 颜色、尺寸、字体、布局和响应式样式 |
-| `tests/`、`e2e/` | 数据规则测试及真实浏览器流程验证 |
+| `src/main.tsx` | Entry point and routing; selects the current page |
+| `src/components/Layout.tsx` | Shared sidebar, workspace switching, account access, and mobile navigation |
+| `src/components/UI.tsx` | Shared cards, buttons, forms, dialogs, and progress bars |
+| `src/pages/Workspace.tsx` | Workspace creation/settings, member management, and user settings |
+| `src/pages/Exams.tsx` | Dashboard, exam list, and exam overview |
+| `src/pages/Import.tsx` | Five-stage import workflow |
+| `src/pages/Questions.tsx` | Grouped/programming answer overviews and the three marking page types |
+| `src/pages/Review.tsx` | Coordinator category-score adjustments by question, student total previews, and history |
+| `src/rubric.ts` | Category defaults, category marking, bulk adjustment validation and audit records, and total calculations |
+| `src/pages/Login.tsx` | Demo login and error/help states |
+| `src/domain.ts` | Data types, sample questions, CSV validation, grouping, and marking constraints |
+| `src/state.tsx` | Shared React state and sessionStorage persistence |
+| `src/styles.css` | Figma colors, sizing, typography, layouts, and responsive styles |
+| `tests/`, `e2e/` | Data-rule tests and browser workflow verification |
 
-举例：点击“Confirm final mark” → 页面调用 `saveMarks` → 校验分数范围及锁定状态 → 只更新所选答案的分数和评语 → React 重新计算总览进度。原答案字符串不会改变。
+Example: select **Partially correct** → click **Confirm category & mark** → `saveCategoryMark` retrieves the score from the question's current category settings → checks the lock state → saves the category, score, and comment → React updates the overview. When a coordinator submits an adjustment, `applyCategoryScores` updates the category settings, matching answer scores, and change records together. The original answer string remains unchanged.
 
-## 当前边界与后续接入
+## Current limitations and future integration
 
-这是**可以运行和交互的前端原型**，还不是完整上线系统。
+This is a **runnable, interactive frontend prototype**, not a complete production system.
 
-- 登录账号是演示凭据，没有真实身份认证。前端的角色、锁定标签不是安全边界。
-- 数据保存在当前标签页的 `sessionStorage`，不是数据库。刷新可以恢复；关闭标签页/清除浏览器数据后不保证保留。测试时使用示例数据，正式数据需先接持久化服务。
-- Python 测试结果和 AI 修正是明确标注的固定演示证据。没有在浏览器执行学生代码，也没有调用第三方 AI。新导入的代码显示“未测试”，不会生成虚假的通过结果。
-- “Use recommended mark”仅填写输入框，必须再次确认才保存。AI 建议不会替换原答案。
-- 注册、找回密码、真实邀请、多用户协作锁、模型生成和永久存储需要后端。界面会解释未接入状态，不会假装这些操作成功。
-- 现有 Python 模块没有 HTTP API。下一步应增加 **React → 后端 API → 数据库/隔离 Python runner/本地模型**；浏览器不直接连接数据库，也不直接运行 `run.sh`。
+- Login uses demo credentials without real authentication. Frontend roles and lock labels are not security boundaries.
+- Demo workspace and marking data are stored in the current tab's `sessionStorage`, not a database. They can be restored after a refresh, but retention after closing the tab or clearing browser data is not guaranteed. Use sample data for testing; real data requires a persistent storage service first.
+- Python test results and AI corrections are fixed examples explicitly labeled as demo evidence. Student code is not executed in the browser, and no third-party AI is called. Newly imported code is shown as untested rather than receiving fabricated passing results.
+- Test results only inform category selection; a human must choose and confirm the category. AI suggestions do not replace original answers or automatically assign marks.
+- Registration, password recovery, real invitations, multi-user marking locks, model generation, and permanent storage require backend support. The interface explains unavailable integrations rather than pretending these actions succeeded.
+- CSV uploads are connected to Python through `POST /api/canvas/preview`, using `csv import.py` for reading and validation. Unsaved previews are cleared on refresh; answers saved to an exam can be restored after refreshing the current tab. Database persistence, the isolated Python runner, and the local model are not yet integrated. The browser does not connect directly to a database or run `run.sh`.
 
-建议后端提供工作区/成员/考试/答案 CRUD、CSV 导入任务、评分确认、测试任务、建议任务、锁与审计接口。后端必须再次验证权限、分数范围、版本冲突及原答案不可变；不要把前端校验当成安全保障。具体单机或共享服务器部署方案留待确定。
+Recommended backend interfaces include workspace/member/exam/answer CRUD, CSV import jobs, marking confirmation, test jobs, suggestion jobs, locks, and audit records, as well as rubric category management by exam/question and atomic bulk score adjustments. The backend must independently validate permissions, score ranges, version conflicts, and original-answer immutability. Frontend validation must not be treated as a security guarantee. The choice between a single-machine deployment and a shared server remains to be determined.
 
-Figma 的 logo 已下载为 `public/logo-code.svg`，字体随 npm 包本地提供；正常使用界面不依赖临时 Figma 资源地址。
+The Figma logo is stored locally at `public/logo-code.svg`, and fonts are provided locally through an npm package. Normal use of the interface does not depend on temporary Figma asset URLs.
+
+## Rubric page mapping and Tutor preview
+
+1. Open an exam as **Coordinator**. Upload an optional PDF or DOCX rubric and save it. PDFs are parsed locally by PDF.js; DOCX files are converted by the local Python API using LibreOffice. The original download is unchanged.
+2. In **Rubric pages by question**, use **Preview rubric** to check the document. Enter a start and end page for each question, then click **Save page assignments**. These are the preview's physical pages starting at 1, not printed page labels. Word layout can differ between renderers, so verify the generated PDF before mapping.
+3. Final exam lists its six demo questions separately from any uploaded CSV questions. New exams derive their question list from the saved CSV, excluding introduction sections. Canvas question IDs are never matched to demo IDs automatically.
+4. Switch the sidebar's **Demo perspective** to **Tutor**. Open **Final exam → a question → Mark** and click **View rubric**. It opens the assigned start page and shows the assigned range. Drag the title to move the floating window and the lower-right corner to resize it. Page navigation, keyboard arrow controls on the move/resize handles, Escape to close, and original-file download are available. Marking remains usable underneath.
+5. Saved real Canvas answers also have **View rubric**; selecting another question uses its own mapping. Their existing answer viewer remains read-only. This change does not invent marking categories for an arbitrary uploaded exam.
+
+Unmapped questions open page 1 with an explicit message. Replacing a saved rubric clears all page assignments. Replacing the CSV clears its question assignments while preserving demo mappings. Invalid uploads, cancelled drafts and failed saves preserve the prior saved document. Existing attachments without a preview need to be uploaded again. PDF passwords are not supported.
+
+The role switch is a local UI preview, not authentication or server-side authorization. Tutor preview hides coordinator controls and blocks direct navigation to management routes, while leaving the demo marking workflow available. Real accounts, shared documents, permissions, multi-user locks and database persistence are not implemented.
+
+DOCX conversion needs the Python backend and LibreOffice. The backend looks for `SOFFICE_BIN`, `soffice` on PATH, the standard macOS LibreOffice location, and the available Codex bundled runtime on this machine. To use another installation:
+
+```bash
+SOFFICE_BIN="/path/to/soffice" python3 backend/server.py
+```
+
+If conversion is unavailable, the upload shows an actionable error; exporting Word to PDF and uploading that PDF works without conversion. Temporary conversion files are removed, and documents are not sent to an external viewer. Fonts and PDF decoders are copied into `public/pdfjs/` automatically before `npm run dev` and `npm run build`; this generated directory is ignored by git. Production deployment must separately route `/api` to Python.
+
+Additional code: `src/rubricDocument.ts` validates documents and calls conversion; `src/rubricPages.ts` defines mapping rules; `src/components/RubricPageMapping.tsx` edits assignments; `src/components/RubricWindow.tsx` renders the floating viewer; `backend/rubric_preview.py` converts DOCX files. Tests are in `tests/rubricPages.test.ts`, `e2e/rubric-pages.spec.ts`, and `backend/test_rubric_api.py`.
+
+## Default Sample exam (supplied local files)
+
+The default COMP10001 workspace now replaces the old six-question Final exam with **Sample exam** at `#/exam/final`. It has 4 students, 37 questions and 100 possible marks, using the original Canvas report and Word marking guide. Other exams and workspaces are retained. The old default exam record is upgraded once per browser tab; subsequent marks, rubric changes and page assignments are not reset on reload.
+
+The local fixture is prepared with:
+
+```bash
+python3 backend/build_sample_exam.py
+python3 backend/server.py
+```
+
+This has already been run on this machine. The builder validates the CSV with the existing Python module and converts Word locally. It writes `backend/demo/sample-exam.json`, which is deliberately ignored by git because it contains local student data. `GET /api/demo/sample-exam` supplies it to the default workspace. The original CSV and DOCX are unchanged. No student files are bundled into the static production build or sent to an external viewer.
+
+`backend/sample_rubric.json` contains the categories transcribed from the provided guide and its source hash. The page mapping is manually checked against the 24-page preview: Q1–9 share pages 7–8; Q10–13 share 9–10; Q14–17 use 10; Q18–22 use 11; later questions use their corresponding pages through 22. Pages 23–24 contain additional material not represented by the CSV questions. If the source Word file or question IDs change, the builder stops for review rather than reusing these mappings blindly.
+
+For a Tutor demo: **Demo perspective → Tutor → Sample exam → Open question → Mark [student] → View rubric → Choose a rubric category → Confirm category & mark**. Original student text and CSV source scores are preserved; new human decisions are separate. Q14–17 are labelled automatic in the supplied guide and are read-only source-score review, excluded from human marking progress. No automatic marker is executed. Categories select a whole-answer score; Q37 offers totals for the document's three one-mark criteria. Sections that omit an explicit zero include a clearly labelled no-credit option. Replacing the rubric clears prepared categories to avoid applying them to a different guide; it does not erase previous confirmed marks.
+
+**Rubric pages by question** is collapsed initially. Expand it to inspect/edit mappings. The internal question list scrolls rather than pushing the rest of the page down. **Assign pages sequentially** takes a first/last question, starting page and pages per question (default 1). It replaces only that draft range; review it and click **Save page assignments** to persist. An out-of-range sequence is rejected in full. Shared-page mappings remain editable manually. The supplied sample already has the correct shared-page assignments; sequential assignment is a convenience, not automatic interpretation of the guide.
+
+Validation commands:
+
+```bash
+npm run test
+npm run test:e2e:sample  # New default sample, separate backend and Vite ports
+npm run test:e2e         # Existing workflow regressions using isolated legacy fixtures
+npm run build
+```
+
+The regression Vite server sets `VITE_LOAD_SAMPLE_EXAM=false` to keep historical six-question fixtures independent. Normal development and the sample test configuration use the new default sample. Storage remains per-tab sessionStorage; real shared accounts and database persistence are still future work.

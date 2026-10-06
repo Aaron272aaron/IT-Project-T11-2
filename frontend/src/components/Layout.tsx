@@ -23,7 +23,7 @@ export function Layout({
   children: ReactNode;
   route: string;
 }) {
-  const { data, setData, workspace, storageError } = useApp();
+  const { data, setData, workspace, storageError, isCoordinator } = useApp();
   const [open, setOpen] = useState(false);
   return (
     <div className="app-layout">
@@ -67,24 +67,47 @@ export function Layout({
             </select>
           )}
         </div>
+        <label className="demo-role">
+          <span>Demo perspective</span>
+          <select
+            aria-label="Demo perspective"
+            value={data.demoRole ?? "Coordinator"}
+            onChange={(e) => {
+              setData((d) => ({
+                ...d,
+                demoRole: e.target.value as "Coordinator" | "Tutor",
+              }));
+            }}
+          >
+            <option>Coordinator</option>
+            <option>Tutor</option>
+          </select>
+          <small>Preview only · Not account permissions</small>
+        </label>
         <div className="nav-label">WORKSPACE</div>
         <nav aria-label="Workspace navigation">
-          {links.map(([path, label]) => (
-            <a
-              key={path}
-              href={`#${path}`}
-              onClick={() => setOpen(false)}
-              aria-current={
-                route === path ||
-                (path === "/exams" &&
-                  /^\/exam|^\/question|^\/import/.test(route))
-                  ? "page"
-                  : undefined
-              }
-            >
-              {label}
-            </a>
-          ))}
+          {links
+            .filter(
+              ([path]) =>
+                isCoordinator ||
+                !["/members", "/workspace-settings"].includes(path),
+            )
+            .map(([path, label]) => (
+              <a
+                key={path}
+                href={`#${path}`}
+                onClick={() => setOpen(false)}
+                aria-current={
+                  route === path ||
+                  (path === "/exams" &&
+                    /^\/exam|^\/question|^\/import|^\/create-exam$/.test(route))
+                    ? "page"
+                    : undefined
+                }
+              >
+                {label}
+              </a>
+            ))}
         </nav>
         <div className="sidebar-bottom">
           <a
@@ -93,7 +116,9 @@ export function Layout({
             onClick={() => setOpen(false)}
           >
             <b>{data.profile.name}</b>
-            <span>Subject coordinator</span>
+            <span>
+              {isCoordinator ? "Subject coordinator" : "Tutor (demo)"}
+            </span>
             <small>
               {workspace.period} · {workspace.year}
             </small>
@@ -121,9 +146,8 @@ export function Layout({
         {children}
         <footer className="page-footer">
           <span>Prototype · Demo workspace</span>
-          <span>
-            Session data stays in this browser · Backend not connected
-          </span>
+          {/* CSV previews use Python; demo marking data still uses sessionStorage. */}
+          <span>Marking data stays in this browser session</span>
         </footer>
       </main>
     </div>

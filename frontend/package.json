@@ -9,11 +9,15 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run tests",
     "test:e2e": "playwright test",
-    "format": "prettier --write src tests e2e *.ts *.json index.html"
+    "format": "prettier --write src tests e2e *.ts *.json index.html",
+    "predev": "node scripts/prepare-pdf-assets.mjs",
+    "prebuild": "node scripts/prepare-pdf-assets.mjs",
+    "test:e2e:sample": "playwright test --config playwright.sample.config.ts"
   },
   "dependencies": {
     "@fontsource/source-sans-3": "^5.2.8",
     "papaparse": "^5.5.3",
+    "pdfjs-dist": "^6.4.299",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

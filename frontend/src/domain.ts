@@ -9,6 +9,22 @@ export type Workspace = {
   period: string;
   configuration: string;
   members: Member[];
+  rubricScores?: Record<number, Record<string, number>>;
+  moderationHistory?: ModerationRecord[];
+};
+export type ModerationRecord = {
+  id: string;
+  at: string;
+  actor: string;
+  question: number;
+  reason: string;
+  changes: {
+    categoryId: string;
+    label: string;
+    before: number;
+    after: number;
+  }[];
+  affected: { student: string; before: number; after: number }[];
 };
 export type Profile = {
   name: string;
@@ -23,6 +39,8 @@ export type Answer = {
   original: string;
   group: string;
   mark?: number;
+  categoryId?: string;
+  markAtSelection?: number;
   comment?: string;
   locked?: string;
   test: "Passed" | "Failed" | "Not run";
@@ -157,6 +175,22 @@ export function seedAnswers(): Answer[] {
         (q.id === 3 && i >= 48) ||
         (q.id === 4 && i >= 96) ||
         (q.id === 5 && i >= 192);
+      const categoryId =
+        q.kind === "short"
+          ? group === "A" || (group === "C" && q.id === 1)
+            ? "correct"
+            : group === "B" || (group === "D" && q.id === 2)
+              ? "partial"
+              : "incorrect"
+          : q.kind === "function" && i % 4 === 0
+            ? "partial"
+            : "correct";
+      const categoryMark =
+        categoryId === "correct"
+          ? q.max
+          : categoryId === "partial"
+            ? q.max / 2
+            : 0;
       return {
         id: `demo${String(i + 1).padStart(3, "0")}`,
         question: q.id,
@@ -183,7 +217,9 @@ export function seedAnswers(): Answer[] {
             : q.kind === "function" && i % 4 !== 0
               ? originalCode(q.id).replace(/\)\n/, "):\n")
               : originalCode(q.id),
-        mark: marked ? q.max : undefined,
+        mark: marked ? categoryMark : undefined,
+        categoryId: marked ? categoryId : undefined,
+        markAtSelection: marked ? categoryMark : undefined,
         comment: marked ? "Reviewed by a human marker." : undefined,
         locked: i === 2 ? "Jamie Lee" : undefined,
         test:

@@ -15,13 +15,16 @@ test("every designed route renders and desktop layout stays within viewport", as
     "/dashboard",
     "/exams",
     "/create-workspace",
+    "/create-exam",
+    "/exam/final/answers/upload",
     "/members",
     "/workspace-settings",
     "/user-settings",
     "/exam/final",
+    "/exam/final/review",
     "/exam/midterm",
     "/exam/practice",
-    "/import",
+    "/exam/final/import",
     "/question/1",
     "/question/2",
     "/question/3",
@@ -70,7 +73,7 @@ test("workspace creation isolates responses and settings persist on refresh", as
   await expect(page.getByLabel("Display name *")).toHaveValue("Alex Updated");
 });
 test("CSV error, review, progress and completion flow", async ({ page }) => {
-  await page.goto("/#/import");
+  await page.goto("/#/exam/final/import");
   await page.getByRole("button", { name: "Try validation errors" }).click();
   await page.getByRole("button", { name: "Validate CSV" }).click();
   await expect(
@@ -96,34 +99,104 @@ test("CSV error, review, progress and completion flow", async ({ page }) => {
     "    return s.strip().lower()",
   );
 });
-test("mark recommendations require confirmation; group marking skips locks", async ({
+test("category selection requires confirmation and group marking skips locks", async ({
   page,
 }) => {
   await page.goto("/#/question/3/mark/demo001");
-  await page.getByRole("button", { name: "Use recommended mark" }).click();
-  await expect(page.getByLabel("Final mark · 0–10")).toHaveValue("10");
-  await page.reload();
-  await expect(page.getByLabel("Final mark · 0–10")).toHaveValue("");
-  await page.getByLabel("Final mark · 0–10").fill("9");
   await page
-    .getByRole("button", { name: "Confirm final mark", exact: true })
+    .getByRole("button", { name: "Confirm category & mark", exact: true })
+    .click();
+  await expect(page.getByRole("alert")).toContainText(
+    "Choose a rubric category",
+  );
+  await page.getByRole("radio", { name: /Fully correct/ }).check();
+  await expect(page.locator(".category-total")).toContainText("10 / 10");
+  await page.reload();
+  await expect(
+    page.getByRole("radio", { name: /Fully correct/ }),
+  ).not.toBeChecked();
+  await page.getByRole("radio", { name: /Partially correct/ }).check();
+  await page
+    .getByRole("button", { name: "Confirm category & mark", exact: true })
     .click();
   await page.reload();
-  await expect(page.getByLabel("Final mark · 0–10")).toHaveValue("9");
+  await expect(
+    page.getByRole("radio", { name: /Partially correct/ }),
+  ).toBeChecked();
   await page.goto("/#/question/1/mark/demo001");
-  await page.getByLabel("Final mark · 0–5").fill("4");
+  await page.getByRole("radio", { name: /Partially correct/ }).check();
   await page.getByRole("button", { name: "Entire group", exact: true }).click();
   await page
-    .getByRole("button", { name: "Confirm final mark", exact: true })
+    .getByRole("button", { name: "Confirm category & mark", exact: true })
     .click();
   await expect(page.getByRole("dialog")).toContainText("71");
   await page.getByRole("button", { name: "Apply group mark" }).click();
   await page.goto("/#/question/1/mark/demo002");
-  await expect(page.getByLabel("Final mark · 0–5")).toHaveValue("4");
+  await expect(
+    page.getByRole("radio", { name: /Partially correct/ }),
+  ).toBeChecked();
   await page.goto("/#/question/1/mark/demo003");
   await expect(
     page.getByRole("heading", { name: "Response unavailable" }),
   ).toBeVisible();
+});
+test("coordinator previews, cancels and applies category-wide score changes", async ({
+  page,
+}) => {
+  await page.goto("/#/question/1/mark/demo001");
+  await page.getByRole("radio", { name: /Partially correct/ }).check();
+  await page
+    .getByRole("button", { name: "Confirm category & mark", exact: true })
+    .click();
+  await page.goto("/#/exam/final");
+  await page
+    .getByRole("button", { name: "Review rubric scores", exact: true })
+    .click();
+  await page.getByLabel("Partially correct proposed score").fill("3");
+  await page
+    .getByLabel("Reason for score change *")
+    .fill("Accept partial explanation after review");
+  await page.getByRole("button", { name: "Review and apply changes" }).click();
+  await expect(page.getByRole("dialog")).toContainText("2.5 → 3");
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Cancel", exact: true })
+    .click();
+  await page.reload();
+  await expect(page.getByLabel("Partially correct proposed score")).toHaveValue(
+    "2.5",
+  );
+  await page.getByLabel("Partially correct proposed score").fill("3");
+  await page
+    .getByLabel("Reason for score change *")
+    .fill("Accept partial explanation after review");
+  await page.getByRole("button", { name: "Review and apply changes" }).click();
+  await page
+    .getByRole("button", { name: "Apply category scores", exact: true })
+    .click();
+  await expect(page.getByLabel("Partially correct proposed score")).toHaveValue(
+    "3",
+  );
+  await expect(page.locator(".change-history")).toContainText(
+    "Accept partial explanation",
+  );
+  await page.screenshot({
+    path: "test-results/rubric-review.png",
+    fullPage: true,
+  });
+  await page.goto("/#/question/1/mark/demo001");
+  await expect(page.locator(".category-total")).toContainText("3 / 5");
+  await expect(
+    page.getByText("Score when category was selected:", { exact: false }),
+  ).toContainText("2.5");
+  await page.goto("/#/exam/final");
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Export confirmed marks" }).click();
+  const download = await downloadPromise;
+  const fs = await import("node:fs/promises");
+  const csv = await fs.readFile((await download.path())!, "utf8");
+  expect(csv).toContain("rubric_category");
+  expect(csv).toContain("demo001,1,Partially correct,2.5,3");
 });
 test("member add, search and remove", async ({ page }) => {
   await page.goto("/#/members");
@@ -156,9 +229,10 @@ test("mobile navigation and pages do not overflow", async ({ page }) => {
     "/dashboard",
     "/create-workspace",
     "/members",
-    "/import",
+    "/exam/final/import",
     "/question/1",
     "/question/5/mark/demo001",
+    "/exam/final/review",
   ]) {
     await page.goto("/#" + route);
     expect(
@@ -167,6 +241,11 @@ test("mobile navigation and pages do not overflow", async ({ page }) => {
       ),
     ).toBe(true);
   }
+  await page.screenshot({
+    path: "test-results/mobile-review.png",
+    animations: "disabled",
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "Toggle navigation" }).click();
   await page
     .getByRole("link", { name: "Workspace settings", exact: true })

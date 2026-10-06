@@ -11,7 +11,7 @@ import {
   Empty,
 } from "../components/UI";
 export function WorkspaceForm({ create = false }: { create?: boolean }) {
-  const { workspace, setData, notify } = useApp();
+  const { workspace, setData, notify, exams } = useApp();
   const blank = {
     name: "",
     subject: "",
@@ -171,7 +171,7 @@ export function WorkspaceForm({ create = false }: { create?: boolean }) {
                 <dt>Workspace members</dt>
                 <dd>{workspace.members.length} members</dd>
                 <dt>Exams</dt>
-                <dd>{workspace.id === "comp10001" ? 3 : 1}</dd>
+                <dd>{exams.length}</dd>
                 <dt>Academic period</dt>
                 <dd>
                   {workspace.period}, {workspace.year}

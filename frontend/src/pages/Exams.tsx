@@ -11,8 +11,17 @@ import {
   Modal,
 } from "../components/UI";
 import Papa from "papaparse";
+import { categoriesFor } from "../rubric";
+import { ExamFiles } from "./ExamSetup";
 export function Dashboard({ list = false }: { list?: boolean }) {
-  const { answers, workspace } = useApp();
+  const { answers, workspace, exams, isCoordinator } = useApp();
+  const sample = exams.find((e) => e.id === "final" && e.sampleVersion);
+  const sampleQuestions =
+    sample?.answers?.preview.questions.filter((q) => !q.instruction) ?? [];
+  const sampleMarks = Object.values(sample?.marks ?? {}).reduce(
+    (n, students) => n + Object.keys(students).length,
+    0,
+  );
   const marked = answers.filter((a) => a.mark !== undefined).length;
   const progress = answers.length
     ? Math.round((marked / answers.length) * 100)
@@ -25,24 +34,29 @@ export function Dashboard({ list = false }: { list?: boolean }) {
         title={list ? "Exams" : "Subject dashboard"}
         subtitle={`${workspace.subject} · ${workspace.period}, ${workspace.year}`}
         actions={
-          <Button variant="primary" onClick={() => go("/create-workspace")}>
-            Create workspace
-          </Button>
+          isCoordinator && (
+            <>
+              <Button onClick={() => go("/create-workspace")}>
+                Create workspace
+              </Button>
+              <Button variant="primary" onClick={() => go("/create-exam")}>
+                Create exam
+              </Button>
+            </>
+          )
         }
       />
       <div className="stats-grid">
         <Stat
           label="Exams"
-          value={workspace.id === "comp10001" ? 3 : 1}
-          detail={
-            workspace.id === "comp10001"
-              ? "1 in progress · 1 complete · 1 draft"
-              : "1 draft exam ready for responses"
-          }
+          value={exams.length}
+          detail="Exams in this workspace"
         />
         <Stat
           label="Students"
-          value={students}
+          value={
+            sample ? (sample.answers?.preview.students.length ?? 0) : students
+          }
           detail="Enrolled in this subject"
         />
         <Stat
@@ -68,22 +82,69 @@ export function Dashboard({ list = false }: { list?: boolean }) {
               </tr>
             </thead>
             <tbody>
+              {/* New exams keep their own files, separate from the marking demo. */}
+              {exams
+                .filter(
+                  (item) => !["final", "midterm", "practice"].includes(item.id),
+                )
+                .map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      <b>{item.title}</b>
+                      <small>
+                        {item.rubric ? "Rubric uploaded" : "Rubric optional"}
+                      </small>
+                    </td>
+                    <td>{item.answers?.preview.students.length ?? "—"}</td>
+                    <td>Not marked</td>
+                    <td>{item.answers ? "Answers uploaded" : "Draft"}</td>
+                    <td>
+                      <Button onClick={() => go(`/exam/${item.id}`)}>
+                        Open exam
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               <tr>
                 <td>
-                  <b>Final exam</b>
-                  <small>6 questions · 60 marks</small>
+                  <b>{sample?.title ?? "Final exam"}</b>
+                  <small>
+                    {sample
+                      ? `${sampleQuestions.length} questions · ${sampleQuestions.reduce((sum, q) => sum + q.maxMark, 0)} marks`
+                      : "6 questions · 60 marks"}
+                  </small>
                 </td>
-                <td>{students || "—"}</td>
                 <td>
-                  <Progress value={progress} />
+                  {sample
+                    ? (sample.answers?.preview.students.length ?? 0)
+                    : students || "—"}
+                </td>
+                <td>
+                  <Progress
+                    value={
+                      sample
+                        ? Math.round(
+                            (100 * sampleMarks) /
+                              (sampleQuestions.filter(
+                                (q) =>
+                                  !sample.autoMarkedQuestionIds?.includes(q.id),
+                              ).length *
+                                (sample.answers?.preview.students.length ||
+                                  1) || 1),
+                          )
+                        : progress
+                    }
+                  />
                 </td>
                 <td>
                   <span>
-                    {progress === 100
-                      ? "Complete"
-                      : answers.length
-                        ? "In progress"
-                        : "Draft"}
+                    {sample
+                      ? `${sampleMarks} responses marked`
+                      : progress === 100
+                        ? "Complete"
+                        : answers.length
+                          ? "In progress"
+                          : "Draft"}
                   </span>
                 </td>
                 <td>
@@ -138,7 +199,8 @@ export function Dashboard({ list = false }: { list?: boolean }) {
   );
 }
 export function Exam({ exam = "final" }: { exam?: string }) {
-  const { answers, notify } = useApp();
+  const { answers, workspace, notify, exams, isCoordinator } = useApp();
+  const record = exams.find((item) => item.id === exam)!;
   const [studentsOpen, setStudentsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const archive = exam === "midterm",
@@ -163,6 +225,11 @@ export function Exam({ exam = "final" }: { exam?: string }) {
           .map((a) => ({
             student_id: a.id,
             question_id: a.question,
+            rubric_category:
+              categoriesFor(a.question, workspace).find(
+                (c) => c.id === a.categoryId,
+              )?.label ?? "Legacy numeric mark",
+            score_at_selection: a.markAtSelection ?? "",
             mark: a.mark,
             comment: a.comment ?? "",
           })),
@@ -182,9 +249,17 @@ export function Exam({ exam = "final" }: { exam?: string }) {
             <Button onClick={() => setStudentsOpen(true)}>
               View student list
             </Button>
-            {!archive && !draft && (
-              <Button variant="primary" onClick={() => go("/import")}>
-                Import responses
+            {!archive && !draft && isCoordinator && (
+              <Button onClick={() => go("/exam/final/review")}>
+                Review rubric scores
+              </Button>
+            )}
+            {!archive && !draft && isCoordinator && (
+              <Button
+                variant="primary"
+                onClick={() => go("/exam/final/import")}
+              >
+                Import demo responses
               </Button>
             )}
           </>
@@ -198,6 +273,7 @@ export function Exam({ exam = "final" }: { exam?: string }) {
           <a href="#/exam/final">Open Final exam →</a>
         </div>
       )}
+      {!archive && <ExamFiles exam={record} />}
       <Card title="Marking progress" className="exam-progress">
         <div className="progress-summary">
           <div>

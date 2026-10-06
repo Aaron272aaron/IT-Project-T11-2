@@ -1295,3 +1295,160 @@ dialog::backdrop {
 th {
   position: relative;
 }
+.category-options {
+  border: 0;
+  padding: 0;
+  margin: 22px 0;
+  min-width: 0;
+}
+.category-options legend {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.category-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.category-option.selected {
+  border-color: #0787b2;
+  background: #edfbff;
+}
+.category-option input {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin: 3px 0;
+  accent-color: #087fa2;
+}
+.category-option > span {
+  flex: 1;
+  min-width: 0;
+}
+.category-option small {
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 5px;
+}
+.category-option > strong {
+  white-space: nowrap;
+  font-size: 14px;
+}
+.category-total {
+  display: flex;
+  justify-content: space-between;
+  background: #eff8fc;
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 22px;
+  align-items: center;
+}
+.category-total strong {
+  font-size: 24px;
+}
+.review-controls {
+  padding: 24px;
+}
+.score-input {
+  max-width: 125px;
+}
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.check-label input {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+}
+.change-history article {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.change-history article:last-child {
+  border-bottom: 0;
+}
+.change-history p {
+  margin: 8px 0;
+}
+
+/* Keep long Canvas filenames, question prompts and original code readable. */
+.canvas-dropzone h3 {
+  overflow-wrap: anywhere;
+}
+.canvas-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.canvas-summary strong {
+  display: block;
+  font-size: 28px;
+}
+.canvas-summary span {
+  display: block;
+  color: var(--muted);
+}
+.canvas-original {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+  max-height: 440px;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 7px;
+  background: #f4f7fb;
+  color: var(--navy);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.canvas-preview h3 {
+  margin-top: 20px;
+}
+.canvas-preview .actions {
+  flex-wrap: wrap;
+}
+.canvas-answer-heading {
+  flex-wrap: wrap;
+}
+@media (max-width: 800px) {
+  .canvas-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Uploaded filenames and question text must wrap inside an exam card. */
+.attachment-name,
+.exam-question-text {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.saved-attachment {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.rubric-picker input[type="file"] {
+  max-width: 100%;
+}
+.rubric-picker .text-button {
+  color: var(--navy);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.exam-question-text {
+  max-width: 600px;
+  white-space: pre-wrap;
+}

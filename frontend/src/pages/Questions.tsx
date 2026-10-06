@@ -1,6 +1,8 @@
+import { RubricAccess } from "../components/RubricWindow";
 import { useState } from "react";
 import { useApp, go } from "../state";
-import { questions, saveMarks, type Answer } from "../domain";
+import { questions, type Answer } from "../domain";
+import { categoriesFor, saveCategoryMark } from "../rubric";
 import {
   Header,
   Card,
@@ -14,7 +16,7 @@ import {
   Stat,
 } from "../components/UI";
 export function QuestionOverview({ id }: { id: number }) {
-  const { answers, notify } = useApp();
+  const { answers, workspace, notify } = useApp();
   const q = questions.find((q) => q.id === id)!;
   const rows = answers.filter((a) => a.question === id);
   const [filter, setFilter] = useState("All");
@@ -215,7 +217,7 @@ export function QuestionOverview({ id }: { id: number }) {
                 </th>
                 <th>{q.kind === "short" ? "Group" : "AI review"}</th>
                 <th>Status</th>
-                <th>Mark</th>
+                <th>Category / Mark</th>
                 <th />
               </tr>
             </thead>
@@ -260,7 +262,22 @@ export function QuestionOverview({ id }: { id: number }) {
                           : "Unmarked"}
                     </Badge>
                   </td>
-                  <td>{a.mark === undefined ? "—" : `${a.mark} / ${q.max}`}</td>
+                  <td>
+                    {a.mark === undefined ? (
+                      "—"
+                    ) : (
+                      <>
+                        {a.categoryId
+                          ? categoriesFor(id, workspace).find(
+                              (c) => c.id === a.categoryId,
+                            )?.label
+                          : "Legacy numeric mark"}
+                        <small>
+                          {a.mark} / {q.max}
+                        </small>
+                      </>
+                    )}
+                  </td>
                   <td>
                     <Button disabled={!!a.locked} onClick={() => open(a)}>
                       {a.locked
@@ -310,10 +327,13 @@ export function QuestionOverview({ id }: { id: number }) {
   );
 }
 export function Marking({ id, student }: { id: number; student: string }) {
-  const { answers, data, setData, notify } = useApp();
+  const { answers, data, workspace, setData, notify, exams } = useApp();
   const q = questions.find((q) => q.id === id)!;
   const answer = answers.find((a) => a.question === id && a.id === student);
-  const [mark, setMark] = useState(answer?.mark?.toString() ?? "");
+  const [categoryId, setCategoryId] = useState(answer?.categoryId ?? "");
+  const categories = categoriesFor(id, workspace);
+  const selectedCategory = categories.find((c) => c.id === categoryId);
+  const mark = selectedCategory?.score;
   const [comment, setComment] = useState(answer?.comment ?? "");
   const [scope, setScope] = useState("student");
   const [confirm, setConfirm] = useState<null | boolean>(null);
@@ -339,13 +359,12 @@ export function Marking({ id, student }: { id: number; student: string }) {
   const fixture = student.startsWith("demo") && answer.test !== "Not run";
   function save(next: boolean) {
     try {
-      if (!mark.trim())
-        throw new Error("Enter a final mark before confirming.");
-      const updated = saveMarks(
+      const updated = saveCategoryMark(
         answers,
+        workspace,
         id,
         targets.map((a) => a.id),
-        Number(mark),
+        categoryId,
         comment,
       );
       setData((d) => ({
@@ -387,9 +406,15 @@ export function Marking({ id, student }: { id: number; student: string }) {
         title={`Mark Question ${id} · ${q.title}`}
         subtitle={`${q.kind === "short" ? "Short-answer" : q.kind === "function" ? "Function" : "Executable-code"} marking · ${q.max} marks`}
         actions={
-          <Button onClick={() => go(`/question/${id}`)}>
-            Back to question
-          </Button>
+          <>
+            <RubricAccess
+              exam={exams.find((exam) => exam.id === "final")}
+              questionKey={`demo:${id}`}
+            />
+            <Button onClick={() => go(`/question/${id}`)}>
+              Back to question
+            </Button>
+          </>
         }
       />
       <Card title="Question text">
@@ -558,20 +583,18 @@ export function Marking({ id, student }: { id: number; student: string }) {
               )}
             </Card>
           )}
-          <Card title="Marking rubric">
+          <Card title="Assessment guidance">
             {q.rubric.map(([text, value]) => (
               <div className="rubric-row" key={text}>
                 <span>{text}</span>
-                <span>{value} marks</span>
+                <span>{value} rubric weight</span>
               </div>
             ))}
           </Card>
         </div>
         <Card className="decision">
           <Badge tone="success">HUMAN DECISION</Badge>
-          <h2>
-            {q.kind === "short" ? "Assign a final mark" : "Review and confirm"}
-          </h2>
+          <h2>Choose a rubric category</h2>
           {q.kind === "short" && (
             <Field label="Apply to">
               <div className="tabs">
@@ -598,17 +621,53 @@ export function Marking({ id, student }: { id: number; student: string }) {
               <p>Review the original answer before confirming.</p>
             </Notice>
           )}
-          <Field label={`Final mark · 0–${q.max}`}>
-            <input
-              type="number"
-              min={0}
-              max={q.max}
-              step="0.5"
-              value={mark}
-              placeholder="Enter mark"
-              onChange={(e) => setMark(e.target.value)}
-            />
-          </Field>
+          <fieldset className="category-options">
+            <legend>Choose one category for the whole answer</legend>
+            {categories.map((c) => (
+              <label
+                key={c.id}
+                className={`category-option ${categoryId === c.id ? "selected" : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="rubric-category"
+                  value={c.id}
+                  checked={categoryId === c.id}
+                  onChange={() => setCategoryId(c.id)}
+                />
+                <span>
+                  <b>{c.label}</b>
+                  <small>{c.description}</small>
+                </span>
+                <strong>
+                  {c.score} / {q.max}
+                </strong>
+              </label>
+            ))}
+          </fieldset>
+          <div className="category-total" aria-live="polite">
+            <span>Score from category</span>
+            <strong>
+              {mark ?? "—"} / {q.max}
+            </strong>
+          </div>
+          {answer.mark !== undefined && !answer.categoryId && (
+            <Notice tone="warning">
+              Previous numeric mark: {answer.mark} / {q.max}. Choose a category
+              to replace it; no category has been inferred.
+            </Notice>
+          )}
+          {answer.markAtSelection !== undefined &&
+            answer.mark !== answer.markAtSelection && (
+              <Notice>
+                Score when category was selected: {answer.markAtSelection}.
+                Current score after coordinator review: {answer.mark}.
+              </Notice>
+            )}
+          <p className="helper">
+            Category values apply to this question. Coordinators can review and
+            adjust them for all matching answers in the exam review.
+          </p>
           <Field label="Marker comment · Optional">
             <textarea
               rows={5}
@@ -629,13 +688,8 @@ export function Marking({ id, student }: { id: number; student: string }) {
             </p>
           )}
           <p className="helper">Changes are unsaved until you confirm.</p>
-          {q.kind === "executable" && fixture && answer.test === "Passed" && (
-            <Button variant="full" onClick={() => setMark(String(q.max))}>
-              Use recommended mark
-            </Button>
-          )}
           <Button variant="primary full" onClick={() => requestSave(false)}>
-            Confirm final mark
+            Confirm category & mark
           </Button>
           <Button variant="full" onClick={() => requestSave(true)}>
             Confirm and next response
@@ -649,9 +703,9 @@ export function Marking({ id, student }: { id: number; student: string }) {
       {confirm !== null && (
         <Modal title="Confirm group mark" onClose={() => setConfirm(null)}>
           <p>
-            Assign{" "}
+            Assign {selectedCategory?.label ?? "a category"} ·
             <b>
-              {mark || "—"} / {q.max}
+              {mark ?? "—"} / {q.max}
             </b>{" "}
             to <b>{targets.length}</b> identical responses?
           </p>
