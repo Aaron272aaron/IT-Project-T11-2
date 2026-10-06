@@ -1,0 +1,9 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+database/.env
+database/backups/
+database/local_tools/
+database/dbeaver_workspace/
+database/verification/
