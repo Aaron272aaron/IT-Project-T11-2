@@ -1,3 +1,4 @@
+import type { QuestionType } from "./questionTypes";
 import type { CanvasPreview } from "./canvasCsv";
 
 // Exams belong to a workspace. Uploaded documents are references, not rules
@@ -11,15 +12,34 @@ export type ExamAttachment = {
   previewPdf?: string;
   pageCount?: number;
 };
+export type RubricCategory = {
+  id: string;
+  score: number;
+  description: string;
+  // Retain identities of merged options so historical marks remain linked.
+  mergedIds?: string[];
+};
+export type RubricChange = {
+  at: string;
+  reason: string;
+  updatedMarks: number;
+  before: Record<string, RubricCategory[]>;
+  after: Record<string, RubricCategory[]>;
+  scoreChanges: {
+    questionId: string;
+    studentId: string;
+    before: number;
+    after: number;
+  }[];
+};
 export type ExamRecord = {
+  questionTypes?: Record<string, QuestionType>;
+  rubricChanges?: RubricChange[];
   id: string;
   title: string;
   description: string;
   sampleVersion?: number;
-  categories?: Record<
-    string,
-    { id: string; score: number; description: string }[]
-  >;
+  categories?: Record<string, RubricCategory[]>;
   autoMarkedQuestionIds?: string[];
   // Human confirmations are separate from immutable CSV source scores and answers.
   marks?: Record<
@@ -29,6 +49,8 @@ export type ExamRecord = {
       {
         score: number;
         categoryId?: string;
+        // Snapshot keeps old decisions readable after editing or deleting an option.
+        categoryDescription?: string;
         comment: string;
         confirmedAt: string;
       }

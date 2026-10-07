@@ -12,16 +12,14 @@ import {
 } from "../components/UI";
 import Papa from "papaparse";
 import { categoriesFor } from "../rubric";
+import { confirmedResponseCount } from "../sampleMarking";
 import { ExamFiles } from "./ExamSetup";
 export function Dashboard({ list = false }: { list?: boolean }) {
   const { answers, workspace, exams, isCoordinator } = useApp();
   const sample = exams.find((e) => e.id === "final" && e.sampleVersion);
   const sampleQuestions =
     sample?.answers?.preview.questions.filter((q) => !q.instruction) ?? [];
-  const sampleMarks = Object.values(sample?.marks ?? {}).reduce(
-    (n, students) => n + Object.keys(students).length,
-    0,
-  );
+  const sampleMarks = confirmedResponseCount(sample);
   const marked = answers.filter((a) => a.mark !== undefined).length;
   const progress = answers.length
     ? Math.round((marked / answers.length) * 100)
@@ -96,7 +94,7 @@ export function Dashboard({ list = false }: { list?: boolean }) {
                       </small>
                     </td>
                     <td>{item.answers?.preview.students.length ?? "—"}</td>
-                    <td>Not marked</td>
+                    <td>{confirmedResponseCount(item)} responses marked</td>
                     <td>{item.answers ? "Answers uploaded" : "Draft"}</td>
                     <td>
                       <Button onClick={() => go(`/exam/${item.id}`)}>

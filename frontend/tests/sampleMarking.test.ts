@@ -1,5 +1,8 @@
 import { it, expect } from "vitest";
-import { confirmSampleMark } from "../src/sampleMarking";
+import {
+  confirmSampleMark,
+  confirmedResponseCount,
+} from "../src/sampleMarking";
 import { assignSequentialPages } from "../src/rubricPages";
 import type { ExamRecord } from "../src/exams";
 const exam: ExamRecord = {
@@ -87,4 +90,21 @@ it("rejects overflow and invalid ranges instead of silently truncating", () => {
     expect(() =>
       assignSequentialPages(["a", "b"], first, last, start, pages, 24),
     ).toThrow();
+});
+
+it("counts only current manual responses after switching a question to source review", () => {
+  const next = confirmSampleMark(exam, "q", "s", "correct", "");
+  expect(confirmedResponseCount(next)).toBe(1);
+  expect(
+    confirmedResponseCount({ ...next, autoMarkedQuestionIds: ["q"] }),
+  ).toBe(0);
+  expect(() =>
+    confirmSampleMark(
+      { ...next, autoMarkedQuestionIds: ["q"] },
+      "q",
+      "s",
+      "correct",
+      "",
+    ),
+  ).toThrow("manual marking");
 });

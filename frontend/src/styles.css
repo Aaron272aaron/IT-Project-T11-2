@@ -1452,3 +1452,155 @@ th {
   max-width: 600px;
   white-space: pre-wrap;
 }
+
+/* Rubric editing stays compact; descriptions are collapsed until the reader opens them. */
+.rubric-editor summary,
+.rubric-score-option summary {
+  cursor: pointer;
+}
+.rubric-editor > details > summary {
+  padding: 8px 0;
+}
+.rubric-import,
+.rubric-save-review {
+  margin: 18px 0;
+  padding: 16px;
+  background: #f5f7fc;
+  border-radius: 10px;
+}
+.rubric-option-editor {
+  padding: 16px 0;
+  border-bottom: 1px solid #dce3f0;
+}
+.rubric-option-editor input[type="number"] {
+  max-width: 160px;
+}
+.imported-rubrics {
+  max-height: 600px;
+  overflow: auto;
+  padding: 8px;
+}
+.imported-block {
+  border-bottom: 1px solid #dce3f0;
+  padding: 14px 0;
+}
+.rubric-options {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+}
+.rubric-score-option {
+  border: 1px solid #dce3f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+}
+.rubric-score-option label {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+}
+.rubric-score-option input,
+.rubric-update-check input {
+  width: auto;
+}
+.rubric-score-option details {
+  margin-top: 8px;
+}
+.rubric-score-option p {
+  overflow-wrap: anywhere;
+}
+.rubric-update-check {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Classification controls remain inside a bounded table on small screens. */
+.question-types summary {
+  cursor: pointer;
+}
+.question-type-table {
+  max-height: 460px;
+  overflow: auto;
+  margin-top: 16px;
+}
+.question-type-table select {
+  min-width: 180px;
+}
+
+/* A distinct panel separates question selection from editing its score options. */
+.rubric-question-selector {
+  border: 2px solid #43bfe2;
+  background: #edf8fc;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+}
+.rubric-question-selector > .field > span {
+  font-size: 18px;
+  font-weight: 700;
+}
+.rubric-question-selector select {
+  background: white;
+  font-weight: 700;
+}
+.rubric-question-numbers {
+  display: flex;
+  gap: 40px;
+  margin: 18px 0;
+}
+.rubric-question-numbers > div {
+  display: grid;
+  gap: 4px;
+}
+.rubric-question-numbers span {
+  font-size: 14px;
+  color: #526077;
+}
+.rubric-question-numbers strong {
+  font-size: 26px;
+  color: #071a46;
+}
+
+/* A bounded list lets markers browse descriptions without scrolling the answer. */
+.rubric-options-scroll {
+  max-height: min(44vh, 360px);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  padding: 2px;
+}
+.mark-decision {
+  padding: 16px;
+}
+.mark-decision .card-heading h2 {
+  font-size: 24px;
+}
+.mark-decision .rubric-options {
+  margin: 12px 0;
+  font-size: 15px;
+}
+/* Allow long question and answer text to wrap within the left grid column. */
+.marking-answer-column {
+  min-width: 0;
+}
+.mark-decision .rubric-score-option {
+  padding: 8px;
+  margin: 6px 0;
+}
+.mark-decision .rubric-score-option label {
+  gap: 8px;
+}
+.mark-decision .rubric-score-option input {
+  min-height: 20px;
+}
+.mark-decision .rubric-score-option details {
+  margin-top: 4px;
+  line-height: 1.45;
+}
+.mark-decision .rubric-score-option p {
+  margin: 6px 0 0;
+}

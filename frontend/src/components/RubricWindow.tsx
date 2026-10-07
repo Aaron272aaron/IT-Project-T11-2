@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { ExamAttachment, ExamRecord } from "../exams";
 import { loadPdf, previewUrl } from "../rubricDocument";
 import { Button } from "./UI";
+import { useApp } from "../state";
 
 // A non-modal window leaves the answer and marking controls usable underneath.
 export function RubricWindow({
@@ -314,8 +315,11 @@ export function RubricAccess({
 }) {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
+  const { isCoordinator } = useApp();
   const range = exam?.rubricPages?.[questionKey];
   const available = !!exam?.rubric?.pageCount;
+  // Tutors use the inline score options; the document action is coordinator-only.
+  if (!isCoordinator) return null;
   return (
     <>
       <button

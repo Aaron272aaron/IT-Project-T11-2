@@ -26,85 +26,27 @@ test.beforeEach(async ({ page }) => {
   ).toBeVisible();
 });
 
-test("replaces the old Final exam with the supplied sample and a compact mapping editor", async ({
+test("sample exam shows questions and rubric editing without page assignments", async ({
   page,
 }) => {
   await expect(
     page.getByRole("button", { name: /Open question \d+$/ }),
   ).toHaveCount(37);
   await expect(
-    page.getByText("37 / 37 assigned · Expand to edit", { exact: false }),
-  ).toBeVisible();
-  const mapping = page.locator(".rubric-assignments > details");
-  await expect(mapping).not.toHaveAttribute("open", "");
-  expect((await mapping.boundingBox())!.height).toBeLessThan(100);
-  await page.getByText("Rubric pages by question", { exact: true }).click();
+    page.getByText("Rubric pages by question", { exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator(".rubric-assignments")).toHaveCount(0);
   await expect(
-    page.getByRole("button", {
-      name: "Assign pages sequentially",
-      exact: true,
-    }),
+    page.getByText("Rubric options by question", { exact: true }),
   ).toBeVisible();
-  expect(
-    (await page.locator(".mapping-table").boundingBox())!.height,
-  ).toBeLessThanOrEqual(460);
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await page.screenshot({
-    path: "test-results/sample-exam-collapsed.png",
-    fullPage: false,
-  });
   await page.reload();
   await expect(
     page.getByRole("heading", { name: "Sample exam", exact: true }),
   ).toBeVisible();
+  await expect(page.locator(".rubric-assignments")).toHaveCount(0);
 });
 
-test("sequential mapping is a draft, protects overflow, and persists only on save", async ({
-  page,
-}) => {
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  const first = page.locator(
-    'input[aria-label^="CSV question 1 ·"][aria-label$=" start page"]',
-  );
-  await expect(first).toHaveValue("7");
-  await page
-    .getByRole("button", { name: "Assign pages sequentially", exact: true })
-    .click();
-  await expect(page.getByRole("alert")).toContainText("rubric has 24 pages");
-  await expect(first).toHaveValue("7");
-  await page.getByLabel("To question", { exact: true }).fill("3");
-  await page.getByLabel("Starting page", { exact: true }).fill("10");
-  await page
-    .getByRole("button", { name: "Assign pages sequentially", exact: true })
-    .click();
-  await expect(first).toHaveValue("10");
-  await page.reload();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await expect(first).toHaveValue("7");
-  await page.getByLabel("To question", { exact: true }).fill("3");
-  await page.getByLabel("Starting page", { exact: true }).fill("10");
-  await page
-    .getByRole("button", { name: "Assign pages sequentially", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Save page assignments", exact: true })
-    .click();
-  await page.reload();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await expect(first).toHaveValue("10");
-  await expect(
-    page.locator(
-      'input[aria-label^="CSV question 3 ·"][aria-label$=" start page"]',
-    ),
-  ).toHaveValue("12");
-  await expect(
-    page.locator(
-      'input[aria-label^="CSV question 4 ·"][aria-label$=" start page"]',
-    ),
-  ).toHaveValue("7");
-});
-
-test("tutor marks a real response using supplied categories and sees the matching rubric page", async ({
+test("tutor marks a real response using supplied categories without a document button", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -119,18 +61,12 @@ test("tutor marks a real response using supplied categories and sees the matchin
     .first()
     .click();
   const original = await page.getByTestId("sample-answer").textContent();
-  await page.getByRole("button", { name: "View rubric", exact: true }).click();
-  await expect(page.getByLabel("Rubric page", { exact: true })).toHaveValue(
-    "16",
-  );
-  await expect(page.getByRole("dialog").locator("canvas")).toHaveAttribute(
-    "data-rendered-page",
-    "16",
-  );
-  await page.getByRole("button", { name: "Close rubric" }).click();
+  await expect(
+    page.getByRole("button", { name: "View rubric", exact: true }),
+  ).toHaveCount(0);
   await page
-    .getByLabel("Rubric category", { exact: true })
-    .selectOption("category-2");
+    .getByRole("radio", { name: "Option 2: 5 / 6", exact: true })
+    .check();
   await expect(
     page.getByText("Final score: 5 / 6", { exact: true }),
   ).toBeVisible();
@@ -145,11 +81,9 @@ test("tutor marks a real response using supplied categories and sees the matchin
     page.getByText("Saved mark: 5 / 6", { exact: true }),
   ).toBeVisible();
   await expect(page.getByTestId("sample-answer")).toHaveText(original!);
-  await page.getByRole("button", { name: "View rubric", exact: true }).click();
-  await expect(page.getByRole("dialog").locator("canvas")).toHaveAttribute(
-    "data-rendered-page",
-    "16",
-  );
+  await expect(
+    page.getByRole("button", { name: "View rubric", exact: true }),
+  ).toHaveCount(0);
   await page.screenshot({
     path: "test-results/sample-tutor.png",
     mask: [page.getByTestId("sample-answer")],
@@ -179,7 +113,7 @@ test("automatic source scores are not misrepresented as new human confirmations"
   ).toHaveCount(0);
 });
 
-test("coordinator layout fits a narrow screen with mappings collapsed or expanded", async ({
+test("coordinator layout fits a narrow screen without page mapping", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -188,7 +122,9 @@ test("coordinator layout fits a narrow screen with mappings collapsed or expande
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.getByText("Rubric pages by question", { exact: true }).click();
+  await expect(
+    page.getByText("Rubric pages by question", { exact: true }),
+  ).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

@@ -151,7 +151,7 @@ The Figma logo is stored locally at `public/logo-code.svg`, and fonts are provid
 2. In **Rubric pages by question**, use **Preview rubric** to check the document. Enter a start and end page for each question, then click **Save page assignments**. These are the preview's physical pages starting at 1, not printed page labels. Word layout can differ between renderers, so verify the generated PDF before mapping.
 3. Final exam lists its six demo questions separately from any uploaded CSV questions. New exams derive their question list from the saved CSV, excluding introduction sections. Canvas question IDs are never matched to demo IDs automatically.
 4. Switch the sidebar's **Demo perspective** to **Tutor**. Open **Final exam → a question → Mark** and click **View rubric**. It opens the assigned start page and shows the assigned range. Drag the title to move the floating window and the lower-right corner to resize it. Page navigation, keyboard arrow controls on the move/resize handles, Escape to close, and original-file download are available. Marking remains usable underneath.
-5. Saved real Canvas answers also have **View rubric**; selecting another question uses its own mapping. Their existing answer viewer remains read-only. This change does not invent marking categories for an arbitrary uploaded exam.
+5. Saved real Canvas answers also have **View rubric**; selecting another question uses its own mapping. The raw answer viewer remains read-only. Open a question from the exam page to mark it using Coordinator-configured rubric options.
 
 Unmapped questions open page 1 with an explicit message. Replacing a saved rubric clears all page assignments. Replacing the CSV clears its question assignments while preserving demo mappings. Invalid uploads, cancelled drafts and failed saves preserve the prior saved document. Existing attachments without a preview need to be uploaded again. PDF passwords are not supported.
 
@@ -201,3 +201,32 @@ npm run build
 ```
 
 The regression Vite server sets `VITE_LOAD_SAMPLE_EXAM=false` to keep historical six-question fixtures independent. Normal development and the sample test configuration use the new default sample. Storage remains per-tab sessionStorage; real shared accounts and database persistence are still future work.
+
+
+## Coordinator rubric options and document import
+
+Open an exam and expand **Rubric options by question**. Save an answer CSV first so that the exam has stable question IDs. Select a question, add/remove options, and edit each score and description. Each score appears once, with the descriptions from all options at that score combined. Scores must be between zero and the question maximum with at most two decimal places. Every option needs a description. Manual editing and Tutor marking work without Python, including in the bundled sample.
+
+**Save rubric options → Review rubric changes → Confirm rubric changes** saves the draft. When an option's score changes, every saved mark using that same option is updated together. The review lists affected students and requires a reason; change history preserves before/after categories and scores. Removing an option preserves its historical marks and descriptions and flags those responses for Tutor review rather than inventing a replacement option. Original answers, CSV source scores and marker comments remain unchanged. Questions with no options cannot be manually marked. The Marking mode selector has been removed; existing source-score review questions keep their established behavior.
+
+For document import, start `python backend/server.py` from the repository root (Windows can also use `py backend/server.py`). Expand **Automatically create rubric from document**, upload a DOCX or text-based PDF, or choose **Read saved rubric document**. Importing option text does not need LibreOffice. LibreOffice is still needed separately when uploading a DOCX as the paginated reference document.
+
+The standard guide uses `Rubric:`, `Marks:` or `Marks for each ...` headings followed by `+2.0 Description` paragraphs. Multiple paragraphs within one score option are retained. Shared rubric sections can target several questions. Explicit question numbers are preferred; consecutive order is suggested where the guide omits them. Review and edit the comma-separated question numbers for every imported section. Supplementary lettered questions are left unassigned. Scanned/image-only PDFs are unsupported; use a DOCX or selectable-text PDF. PDF wrapping is reconstructed before parsing, but always compare the draft with the original guide. No external AI service is used.
+
+**Apply imported draft** only updates the editor draft. It does not replace the saved reference document, PDF page assignments, or saved marks. Use the normal review/save flow to commit. Additive rules such as “1 mark for each criterion” are converted into whole-answer total options with an explicit review warning. Missing zero-mark options are reported, not silently invented. Same-score options are merged into one score option, preserving historical IDs for batch updates. Invalid associations, conflicting sections, out-of-range scores and missing descriptions block application. Unmapped sections are skipped. Unmapped questions retain their current options.
+
+Tutor marking initially shows score options with collapsed **Description** arrows. Selecting a radio button chooses one whole-answer score; expanding a description does not select or confirm a score. Confirming a mark records its option ID and description snapshot. New exams use the same workflow as Sample exam.
+
+`POST /api/rubric/import` accepts DOCX bytes or JSON `{ "text": "PDF paragraph text" }`, with a 2 MB request limit. PDF.js extracts PDF text locally (up to 8 MB / 200 pages); Python's standard library parses DOCX XML and guide rules. The API returns editable blocks, proposed question numbers and warnings, never writes exam state, and does not convert Word to PDF.
+
+Code: `src/components/RubricEditor.tsx` (Coordinator UI), `src/rubricEditor.ts` (validation and batch updates), `src/components/RubricOptions.tsx` (Tutor choices), `src/rubricImport.ts` and `src/pdfRubricText.ts` (upload and PDF text), `backend/rubric_import.py` (parsing). Run `npm run test:e2e:rubric` for the real DOCX/PDF, editing, batch update and new-exam workflows. The sample suite still blocks all API calls to verify offline demo behavior. State and change history remain in this browser tab's sessionStorage; this is not multi-user synchronization or database persistence.
+
+
+## Question classifications and AI placeholder
+
+Coordinators can expand **Question classifications** on an exam, assign each question a type, and click **Save classifications**. Draft changes are discarded on refresh. The seven types follow the supplied exam: Expression output (Q1–9), Single assignment statement (Q10–13), Multiple choice (Q14–17), Code completion (Q18–22), Debugging (Q23–31), Coding questions (Q32–34), and Short answer (Q35–37). These are question types, separate from rubric score categories and manual/source marking modes. New exams start unassigned; the sample includes defaults, including for older browser sessions. Explicit Coordinator choices override defaults.
+
+On a Tutor's individual answer page, **Generate AI-suggested fixes** appears only for questions classified as **Coding questions**. It opens a closable dialog displaying exactly **waiting for API**. This is a UI placeholder: no API request, code execution, AI generation, answer modification or mark change occurs. Classification and this dialog work without Python. Future AI integration will use this entry point. Existing scoring and rubric options remain independent of classification.
+
+
+The **Edit question rubric** selector sits in a highlighted panel. Its menu contains only question numbers; the selected question's maximum marks and score-option count appear below. Editing a score to match another option merges their descriptions when leaving the score field. Historical marks remain linked to the merged option, and later score adjustments update every affected confirmation. The warning above the editor explains this impact.

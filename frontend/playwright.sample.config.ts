@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 // Exercise the bundled sample without starting Python, using isolated browser storage.
 export default defineConfig({
   testDir: "./e2e",
-  testMatch: "sample-exam.spec.ts",
+  testMatch: ["sample-exam.spec.ts", "question-types.spec.ts"],
   workers: 1,
   reporter: "list",
   use: {

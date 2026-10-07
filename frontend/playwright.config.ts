@@ -1,7 +1,11 @@
 import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./e2e",
-  testIgnore: "**/sample-exam.spec.ts",
+  testIgnore: [
+    "**/sample-exam.spec.ts",
+    "**/rubric-editor.spec.ts",
+    "**/question-types.spec.ts",
+  ],
   use: {
     // Tests use their own Vite port instead of your manual development tab.
     baseURL: "http://127.0.0.1:5174",

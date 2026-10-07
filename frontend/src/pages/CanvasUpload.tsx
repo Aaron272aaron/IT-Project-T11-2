@@ -155,6 +155,25 @@ export function CanvasUpload({
       saveExam({
         ...exam,
         marks: {},
+        questionTypes: Object.fromEntries(
+          Object.entries(exam.questionTypes ?? {}).filter(([id]) =>
+            preview.questions.some((q) => q.id === id && !q.instruction),
+          ),
+        ),
+        // Keep only rubrics whose stable question IDs and score limits still match.
+        categories: Object.fromEntries(
+          Object.entries(exam.categories ?? {}).filter(([id, options]) =>
+            preview.questions.some(
+              (q) =>
+                q.id === id &&
+                !q.instruction &&
+                options.every((c) => c.score <= q.maxMark),
+            ),
+          ),
+        ),
+        autoMarkedQuestionIds: (exam.autoMarkedQuestionIds ?? []).filter((id) =>
+          preview.questions.some((q) => q.id === id && !q.instruction),
+        ),
         rubricPages: Object.fromEntries(
           Object.entries(exam.rubricPages ?? {}).filter(
             ([key]) => !key.startsWith("canvas:"),
@@ -185,7 +204,7 @@ export function CanvasUpload({
           <Button onClick={() => go(`/exam/${exam.id}`)}>Back to exam</Button>
         }
       />
-      {view && preview && (
+      {view && preview && isCoordinator && (
         <div className="actions">
           <RubricAccess exam={exam} questionKey={`canvas:${questionId}`} />
         </div>

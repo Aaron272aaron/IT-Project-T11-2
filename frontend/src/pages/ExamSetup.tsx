@@ -2,7 +2,9 @@ import { useState, type FormEvent } from "react";
 import { useApp, go } from "../state";
 import type { ExamAttachment, ExamRecord } from "../exams";
 import { Header, Card, Button, Field, Notice, Stat } from "../components/UI";
-import { RubricPageMapping } from "../components/RubricPageMapping";
+import { QuestionTypes } from "../components/QuestionTypes";
+import { questionTypeLabel } from "../questionTypes";
+import { RubricEditor } from "../components/RubricEditor";
 import { RubricPicker } from "../components/RubricPicker";
 
 export function CreateExam() {
@@ -228,9 +230,15 @@ export function ExamFiles({ exam }: { exam: ExamRecord }) {
           </p>
         </Card>
       </div>
-      {isCoordinator && !!exam.rubric?.pageCount && (
-        <RubricPageMapping
-          key={`${exam.id}-${exam.rubric.uploadedAt}`}
+      {isCoordinator && (
+        <QuestionTypes
+          key={`types-${exam.id}-${exam.answers?.uploadedAt}`}
+          exam={exam}
+        />
+      )}
+      {isCoordinator && (
+        <RubricEditor
+          key={`options-${exam.id}-${exam.answers?.uploadedAt}-${exam.rubric?.uploadedAt}`}
           exam={exam}
         />
       )}
@@ -283,6 +291,8 @@ export function CreatedExam({ exam }: { exam: ExamRecord }) {
                   <th>Canvas question ID</th>
                   <th>Question</th>
                   <th>Maximum mark</th>
+                  <th>Classification</th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
@@ -291,6 +301,14 @@ export function CreatedExam({ exam }: { exam: ExamRecord }) {
                     <td>{q.id}</td>
                     <td className="exam-question-text">{q.text}</td>
                     <td>{q.maxMark}</td>
+                    <td>{questionTypeLabel(exam, q.id)}</td>
+                    <td>
+                      <Button
+                        onClick={() => go(`/exam/${exam.id}/question/${q.id}`)}
+                      >
+                        Open question {questions.indexOf(q) + 1}
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -39,8 +39,9 @@ function App() {
   );
   const currentExam = exams.find((item) => item.id === examRoute?.[1]);
   const sampleRoute = route.match(
-    /^\/exam\/final\/question\/([^/]+)(?:\/mark\/([^/]+))?$/,
+    /^\/exam\/([^/]+)\/question\/([^/]+)(?:\/mark\/([^/]+))?$/,
   );
+  const questionExam = exams.find((e) => e.id === sampleRoute?.[1]);
   const sample = exams.find((e) => e.id === "final" && e.sampleVersion);
   const match = route.match(/^\/question\/([1-6])(?:\/mark\/(.+))?$/);
   let page;
@@ -102,14 +103,14 @@ function App() {
           <a href="#/exam/final">Open exam</a>
         </div>
       );
-    } else if (sampleRoute && sample) {
+    } else if (sampleRoute && questionExam) {
       content = (
         <SampleQuestion
-          key={`${sampleRoute[1]}-${sampleRoute[2] ?? "list"}`}
-          exam={sample}
-          questionId={sampleRoute[1]}
+          key={`${sampleRoute[1]}-${sampleRoute[2]}-${sampleRoute[3] ?? "list"}`}
+          exam={questionExam}
+          questionId={sampleRoute[2]}
           studentId={
-            sampleRoute[2] ? decodeURIComponent(sampleRoute[2]) : undefined
+            sampleRoute[3] ? decodeURIComponent(sampleRoute[3]) : undefined
           }
         />
       );

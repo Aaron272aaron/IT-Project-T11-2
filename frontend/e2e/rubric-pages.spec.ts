@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.getByRole("button", { name: "Explore demo workspace" }).click();
 });
 
-test("coordinator maps pages; tutor opens the mapped page, moves/resizes it and still marks", async ({
+test("coordinator can still preview, move and resize the document", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -16,28 +16,15 @@ test("coordinator maps pages; tutor opens the mapped page, moves/resizes it and 
   await page.goto("/#/exam/final");
   await page.getByLabel("Rubric file (optional)").setInputFiles(pdf());
   await page.getByRole("button", { name: "Save rubric", exact: true }).click();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  const start = page.getByLabel(/Demo question 1 .* start page/);
-  const end = page.getByLabel(/Demo question 1 .* end page/);
-  await start.fill("2");
-  await end.fill("3");
-  await page.getByRole("button", { name: "Save page assignments" }).click();
-  await page.reload();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await expect(start).toHaveValue("2");
-  await page.getByLabel("Demo perspective").selectOption("Tutor");
-  await expect(page.getByLabel("Rubric file (optional)")).toHaveCount(0);
-  await expect(
-    page.getByRole("button", { name: "Review rubric scores" }),
-  ).toHaveCount(0);
+  await expect(page.locator(".rubric-assignments")).toHaveCount(0);
   await page.goto("/#/question/1/mark/demo001");
   await page.getByRole("button", { name: "View rubric", exact: true }).click();
   const window = page.getByRole("dialog", { name: "Rubric preview" });
   await expect(window.getByLabel("Rubric page", { exact: true })).toHaveValue(
-    "2",
+    "1",
   );
   await expect(
-    window.getByRole("img", { name: "Rubric page 2" }),
+    window.getByRole("img", { name: "Rubric page 1" }),
   ).toBeVisible();
   // Check pixels were actually rendered, not only the navigation label.
   expect(
@@ -79,7 +66,7 @@ test("coordinator maps pages; tutor opens the mapped page, moves/resizes it and 
   expect(resized.height).toBeLessThan(moved.height - 50);
   await window.getByRole("button", { name: "Next page" }).click();
   await expect(
-    window.getByRole("img", { name: "Rubric page 3" }),
+    window.getByRole("img", { name: "Rubric page 2" }),
   ).toBeVisible();
   const sizes = await window.evaluate((el) => ({
     window: el.getBoundingClientRect().toJSON(),
@@ -99,41 +86,29 @@ test("coordinator maps pages; tutor opens the mapped page, moves/resizes it and 
   expect(errors).toEqual([]);
 });
 
-test("rejects invalid page ranges and clears assignments only when replacement is saved", async ({
+test("rubric replacement remains available without page assignments", async ({
   page,
 }) => {
   await page.goto("/#/exam/final");
   await page.getByLabel("Rubric file (optional)").setInputFiles(pdf());
   await page.getByRole("button", { name: "Save rubric", exact: true }).click();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  const start = page.getByLabel(/Demo question 1 .* start page/),
-    end = page.getByLabel(/Demo question 1 .* end page/);
-  await start.fill("4");
-  await end.fill("4");
-  await page.getByRole("button", { name: "Save page assignments" }).click();
-  await expect(page.getByRole("alert")).toContainText("whole page numbers");
-  await start.fill("2");
-  await end.fill("1");
-  await page.getByRole("button", { name: "Save page assignments" }).click();
-  await expect(page.getByRole("alert")).toContainText("end page");
-  await end.fill("3");
-  await page.getByRole("button", { name: "Save page assignments" }).click();
   await page
     .getByLabel("Rubric file (optional)")
     .setInputFiles(pdf("replacement.pdf", 1));
-  await expect(
-    page.getByRole("button", { name: "Replace rubric" }),
-  ).toBeEnabled();
-  await expect(start).toHaveValue("2");
-  await page.getByRole("button", { name: "Replace rubric" }).click();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await expect(start).toHaveValue("");
-  await page.goto("/#/question/1/mark/demo001");
-  await page.getByRole("button", { name: "View rubric", exact: true }).click();
-  await expect(page.getByRole("dialog")).toContainText("No pages assigned");
-  await expect(page.getByLabel("Rubric page", { exact: true })).toHaveValue(
-    "1",
+  await page
+    .getByRole("button", { name: "Replace rubric", exact: true })
+    .click();
+  await page.reload();
+  await expect(page.locator(".saved-attachment")).toContainText(
+    "replacement.pdf",
   );
+  await expect(page.locator(".rubric-assignments")).toHaveCount(0);
+  await page.getByLabel("Demo perspective").selectOption("Tutor");
+  await page.goto("/#/question/1/mark/demo001");
+  await expect(
+    page.getByRole("button", { name: "View rubric", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.getByRole("radio").first()).toBeVisible();
 });
 
 test("tutor perspective persists and blocks direct management routes", async ({
@@ -164,7 +139,7 @@ test("tutor perspective persists and blocks direct management routes", async ({
   ).toHaveCount(0);
 });
 
-test("maps real CSV question IDs independently and opens their reference in uploaded answers", async ({
+test("uploaded answers remain accessible to tutors without the document button", async ({
   page,
 }) => {
   await page.goto("/#/create-exam");
@@ -184,21 +159,17 @@ test("maps real CSV question IDs independently and opens their reference in uplo
   await page.getByRole("button", { name: "Validate and preview" }).click();
   await page.getByRole("button", { name: "Save answers to exam" }).click();
   await expect(page).toHaveURL(examUrl);
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await page.getByLabel(/CSV question 2 .* start page/).fill("3");
-  await page.getByRole("button", { name: "Save page assignments" }).click();
+  await expect(page.locator(".rubric-assignments")).toHaveCount(0);
   await page.getByLabel("Demo perspective").selectOption("Tutor");
   await page.getByRole("button", { name: "View uploaded answers" }).click();
   await page.getByLabel("Question or section").selectOption("102");
-  await page.getByRole("button", { name: "View rubric", exact: true }).click();
-  await expect(page.getByLabel("Rubric page", { exact: true })).toHaveValue(
-    "3",
-  );
-  await expect(page.getByRole("img", { name: "Rubric page 3" })).toBeVisible();
-  await page.getByRole("button", { name: "Close rubric" }).click();
+  await expect(
+    page.getByRole("button", { name: "View rubric", exact: true }),
+  ).toHaveCount(0);
   await page.getByLabel("Question or section").selectOption("101");
-  await page.getByRole("button", { name: "View rubric", exact: true }).click();
-  await expect(page.getByRole("dialog")).toContainText("No pages assigned");
+  await expect(
+    page.getByRole("button", { name: "View rubric", exact: true }),
+  ).toHaveCount(0);
 });
 
 test("corrupt PDFs and old DOC files fail without replacing the saved rubric", async ({
@@ -252,7 +223,7 @@ test("rubric window fits mobile and remains operable by keyboard", async ({
 });
 
 // This opt-in test uses the user's originals read-only and exercises their combined storage size.
-test("real Word rubric and Canvas answers survive save, map, refresh and tutor preview", async ({
+test("real Word rubric and Canvas answers survive save and refresh without tutor preview", async ({
   page,
 }) => {
   test.skip(
@@ -268,10 +239,6 @@ test("real Word rubric and Canvas answers survive save, map, refresh and tutor p
     page.getByRole("button", { name: "Save rubric", exact: true }),
   ).toBeEnabled({ timeout: 75000 });
   await page.getByRole("button", { name: "Save rubric", exact: true }).click();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "Preview rubric", exact: true }),
-  ).toBeVisible();
   const downloadPromise = page.waitForEvent("download");
   await page
     .getByRole("link", { name: "Download rubric", exact: true })
@@ -280,15 +247,6 @@ test("real Word rubric and Canvas answers survive save, map, refresh and tutor p
   expect(await readFile((await download.path())!)).toEqual(
     await readFile(process.env.RUBRIC_TEST_DOCX!),
   );
-  await page
-    .getByRole("button", { name: "Preview rubric", exact: true })
-    .click();
-  const count = await page
-    .getByLabel("Rubric page", { exact: true })
-    .locator("option")
-    .count();
-  expect(count).toBeGreaterThan(1);
-  await page.getByRole("button", { name: "Close rubric", exact: true }).click();
   await page
     .getByRole("button", { name: "Upload answer CSV", exact: true })
     .click();
@@ -301,29 +259,12 @@ test("real Word rubric and Canvas answers survive save, map, refresh and tutor p
   await page
     .getByRole("button", { name: "Save answers to exam", exact: true })
     .click();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await page
-    .getByLabel(/CSV question 1 [\s\S]* start page/)
-    .fill(String(count));
-  await page.getByRole("button", { name: "Save page assignments" }).click();
   await page.reload();
-  await page.getByText("Rubric pages by question", { exact: true }).click();
-  await expect(
-    page.getByLabel(/CSV question 1 [\s\S]* start page/),
-  ).toHaveValue(String(count));
+  await expect(page.locator(".saved-attachment")).toBeVisible();
+  await expect(page.locator(".rubric-assignments")).toHaveCount(0);
   await page.getByLabel("Demo perspective").selectOption("Tutor");
   await page.getByRole("button", { name: "View uploaded answers" }).click();
-  await page.getByRole("button", { name: "View rubric", exact: true }).click();
-  await expect(page.getByLabel("Rubric page", { exact: true })).toHaveValue(
-    String(count),
-  );
-  await expect(page.getByRole("dialog").locator("canvas")).toHaveAttribute(
-    "data-rendered-page",
-    String(count),
-  );
-  await expect(page.getByRole("dialog").getByRole("img")).toBeVisible();
-  // Capture only the reference document, without including real student answers.
-  await page
-    .getByRole("dialog")
-    .screenshot({ path: "test-results/real-rubric-preview.png" });
+  await expect(
+    page.getByRole("button", { name: "View rubric", exact: true }),
+  ).toHaveCount(0);
 });

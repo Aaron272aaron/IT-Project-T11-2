@@ -4,7 +4,11 @@ import { useApp, go } from "../state";
 import { Button, Card, Header, Notice, Stat, Field } from "../components/UI";
 import { RubricAccess } from "../components/RubricWindow";
 import { ExamFiles } from "./ExamSetup";
-import { confirmSampleMark } from "../sampleMarking";
+import { AiSuggestedFixes } from "../components/AiSuggestedFixes";
+import { questionType, questionTypeLabel } from "../questionTypes";
+import { groupCategories, matchesCategory } from "../rubricScores";
+import { RubricOptions } from "../components/RubricOptions";
+import { confirmSampleMark, confirmedResponseCount } from "../sampleMarking";
 
 export function SampleExam({ exam }: { exam: ExamRecord }) {
   const rows =
@@ -13,10 +17,7 @@ export function SampleExam({ exam }: { exam: ExamRecord }) {
   const manualQuestions = rows.filter(
     (q) => !exam.autoMarkedQuestionIds?.includes(q.id),
   );
-  const marked = Object.values(exam.marks ?? {}).reduce(
-    (n, records) => n + Object.keys(records).length,
-    0,
-  );
+  const marked = confirmedResponseCount(exam);
   return (
     <>
       <Header
@@ -49,7 +50,7 @@ export function SampleExam({ exam }: { exam: ExamRecord }) {
       <ExamFiles exam={exam} />
       <Card
         title="Questions"
-        description="Open any question to review the original answers and its assigned rubric pages."
+        description="Open any question to review the original answers and rubric score options."
       >
         <div className="table-scroll">
           <table>
@@ -58,6 +59,7 @@ export function SampleExam({ exam }: { exam: ExamRecord }) {
                 <th>Question</th>
                 <th>Prompt</th>
                 <th>Maximum mark</th>
+                <th>Classification</th>
                 <th>Marked</th>
                 <th />
               </tr>
@@ -79,13 +81,16 @@ export function SampleExam({ exam }: { exam: ExamRecord }) {
                     </details>
                   </td>
                   <td>{q.maxMark}</td>
+                  <td>{questionTypeLabel(exam, q.id)}</td>
                   <td>
                     {exam.autoMarkedQuestionIds?.includes(q.id)
                       ? "Source-scored"
                       : `${Object.keys(exam.marks?.[q.id] ?? {}).length} / ${students.length}`}
                   </td>
                   <td>
-                    <Button onClick={() => go(`/exam/final/question/${q.id}`)}>
+                    <Button
+                      onClick={() => go(`/exam/${exam.id}/question/${q.id}`)}
+                    >
                       Open question {i + 1}
                     </Button>
                   </td>
@@ -108,7 +113,7 @@ export function SampleQuestion({
   questionId: string;
   studentId?: string;
 }) {
-  const { saveExam, notify } = useApp();
+  const { saveExam, notify, isCoordinator } = useApp();
   const questions =
     exam.answers?.preview.questions.filter((q) => !q.instruction) ?? [];
   const question = questions.find((q) => q.id === questionId);
@@ -117,16 +122,16 @@ export function SampleQuestion({
   const student = students.find((s) => s.id === studentId);
   const answer = student?.answers.find((a) => a.questionId === questionId);
   const saved = studentId ? exam.marks?.[questionId]?.[studentId] : undefined;
-  const categories = exam.categories?.[questionId] ?? [];
+  const categories = groupCategories(exam.categories?.[questionId] ?? []);
   const automatic = exam.autoMarkedQuestionIds?.includes(questionId);
   const [categoryId, setCategoryId] = useState(saved?.categoryId ?? "");
-  const category = categories.find((c) => c.id === categoryId);
+  const category = categories.find((c) => matchesCategory(c, categoryId));
   const [comment, setComment] = useState(saved?.comment ?? "");
   const [error, setError] = useState("");
   if (!question || (studentId && !answer))
     return (
       <Card title="Response not found">
-        <Button onClick={() => go("/exam/final")}>Back to exam</Button>
+        <Button onClick={() => go(`/exam/${exam.id}`)}>Back to exam</Button>
       </Card>
     );
   function save(next: boolean) {
@@ -153,8 +158,8 @@ export function SampleQuestion({
         ].find((s) => !updated.marks?.[questionId]?.[s.id]);
         go(
           remaining
-            ? `/exam/final/question/${questionId}/mark/${encodeURIComponent(remaining.id)}`
-            : `/exam/final/question/${questionId}`,
+            ? `/exam/${exam.id}/question/${questionId}/mark/${encodeURIComponent(remaining.id)}`
+            : `/exam/${exam.id}/question/${questionId}`,
         );
       }
     } catch (reason) {
@@ -166,7 +171,7 @@ export function SampleQuestion({
       <Header
         title={`${studentId ? "Mark " : ""}Question ${ordinal}`}
         crumb={`COMP10001 / ${exam.title} / Question ${ordinal}`}
-        subtitle={`Canvas question ${questionId} · ${question.maxMark} marks`}
+        subtitle={`Canvas question ${questionId} · ${question.maxMark} marks · ${questionTypeLabel(exam, questionId)}`}
         actions={
           <>
             <RubricAccess exam={exam} questionKey={`canvas:${questionId}`} />
@@ -174,8 +179,8 @@ export function SampleQuestion({
               onClick={() =>
                 go(
                   studentId
-                    ? `/exam/final/question/${questionId}`
-                    : "/exam/final",
+                    ? `/exam/${exam.id}/question/${questionId}`
+                    : `/exam/${exam.id}`,
                 )
               }
             >
@@ -184,9 +189,11 @@ export function SampleQuestion({
           </>
         }
       />
-      <Card title="Question text">
-        <p className="preserve">{question.text}</p>
-      </Card>
+      {!studentId && (
+        <Card title="Question text">
+          <p className="preserve">{question.text}</p>
+        </Card>
+      )}
       {!studentId ? (
         <Card title="Student responses">
           <div className="table-scroll">
@@ -214,7 +221,7 @@ export function SampleQuestion({
                       <Button
                         onClick={() =>
                           go(
-                            `/exam/final/question/${questionId}/mark/${encodeURIComponent(s.id)}`,
+                            `/exam/${exam.id}/question/${questionId}/mark/${encodeURIComponent(s.id)}`,
                           )
                         }
                       >
@@ -229,26 +236,29 @@ export function SampleQuestion({
         </Card>
       ) : (
         <div className="marking-grid">
-          <Card
-            title="Original student response"
-            description={`${studentId} · Read only`}
-          >
-            <pre className="code-block" data-testid="sample-answer">
-              {answer?.original || "(Blank response)"}
-            </pre>
-            <p className="helper">
-              Source CSV score: {answer?.sourceScore || "—"}. This is not a mark
-              confirmed in this workspace.
-            </p>
-          </Card>
-          <Card
-            title="Human decision"
-            description="Check the assigned rubric before confirming a score for the whole answer."
-          >
-            <p className="helper">
-              Use the document's categories and award the corresponding total.
-              No automatic marking or code execution is performed.
-            </p>
+          {/* Keep the prompt and original response together beside the scoring panel. */}
+          <div className="marking-answer-column">
+            <Card title="Question text">
+              <p className="preserve">{question.text}</p>
+            </Card>
+            <Card
+              title="Original student response"
+              description={`${studentId} · Read only`}
+            >
+              {!isCoordinator &&
+                questionType(exam, questionId) === "coding" && (
+                  <AiSuggestedFixes />
+                )}
+              <pre className="code-block" data-testid="sample-answer">
+                {answer?.original || "(Blank response)"}
+              </pre>
+              <p className="helper">
+                Source CSV score: {answer?.sourceScore || "—"}. This is not a
+                mark confirmed in this workspace.
+              </p>
+            </Card>
+          </div>
+          <Card className="mark-decision" title="Mark decision">
             {automatic ? (
               <Notice>
                 This section is identified as automatically marked in the
@@ -263,24 +273,14 @@ export function SampleQuestion({
                     answers remain available for review.
                   </Notice>
                 )}
-                <Field label="Rubric category">
-                  <select
-                    aria-label="Rubric category"
-                    value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}
-                  >
-                    <option value="">Choose a category</option>
-                    {categories.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.score} / {question.maxMark} ·{" "}
-                        {c.description.slice(0, 100)}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
+                <RubricOptions
+                  options={categories}
+                  maxMark={question.maxMark}
+                  selected={categoryId}
+                  onSelect={setCategoryId}
+                />
                 {category && (
                   <>
-                    <p>{category.description}</p>
                     <p>
                       <b>
                         Final score: {category.score} / {question.maxMark}
@@ -301,6 +301,24 @@ export function SampleQuestion({
                 Saved mark: {saved.score} / {question.maxMark}
               </p>
             )}
+            {saved &&
+              !categories.some(
+                (c) =>
+                  matchesCategory(c, saved.categoryId) &&
+                  c.score === saved.score,
+              ) && (
+                <Notice>
+                  The rubric has changed since this mark was saved. The saved
+                  score is retained. Select a current option and confirm only
+                  after reviewing the answer.
+                  {saved.categoryDescription && (
+                    <details>
+                      <summary>Previously selected description</summary>
+                      <p>{saved.categoryDescription}</p>
+                    </details>
+                  )}
+                </Notice>
+              )}
             {error && (
               <p className="error" role="alert">
                 {error}
