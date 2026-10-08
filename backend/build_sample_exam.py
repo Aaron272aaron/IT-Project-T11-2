@@ -42,6 +42,8 @@ def build():
         "rubric": {"name": DOCX_NAME, "size": len(docx_bytes), "uploadedAt": now,
                    "dataUrl": "data:application/octet-stream;base64," + base64.b64encode(docx_bytes).decode(),
                    "previewPdf": "data:application/pdf;base64," + document["pdf"], "pageCount": 24},
+        # Part classifications are bundled for frontend-only demonstrations.
+        "questionTypes": dict(zip([q["id"] for q in questions], ['expression-output', 'expression-output', 'expression-output', 'expression-output', 'expression-output', 'expression-output', 'expression-output', 'expression-output', 'expression-output', 'assignment-statement', 'assignment-statement', 'assignment-statement', 'assignment-statement', 'multiple-choice', 'multiple-choice', 'multiple-choice', 'multiple-choice', 'code-completion', 'code-completion', 'code-completion', 'code-completion', 'code-completion', 'debugging', 'debugging', 'debugging', 'debugging', 'debugging', 'debugging', 'debugging', 'debugging', 'debugging', 'coding', 'coding', 'coding', 'short-answer', 'short-answer', 'short-answer'])),
         "categories": {q["id"]: metadata["categoriesByQuestionNumber"].get(str(i+1), []) for i,q in enumerate(questions)},
         "autoMarkedQuestionIds": [questions[n-1]["id"] for n in metadata["autoMarkedQuestionNumbers"]],
         "rubricPages": {"canvas:"+q["id"]: {"start": start, "end": end} for q,(start,end) in zip(questions,ranges)},

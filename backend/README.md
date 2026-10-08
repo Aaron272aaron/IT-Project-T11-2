@@ -17,11 +17,11 @@
 
 ### 1. 选择文件，还没有上传
 
-`frontend/src/pages/CanvasUpload.tsx` 的 `choose()` 记住你选择的 `File`，检查是不是 `.csv`、有没有超过 10 MB。它不会在浏览器解析 CSV，也不会此时就发送文件。
+`frontend/src/pages/imports/CanvasUpload.tsx` 的 `choose()` 记住你选择的 `File`，检查是不是 `.csv`、有没有超过 10 MB。它不会在浏览器解析 CSV，也不会此时就发送文件。
 
 ### 2. 点击 Validate and preview，网页开始寄文件
 
-同一文件里的 `validate()` 会显示等待状态，再调用 `frontend/src/api.ts` 的 `previewCanvasCsv()`。发送部分可简化理解为：
+同一文件里的 `validate()` 会显示等待状态，再调用 `frontend/src/services/api.ts` 的 `previewCanvasCsv()`。发送部分可简化理解为：
 
 ```ts
 fetch('/api/canvas/preview', {
@@ -127,7 +127,7 @@ Python 不自动热更新。修改后端代码后，在终端 A 按 Ctrl+C，再
 
 后台保留一个很小的 `GET /api/health`，自动测试用它确认服务已经启动；它不再有网页按钮，也不返回展示用的文字和时间戳。
 
-旧的前端 Canvas 解析逻辑在接入 Python 时已移除。`frontend/src/canvasCsv.ts` 仍提供前端类型和虚构示例，这是上传页面还在使用的内容。另一个六题演示考试的导入功能有自己的格式和用途，不在此次清理范围内。
+旧的前端 Canvas 解析逻辑在接入 Python 时已移除。`frontend/src/models/canvasCsv.ts` 仍提供前端类型和虚构示例，这是上传页面还在使用的内容。另一个六题演示考试的导入功能有自己的格式和用途，不在此次清理范围内。
 
 目前只接入读取和校验，没有调用 `import_canvas_csv()` 写 SQLite，也没有接入保存评分和成绩导出。未保存的网页预览刷新即清除。现在可以点击 Save answers to exam，把已校验的结果按考试保存到当前标签页的 sessionStorage，刷新后可恢复；仍不是数据库保存。Rubric Word/PDF 也作为本标签页的参考附件保存，不调用这个 CSV 解析接口。演示评分记录保持独立。
 
