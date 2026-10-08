@@ -2,7 +2,7 @@
 """Group short-answer submissions using syntax-aware Python normalisation.
 
 Answers with insignificant formatting differences are grouped together.
-Meaningful differences in Python syntax are preserved.
+Token types and values, comments, and logical block boundaries are preserved.
 
 Student code is never executed, and original answers are never modified.
 """
@@ -30,27 +30,7 @@ class Submission:
     answer: str
 
 
-@dataclass(frozen=True)
-class GroupingOptions:
-    """Settings for grouping student answers.
-
-    Kept for compatibility with the existing grouping interface.
-    Syntax-aware normalisation determines which whitespace is ignored.
-    """
-
-    extra_whitespace: str = ""
-
-    def __post_init__(self) -> None:
-        if any(not char.isspace() for char in self.extra_whitespace):
-            raise ValueError(
-                "extra_whitespace must contain only whitespace characters"
-            )
-
-
-def grouping_key(
-    answer: str,
-    options: GroupingOptions | None = None
-) -> str:
+def grouping_key(answer: str) -> str:
     """Create a syntax-aware key for comparing Python answers.
 
     Ignore insignificant whitespace between Python tokens.
@@ -60,22 +40,23 @@ def grouping_key(
     - String literal contents
     - Numbers and operators
     - Comments
-    - Indentation structure
+    - Indentation structure (not indentation width)
     - Statement boundaries
     - Parentheses and punctuation
 
     Invalid or incomplete Python answers are preserved exactly.
     Student code is never executed.
 
-    The options parameter is retained for interface compatibility.
     """
     if not isinstance(answer, str):
         raise TypeError("answer must be a string")
 
-    # Check whether the answer is valid standalone Python.
-    # This only parses code; it does not execute anything.
+    # Validate standalone Python syntax without executing submitted code.
     try:
         ast.parse(answer)
+        # Compilation validates context (e.g., return outside a function).
+        # The resulting code object is discarded; nothing is executed.
+        compile(answer, "<student-answer>", "exec")
     except (SyntaxError, ValueError):
         return "raw:" + answer
 
@@ -113,7 +94,7 @@ def grouping_key(
             else:
                 tokens.append((token_type, token_value))
 
-    except (tokenize.TokenError, IndentationError):
+    except (tokenize.TokenError, IndentationError, SyntaxError):
         return "raw:" + answer
 
     # Convert the token sequence into a stable string key.
@@ -123,10 +104,7 @@ def grouping_key(
     )
 
 
-def group_answers(
-    submissions: Iterable[Submission],
-    options: GroupingOptions | None = None
-) -> list[dict]:
+def group_answers(submissions: Iterable[Submission]) -> list[dict]:
     """Group student answers with matching syntax-aware keys.
 
     All submissions must belong to the same question.
@@ -137,8 +115,6 @@ def group_answers(
 
     Original student answers are preserved.
     """
-    options = options or GroupingOptions()
-
     # Store submissions according to their grouping keys.
     buckets: dict[str, list[Submission]] = defaultdict(list)
 
@@ -194,7 +170,7 @@ def group_answers(
             )
 
         # Generate the syntax-aware grouping key.
-        key = grouping_key(item.answer, options)
+        key = grouping_key(item.answer)
 
         # Add the original submission to its group.
         buckets[key].append(item)

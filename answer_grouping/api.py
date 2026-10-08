@@ -1,6 +1,6 @@
 """Framework-neutral JSON adapter; use behind an authenticated HTTP endpoint."""
 from __future__ import annotations
-from .core import GroupingOptions, Submission, group_answers
+from .core import Submission, group_answers
 
 
 def handle_grouping_request(payload: dict) -> dict:
