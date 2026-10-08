@@ -1,11 +1,11 @@
 import { useState, type FormEvent } from "react";
-import { useApp, go } from "../state";
-import type { ExamAttachment, ExamRecord } from "../exams";
-import { Header, Card, Button, Field, Notice, Stat } from "../components/UI";
-import { QuestionTypes } from "../components/QuestionTypes";
-import { questionTypeLabel } from "../questionTypes";
-import { RubricEditor } from "../components/RubricEditor";
-import { RubricPicker } from "../components/RubricPicker";
+import { useApp, go } from "../../state";
+import type { ExamAttachment, ExamRecord } from "../../models/exams";
+import { Header, Card, Button, Field, Notice, Stat } from "../../components/UI";
+import { QuestionTypes } from "../../components/marking/QuestionTypes";
+import { questionTypeLabel } from "../../models/questionTypes";
+import { RubricEditor } from "../../components/rubric/RubricEditor";
+import { RubricPicker } from "../../components/rubric/RubricPicker";
 
 export function CreateExam() {
   const { saveExam, notify, exams } = useApp();

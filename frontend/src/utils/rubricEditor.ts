@@ -1,5 +1,5 @@
 import { groupCategoryMap, matchesCategory } from "./rubricScores";
-import type { ExamRecord, RubricCategory } from "./exams";
+import type { ExamRecord, RubricCategory } from "../models/exams";
 export type CategoryMap = Record<string, RubricCategory[]>;
 
 // A rubric is linked by the stable Canvas question ID, never its display label.

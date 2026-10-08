@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { prepareRubric } from "../rubricDocument";
-import type { ExamAttachment } from "../exams";
+import { prepareRubric } from "../../services/rubricDocument";
+import type { ExamAttachment } from "../../models/exams";
 
 // Keep the original document as an attachment; do not infer scoring rules.
 // The limit is deliberately small because this prototype uses sessionStorage.

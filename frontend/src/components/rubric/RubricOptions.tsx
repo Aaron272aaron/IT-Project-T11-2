@@ -1,6 +1,6 @@
 import { useId } from "react";
-import { groupCategories, matchesCategory } from "../rubricScores";
-import type { RubricCategory } from "../exams";
+import { groupCategories, matchesCategory } from "../../utils/rubricScores";
+import type { RubricCategory } from "../../models/exams";
 
 // Selecting a score and expanding its description are separate keyboard-accessible actions.
 export function RubricOptions({

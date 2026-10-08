@@ -1,12 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { initialWorkspace, type Answer } from "../src/domain";
+import { initialWorkspace, type Answer } from "../src/models/domain";
 import {
   categoriesFor,
   saveCategoryMark,
   previewCategoryScores,
   applyCategoryScores,
   studentTotals,
-} from "../src/rubric";
+} from "../src/utils/rubric";
 const base: Answer = {
   id: "a",
   question: 1,

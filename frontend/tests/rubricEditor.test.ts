@@ -1,12 +1,12 @@
 import { it, expect } from "vitest";
-import type { ExamRecord } from "../src/exams";
+import type { ExamRecord } from "../src/models/exams";
 import {
   saveCategories,
   affectedMarks,
   validateCategories,
-} from "../src/rubricEditor";
-import { groupCategoryMap, groupCategories } from "../src/rubricScores";
-import { pdfRubricParagraphs } from "../src/pdfRubricText";
+} from "../src/utils/rubricEditor";
+import { groupCategoryMap, groupCategories } from "../src/utils/rubricScores";
+import { pdfRubricParagraphs } from "../src/utils/pdfRubricText";
 const exam: ExamRecord = {
   id: "custom",
   title: "Custom",

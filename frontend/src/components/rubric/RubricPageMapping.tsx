@@ -1,12 +1,12 @@
 import { useState } from "react";
-import type { ExamRecord } from "../exams";
+import type { ExamRecord } from "../../models/exams";
 import {
   rubricQuestions,
   validRange,
   assignSequentialPages,
-} from "../rubricPages";
-import { useApp } from "../state";
-import { Button, Card } from "./UI";
+} from "../../utils/rubricPages";
+import { useApp } from "../../state";
+import { Button, Card } from "../UI";
 import { RubricWindow } from "./RubricWindow";
 
 // Page numbers refer to the PDF preview, not printed labels or Word section numbers.

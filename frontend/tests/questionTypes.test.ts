@@ -1,6 +1,6 @@
 import { it, expect } from "vitest";
-import type { ExamRecord } from "../src/exams";
-import { questionType } from "../src/questionTypes";
+import type { ExamRecord } from "../src/models/exams";
+import { questionType } from "../src/models/questionTypes";
 const sample: ExamRecord = {
   id: "final",
   title: "Sample",

@@ -27,6 +27,7 @@ export type ModerationRecord = {
   affected: { student: string; before: number; after: number }[];
 };
 export type Profile = {
+  avatar?: string | null;
   name: string;
   email: string;
   username: string;
@@ -130,9 +131,10 @@ export const questions: Question[] = [
   },
 ];
 export const initialProfile: Profile = {
-  name: "Alex Morgan",
-  email: "alex.morgan@example.edu",
-  username: "alex.morgan",
+  avatar: `${import.meta.env.BASE_URL}demo/avatar.png`,
+  name: "Fran Neumann",
+  email: "fran.neumann@example.edu",
+  username: "fran.neumann",
   language: "English",
   timezone: "Australia/Melbourne",
 };

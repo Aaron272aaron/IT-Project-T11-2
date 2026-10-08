@@ -1,6 +1,6 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
-import type { ExamAttachment } from "./exams";
+import type { ExamAttachment } from "../models/exams";
 
 // Bundle the worker locally: student documents never go to an external viewer.
 GlobalWorkerOptions.workerSrc = workerUrl;

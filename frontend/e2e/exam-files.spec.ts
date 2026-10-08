@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
-import { canvasExampleCsv } from "../src/canvasCsv";
+import { canvasExampleCsv } from "../src/models/canvasCsv";
 
 import { pdf } from "./pdf-fixture";
 async function createExam(page: Page, name: string) {

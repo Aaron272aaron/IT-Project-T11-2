@@ -1,5 +1,5 @@
 import { groupCategories, matchesCategory } from "./rubricScores";
-import type { ExamRecord } from "./exams";
+import type { ExamRecord } from "../models/exams";
 
 // One human-selected score applies to the whole answer. The CSV source score is never a confirmation.
 export function confirmSampleMark(

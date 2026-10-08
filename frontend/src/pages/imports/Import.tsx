@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Papa from "papaparse";
-import { useApp, go } from "../state";
+import { useApp, go } from "../../state";
 import {
   validateCsv,
   groupAnswers,
@@ -8,7 +8,7 @@ import {
   sampleCsv,
   type Answer,
   type CsvIssue,
-} from "../domain";
+} from "../../models/domain";
 import {
   Header,
   Card,
@@ -16,7 +16,7 @@ import {
   Badge,
   Notice,
   Progress,
-} from "../components/UI";
+} from "../../components/UI";
 type Stage = "upload" | "errors" | "review" | "progress" | "done";
 export function ImportPage() {
   const { answers, data, setData, workspace } = useApp();

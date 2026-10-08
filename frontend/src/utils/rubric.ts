@@ -4,7 +4,7 @@ import {
   type Answer,
   type Workspace,
   type ModerationRecord,
-} from "./domain";
+} from "../models/domain";
 export type RubricCategory = {
   id: string;
   label: string;

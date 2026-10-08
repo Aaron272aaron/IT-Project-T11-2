@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { canvasExampleCsv } from "../src/canvasCsv";
+import { canvasExampleCsv } from "../src/models/canvasCsv";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");

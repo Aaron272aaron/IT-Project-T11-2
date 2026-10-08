@@ -1604,3 +1604,60 @@ th {
 .mark-decision .rubric-score-option p {
   margin: 6px 0 0;
 }
+
+/* Consistent circular photos and generated initials across account surfaces. */
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #e6f7fd;
+}
+.profile-avatar.large {
+  width: 88px;
+  height: 88px;
+}
+.account-link > .profile-avatar {
+  display: block;
+  margin-bottom: 8px;
+}
+.avatar-settings {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.avatar-settings > div {
+  min-width: 0;
+  flex: 1;
+}
+@media (max-width: 600px) {
+  .avatar-settings {
+    flex-direction: column;
+  }
+}
+
+/* Paired empty panes will display execution results when the API is connected. */
+.automated-test-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.automated-test-result section {
+  min-width: 0;
+}
+.automated-test-result h3 {
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+.automated-test-result .code-block {
+  min-height: 120px;
+  margin: 0;
+}
+
+/* A light-blue accent distinguishes the question from the student response. */
+.question-text-card {
+  border-left: 14px solid #b5e3f2;
+}

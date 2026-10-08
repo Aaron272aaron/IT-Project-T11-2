@@ -13,14 +13,14 @@ import {
   type Workspace,
   type Profile,
   type Answer,
-} from "./domain";
+} from "./models/domain";
 import {
   EXAM_STORAGE_KEY,
   examsFor,
   restoreExams,
   updateExam,
   type ExamRecord,
-} from "./exams";
+} from "./models/exams";
 const KEY = "automarktic-demo-v1";
 function restore() {
   try {
@@ -35,7 +35,17 @@ function restore() {
         s.answers &&
         s.workspaces.some((w: Workspace) => w.id === s.active)
       )
-        return s;
+        // Upgrade existing demo sessions once; null means the user chose initials.
+        return {
+          ...s,
+          profile: {
+            ...s.profile,
+            avatar:
+              s.profile.avatar === undefined
+                ? initialProfile.avatar
+                : s.profile.avatar,
+          },
+        };
     }
   } catch {}
   return {

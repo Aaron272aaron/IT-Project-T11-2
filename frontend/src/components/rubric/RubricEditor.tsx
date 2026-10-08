@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import type { ExamRecord, RubricCategory } from "../exams";
-import { useApp } from "../state";
+import type { ExamRecord, RubricCategory } from "../../models/exams";
+import { useApp } from "../../state";
 import {
   affectedMarks,
   saveCategories,
   validateCategories,
   type CategoryMap,
-} from "../rubricEditor";
-import { groupCategories, groupCategoryMap } from "../rubricScores";
-import { importRubric, type RubricImport } from "../rubricImport";
-import { Button, Card, Field, Notice } from "./UI";
+} from "../../utils/rubricEditor";
+import { groupCategories, groupCategoryMap } from "../../utils/rubricScores";
+import { importRubric, type RubricImport } from "../../services/rubricImport";
+import { Button, Card, Field, Notice } from "../UI";
 
 // Coordinator-only drafts: document parsing never writes to saved exam state.
 export function RubricEditor({ exam }: { exam: ExamRecord }) {

@@ -2,9 +2,9 @@ import { it, expect } from "vitest";
 import {
   confirmSampleMark,
   confirmedResponseCount,
-} from "../src/sampleMarking";
-import { assignSequentialPages } from "../src/rubricPages";
-import type { ExamRecord } from "../src/exams";
+} from "../src/utils/sampleMarking";
+import { assignSequentialPages } from "../src/utils/rubricPages";
+import type { ExamRecord } from "../src/models/exams";
 const exam: ExamRecord = {
   id: "final",
   title: "Sample",

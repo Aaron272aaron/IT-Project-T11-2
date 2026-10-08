@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useApp, go } from "../state";
-import { questions, type ModerationRecord } from "../domain";
+import { useApp, go } from "../../state";
+import { questions, type ModerationRecord } from "../../models/domain";
 import {
   categoriesFor,
   previewCategoryScores,
   applyCategoryScores,
   studentTotals,
-} from "../rubric";
+} from "../../utils/rubric";
 import {
   Header,
   Card,
@@ -17,7 +17,7 @@ import {
   Modal,
   Stat,
   Empty,
-} from "../components/UI";
+} from "../../components/UI";
 export function Review() {
   const { workspace } = useApp();
   const [question, setQuestion] = useState(1);

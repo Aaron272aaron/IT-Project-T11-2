@@ -1,14 +1,14 @@
 import { useState } from "react";
-import type { ExamRecord } from "../exams";
-import { useApp, go } from "../state";
-import { Button, Card, Header, Notice, Stat, Field } from "../components/UI";
-import { RubricAccess } from "../components/RubricWindow";
+import type { ExamRecord } from "../../models/exams";
+import { useApp, go } from "../../state";
+import { Button, Card, Header, Notice, Stat, Field } from "../../components/UI";
+import { RubricAccess } from "../../components/rubric/RubricWindow";
 import { ExamFiles } from "./ExamSetup";
-import { AiSuggestedFixes } from "../components/AiSuggestedFixes";
-import { questionType, questionTypeLabel } from "../questionTypes";
-import { groupCategories, matchesCategory } from "../rubricScores";
-import { RubricOptions } from "../components/RubricOptions";
-import { confirmSampleMark, confirmedResponseCount } from "../sampleMarking";
+import { AiSuggestedFixes } from "../../components/marking/AiSuggestedFixes";
+import { questionType, questionTypeLabel } from "../../models/questionTypes";
+import { groupCategories, matchesCategory } from "../../utils/rubricScores";
+import { RubricOptions } from "../../components/rubric/RubricOptions";
+import { confirmSampleMark, confirmedResponseCount } from "../../utils/sampleMarking";
 
 export function SampleExam({ exam }: { exam: ExamRecord }) {
   const rows =
@@ -190,7 +190,7 @@ export function SampleQuestion({
         }
       />
       {!studentId && (
-        <Card title="Question text">
+        <Card className="question-text-card" title="Question text">
           <p className="preserve">{question.text}</p>
         </Card>
       )}
@@ -238,7 +238,7 @@ export function SampleQuestion({
         <div className="marking-grid">
           {/* Keep the prompt and original response together beside the scoring panel. */}
           <div className="marking-answer-column">
-            <Card title="Question text">
+            <Card className="question-text-card" title="Question text">
               <p className="preserve">{question.text}</p>
             </Card>
             <Card
@@ -257,6 +257,23 @@ export function SampleQuestion({
                 mark confirmed in this workspace.
               </p>
             </Card>
+            {/* Empty result panes are reserved for the future execution API. */}
+            {["assignment-statement", "code-completion"].includes(
+              questionType(exam, questionId),
+            ) && (
+              <Card title="Automated test result">
+                <div className="automated-test-result">
+                  <section aria-label="Student code execution">
+                    <h3>Student code execution</h3>
+                    <pre className="code-block" />
+                  </section>
+                  <section aria-label="Expected output">
+                    <h3>Expected output</h3>
+                    <pre className="code-block" />
+                  </section>
+                </div>
+              </Card>
+            )}
           </div>
           <Card className="mark-decision" title="Mark decision">
             {automatic ? (

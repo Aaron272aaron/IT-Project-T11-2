@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useApp, go } from "../state";
-import { questions, download } from "../domain";
+import { useApp, go } from "../../state";
+import { questions, download } from "../../models/domain";
 import {
   Header,
   Card,
@@ -9,10 +9,10 @@ import {
   Progress,
   Badge,
   Modal,
-} from "../components/UI";
+} from "../../components/UI";
 import Papa from "papaparse";
-import { categoriesFor } from "../rubric";
-import { confirmedResponseCount } from "../sampleMarking";
+import { categoriesFor } from "../../utils/rubric";
+import { confirmedResponseCount } from "../../utils/sampleMarking";
 import { ExamFiles } from "./ExamSetup";
 export function Dashboard({ list = false }: { list?: boolean }) {
   const { answers, workspace, exams, isCoordinator } = useApp();

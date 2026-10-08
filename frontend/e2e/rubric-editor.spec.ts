@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { canvasExampleCsv } from "../src/canvasCsv";
+import { canvasExampleCsv } from "../src/models/canvasCsv";
 import { readFileSync } from "node:fs";
 // The bundled fixture supplies paths and IDs; requests still exercise the real Python API.
 const sample = JSON.parse(

@@ -1,4 +1,4 @@
-import { pdfRubricParagraphs } from "./pdfRubricText";
+import { pdfRubricParagraphs } from "../utils/pdfRubricText";
 import { loadPdf } from "./rubricDocument";
 export type ImportedBlock = {
   id: string;

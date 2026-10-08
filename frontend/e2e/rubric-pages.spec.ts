@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { pdf } from "./pdf-fixture";
 import { readFile } from "node:fs/promises";
-import { canvasExampleCsv } from "../src/canvasCsv";
+import { canvasExampleCsv } from "../src/models/canvasCsv";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");

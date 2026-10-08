@@ -1,4 +1,4 @@
-import { RubricAccess } from "../components/RubricWindow";
+import { RubricAccess } from "../../components/rubric/RubricWindow";
 import { useEffect, useRef, useState } from "react";
 import {
   Header,
@@ -8,16 +8,16 @@ import {
   Notice,
   Field,
   Modal,
-} from "../components/UI";
-import { download } from "../domain";
-import { go, useApp } from "../state";
-import type { ExamRecord } from "../exams";
-import { previewCanvasCsv } from "../api";
+} from "../../components/UI";
+import { download } from "../../models/domain";
+import { go, useApp } from "../../state";
+import type { ExamRecord } from "../../models/exams";
+import { previewCanvasCsv } from "../../services/api";
 import {
   canvasExampleCsv,
   MAX_CANVAS_BYTES,
   type CanvasPreview,
-} from "../canvasCsv";
+} from "../../models/canvasCsv";
 
 export function CanvasUpload({
   exam,

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { previewCanvasCsv } from "../src/api";
+import { previewCanvasCsv } from "../src/services/api";
 
 // These tests cover the network contract; CSV rules are tested against Python.
 const preview = {

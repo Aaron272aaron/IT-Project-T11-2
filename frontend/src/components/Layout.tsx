@@ -1,3 +1,4 @@
+import { Avatar } from "./profile/Avatar";
 import { useState, type ReactNode } from "react";
 import { useApp, go } from "../state";
 const links = [
@@ -115,6 +116,7 @@ export function Layout({
             href="#/user-settings"
             onClick={() => setOpen(false)}
           >
+            <Avatar name={data.profile.name} src={data.profile.avatar} />
             <b>{data.profile.name}</b>
             <span>
               {isCoordinator ? "Subject coordinator" : "Tutor (demo)"}

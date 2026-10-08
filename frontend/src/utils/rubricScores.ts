@@ -1,4 +1,4 @@
-import type { RubricCategory } from "./exams";
+import type { RubricCategory } from "../models/exams";
 
 export function matchesCategory(option: RubricCategory, id?: string): boolean {
   return !!id && (option.id === id || !!option.mergedIds?.includes(id));

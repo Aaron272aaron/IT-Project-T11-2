@@ -1,5 +1,5 @@
 // The wire response must be checked at runtime before rendering server data.
-import type { CanvasPreview } from "./canvasCsv";
+import type { CanvasPreview } from "../models/canvasCsv";
 function isCanvasPreview(value: unknown): value is CanvasPreview {
   if (!value || typeof value !== "object") return false;
   const p = value as CanvasPreview;

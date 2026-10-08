@@ -5,6 +5,7 @@ export default defineConfig({
     "**/sample-exam.spec.ts",
     "**/rubric-editor.spec.ts",
     "**/question-types.spec.ts",
+    "**/avatar.spec.ts",
   ],
   use: {
     // Tests use their own Vite port instead of your manual development tab.

@@ -6,7 +6,7 @@ import {
   seedAnswers,
   groupAnswers,
   type Answer,
-} from "../src/domain";
+} from "../src/models/domain";
 describe("CSV validation", () => {
   it("preserves quoted multiline code and commas", () => {
     const r = validateCsv(sampleCsv);

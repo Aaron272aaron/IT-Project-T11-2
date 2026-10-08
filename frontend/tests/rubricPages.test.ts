@@ -1,5 +1,5 @@
 import { it, expect } from "vitest";
-import { validRange, rubricQuestions } from "../src/rubricPages";
+import { validRange, rubricQuestions } from "../src/utils/rubricPages";
 it("accepts a single page or an inclusive page range", () => {
   expect(validRange({ start: 2, end: 2 }, 3)).toBe(true);
   expect(validRange({ start: 1, end: 3 }, 3)).toBe(true);

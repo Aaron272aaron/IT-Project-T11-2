@@ -1,8 +1,8 @@
-import { RubricAccess } from "../components/RubricWindow";
+import { RubricAccess } from "../../components/rubric/RubricWindow";
 import { useState } from "react";
-import { useApp, go } from "../state";
-import { questions, type Answer } from "../domain";
-import { categoriesFor, saveCategoryMark } from "../rubric";
+import { useApp, go } from "../../state";
+import { questions, type Answer } from "../../models/domain";
+import { categoriesFor, saveCategoryMark } from "../../utils/rubric";
 import {
   Header,
   Card,
@@ -14,7 +14,7 @@ import {
   Notice,
   Empty,
   Stat,
-} from "../components/UI";
+} from "../../components/UI";
 export function QuestionOverview({ id }: { id: number }) {
   const { answers, workspace, notify } = useApp();
   const q = questions.find((q) => q.id === id)!;

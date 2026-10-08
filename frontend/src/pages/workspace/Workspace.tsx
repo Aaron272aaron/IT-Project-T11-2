@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from "react";
-import { useApp, go } from "../state";
-import { type Workspace, type Member, type Role } from "../domain";
+import { Avatar, readAvatar } from "../../components/profile/Avatar";
+import { useState, useRef, type FormEvent } from "react";
+import { useApp, go } from "../../state";
+import { type Workspace, type Member, type Role } from "../../models/domain";
 import {
   Header,
   Card,
@@ -9,7 +10,7 @@ import {
   Badge,
   Modal,
   Empty,
-} from "../components/UI";
+} from "../../components/UI";
 export function WorkspaceForm({ create = false }: { create?: boolean }) {
   const { workspace, setData, notify, exams } = useApp();
   const blank = {
@@ -189,7 +190,7 @@ export function WorkspaceForm({ create = false }: { create?: boolean }) {
   );
 }
 export function Members() {
-  const { workspace, setData, notify } = useApp();
+  const { data, workspace, setData, notify } = useApp();
   const [query, setQuery] = useState("");
   const [role, setRole] = useState("All roles");
   const [editing, setEditing] = useState<Member | "new" | null>(null);
@@ -263,13 +264,10 @@ export function Members() {
                 <tr key={m.id}>
                   <td>
                     <div className="person">
-                      <span className="avatar">
-                        {m.name
-                          .split(" ")
-                          .map((x) => x[0])
-                          .slice(0, 2)
-                          .join("")}
-                      </span>
+                      <Avatar
+                        name={m.name}
+                        src={m.id === "me" ? data.profile.avatar : undefined}
+                      />
                       <div>
                         <b>
                           {m.name} {m.id === "me" && <Badge>You</Badge>}
@@ -448,6 +446,32 @@ function MemberDialog({
 export function UserSettings() {
   const { data, setData, workspace, notify } = useApp();
   const [form, setForm] = useState(data.profile);
+  const [avatarError, setAvatarError] = useState("");
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const avatarInput = useRef<HTMLInputElement>(null);
+  // A request counter prevents an older file read from replacing a newer choice.
+  const avatarRequest = useRef(0);
+  async function uploadAvatar(file?: File) {
+    if (!file) return;
+    const request = ++avatarRequest.current;
+    setAvatarError("");
+    setAvatarLoading(true);
+    try {
+      const avatar = await readAvatar(file);
+      if (request === avatarRequest.current) setForm((f) => ({ ...f, avatar }));
+    } catch (error) {
+      if (request === avatarRequest.current)
+        setAvatarError((error as Error).message);
+    } finally {
+      if (request === avatarRequest.current) setAvatarLoading(false);
+    }
+  }
+  function resetAvatarRead() {
+    avatarRequest.current++;
+    setAvatarLoading(false);
+    setAvatarError("");
+    if (avatarInput.current) avatarInput.current.value = "";
+  }
   function save(e: FormEvent) {
     e.preventDefault();
     setData((d) => ({
@@ -475,6 +499,38 @@ export function UserSettings() {
           description="Fields marked with * are required."
         >
           <form onSubmit={save}>
+            <div className="avatar-settings">
+              <Avatar name={form.name} src={form.avatar} large />
+              <div>
+                <Field label="Profile photo">
+                  <input
+                    ref={avatarInput}
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    onChange={(e) => void uploadAvatar(e.target.files?.[0])}
+                  />
+                </Field>
+                <p className="helper">
+                  PNG, JPG or WebP · Up to 5 MB. Without a photo, your initials
+                  are shown.
+                </p>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    resetAvatarRead();
+                    setForm((f) => ({ ...f, avatar: null }));
+                  }}
+                >
+                  Use initials instead
+                </Button>
+                {avatarLoading && <p role="status">Preparing photo…</p>}
+                {avatarError && (
+                  <p className="error" role="alert">
+                    {avatarError}
+                  </p>
+                )}
+              </div>
+            </div>
             <Field label="Display name *">
               <input
                 required
@@ -526,13 +582,16 @@ export function UserSettings() {
               <Button
                 type="button"
                 onClick={() => {
+                  resetAvatarRead();
                   setForm(data.profile);
                   notify("Unsaved changes discarded.");
                 }}
               >
                 Discard changes
               </Button>
-              <Button variant="primary">Save changes</Button>
+              <Button variant="primary" disabled={avatarLoading}>
+                Save changes
+              </Button>
             </div>
             <p className="helper">
               These preferences apply to your account in this demo session.

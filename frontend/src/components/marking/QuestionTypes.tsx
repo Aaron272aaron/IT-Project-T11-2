@@ -1,12 +1,12 @@
 import { useState } from "react";
-import type { ExamRecord } from "../exams";
+import type { ExamRecord } from "../../models/exams";
 import {
   QUESTION_TYPES,
   questionType,
   type QuestionType,
-} from "../questionTypes";
-import { useApp } from "../state";
-import { Card, Button, Notice } from "./UI";
+} from "../../models/questionTypes";
+import { useApp } from "../../state";
+import { Card, Button, Notice } from "../UI";
 
 // Classification is saved independently from scoring rules and confirmed marks.
 export function QuestionTypes({ exam }: { exam: ExamRecord }) {

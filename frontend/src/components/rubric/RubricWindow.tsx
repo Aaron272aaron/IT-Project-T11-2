@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import type { ExamAttachment, ExamRecord } from "../exams";
-import { loadPdf, previewUrl } from "../rubricDocument";
-import { Button } from "./UI";
-import { useApp } from "../state";
+import type { ExamAttachment, ExamRecord } from "../../models/exams";
+import { loadPdf, previewUrl } from "../../services/rubricDocument";
+import { Button } from "../UI";
+import { useApp } from "../../state";
 
 // A non-modal window leaves the answer and marking controls usable underneath.
 export function RubricWindow({

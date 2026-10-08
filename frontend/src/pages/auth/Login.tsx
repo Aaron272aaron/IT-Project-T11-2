@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
-import { useApp, go } from "../state";
-import { Logo } from "../components/Layout";
-import { Field, Button, Modal, Notice } from "../components/UI";
+import { useApp, go } from "../../state";
+import { Logo } from "../../components/Layout";
+import { Field, Button, Modal, Notice } from "../../components/UI";
 export function Login({
   errorState = false,
   ocean = false,

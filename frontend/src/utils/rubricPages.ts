@@ -1,5 +1,5 @@
-import type { ExamRecord } from "./exams";
-import { questions } from "./domain";
+import type { ExamRecord } from "../models/exams";
+import { questions } from "../models/domain";
 export type PageRange = { start: number; end: number };
 export function validRange(range: PageRange, count: number) {
   return (

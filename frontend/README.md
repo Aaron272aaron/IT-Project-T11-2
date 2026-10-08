@@ -90,7 +90,7 @@ Exam details, original rubric files, and confirmed answer results are stored in 
 
 The legacy `#/import/canvas` URL returns to the exam list to prevent uploads without an associated exam. The standardized CSV import for the original six-question demo is at `#/exam/final/import`; old `#/import` bookmarks redirect there. Demo marking records remain separate from newly uploaded raw Canvas answers.
 
-Code responsibilities: `src/pages/ExamSetup.tsx` creates exams and manages files; `src/components/RubricPicker.tsx` reads Word/PDF files; `src/exams.ts` manages exam data; `src/state.tsx` stores data for the current tab; `src/pages/CanvasUpload.tsx` uploads, previews, and saves answers; and `src/api.ts` calls Python's `POST /api/canvas/preview`. The original CSV module and test materials have not been rewritten.
+Code responsibilities: `src/pages/exams/ExamSetup.tsx` creates exams and manages files; `src/components/rubric/RubricPicker.tsx` reads Word/PDF files; `src/models/exams.ts` manages exam data; `src/state.tsx` stores data for the current tab; `src/pages/imports/CanvasUpload.tsx` uploads, previews, and saves answers; and `src/services/api.ts` calls Python's `POST /api/canvas/preview`. The original CSV module and test materials have not been rewritten.
 
 ## Import format
 
@@ -116,14 +116,14 @@ student241,5,"def clean_text(s):
 | `src/main.tsx` | Entry point and routing; selects the current page |
 | `src/components/Layout.tsx` | Shared sidebar, workspace switching, account access, and mobile navigation |
 | `src/components/UI.tsx` | Shared cards, buttons, forms, dialogs, and progress bars |
-| `src/pages/Workspace.tsx` | Workspace creation/settings, member management, and user settings |
-| `src/pages/Exams.tsx` | Dashboard, exam list, and exam overview |
-| `src/pages/Import.tsx` | Five-stage import workflow |
-| `src/pages/Questions.tsx` | Grouped/programming answer overviews and the three marking page types |
-| `src/pages/Review.tsx` | Coordinator category-score adjustments by question, student total previews, and history |
-| `src/rubric.ts` | Category defaults, category marking, bulk adjustment validation and audit records, and total calculations |
-| `src/pages/Login.tsx` | Demo login and error/help states |
-| `src/domain.ts` | Data types, sample questions, CSV validation, grouping, and marking constraints |
+| `src/pages/workspace/Workspace.tsx` | Workspace creation/settings, member management, and user settings |
+| `src/pages/exams/Exams.tsx` | Dashboard, exam list, and exam overview |
+| `src/pages/imports/Import.tsx` | Five-stage import workflow |
+| `src/pages/marking/Questions.tsx` | Grouped/programming answer overviews and the three marking page types |
+| `src/pages/marking/Review.tsx` | Coordinator category-score adjustments by question, student total previews, and history |
+| `src/utils/rubric.ts` | Category defaults, category marking, bulk adjustment validation and audit records, and total calculations |
+| `src/pages/auth/Login.tsx` | Demo login and error/help states |
+| `src/models/domain.ts` | Data types, sample questions, CSV validation, grouping, and marking constraints |
 | `src/state.tsx` | Shared React state and sessionStorage persistence |
 | `src/styles.css` | Figma colors, sizing, typography, layouts, and responsive styles |
 | `tests/`, `e2e/` | Data-rule tests and browser workflow verification |
@@ -165,7 +165,7 @@ SOFFICE_BIN="/path/to/soffice" python3 backend/server.py
 
 If conversion is unavailable, the upload shows an actionable error; exporting Word to PDF and uploading that PDF works without conversion. Temporary conversion files are removed, and documents are not sent to an external viewer. Fonts and PDF decoders are copied into `public/pdfjs/` automatically before `npm run dev` and `npm run build`; this generated directory is ignored by git. Production deployment must separately route `/api` to Python.
 
-Additional code: `src/rubricDocument.ts` validates documents and calls conversion; `src/rubricPages.ts` defines mapping rules; `src/components/RubricPageMapping.tsx` edits assignments; `src/components/RubricWindow.tsx` renders the floating viewer; `backend/rubric_preview.py` converts DOCX files. Tests are in `tests/rubricPages.test.ts`, `e2e/rubric-pages.spec.ts`, and `backend/test_rubric_api.py`.
+Additional code: `src/services/rubricDocument.ts` validates documents and calls conversion; `src/utils/rubricPages.ts` defines mapping rules; `src/components/rubric/RubricPageMapping.tsx` edits assignments; `src/components/rubric/RubricWindow.tsx` renders the floating viewer; `backend/rubric_preview.py` converts DOCX files. Tests are in `tests/rubricPages.test.ts`, `e2e/rubric-pages.spec.ts`, and `backend/test_rubric_api.py`.
 
 ## Default Sample exam (supplied local files)
 
@@ -219,7 +219,7 @@ Tutor marking initially shows score options with collapsed **Description** arrow
 
 `POST /api/rubric/import` accepts DOCX bytes or JSON `{ "text": "PDF paragraph text" }`, with a 2 MB request limit. PDF.js extracts PDF text locally (up to 8 MB / 200 pages); Python's standard library parses DOCX XML and guide rules. The API returns editable blocks, proposed question numbers and warnings, never writes exam state, and does not convert Word to PDF.
 
-Code: `src/components/RubricEditor.tsx` (Coordinator UI), `src/rubricEditor.ts` (validation and batch updates), `src/components/RubricOptions.tsx` (Tutor choices), `src/rubricImport.ts` and `src/pdfRubricText.ts` (upload and PDF text), `backend/rubric_import.py` (parsing). Run `npm run test:e2e:rubric` for the real DOCX/PDF, editing, batch update and new-exam workflows. The sample suite still blocks all API calls to verify offline demo behavior. State and change history remain in this browser tab's sessionStorage; this is not multi-user synchronization or database persistence.
+Code: `src/components/rubric/RubricEditor.tsx` (Coordinator UI), `src/utils/rubricEditor.ts` (validation and batch updates), `src/components/rubric/RubricOptions.tsx` (Tutor choices), `src/services/rubricImport.ts` and `src/utils/pdfRubricText.ts` (upload and PDF text), `backend/rubric_import.py` (parsing). Run `npm run test:e2e:rubric` for the real DOCX/PDF, editing, batch update and new-exam workflows. The sample suite still blocks all API calls to verify offline demo behavior. State and change history remain in this browser tab's sessionStorage; this is not multi-user synchronization or database persistence.
 
 
 ## Question classifications and AI placeholder
@@ -230,3 +230,24 @@ On a Tutor's individual answer page, **Generate AI-suggested fixes** appears onl
 
 
 The **Edit question rubric** selector sits in a highlighted panel. Its menu contains only question numbers; the selected question's maximum marks and score-option count appear below. Editing a score to match another option merges their descriptions when leaving the score field. Historical marks remain linked to the merged option, and later score adjustments update every affected confirmation. The warning above the editor explains this impact.
+
+
+## Frontend directory guide
+
+- `src/pages/auth/`: login and account access screens.
+- `src/pages/workspace/`: workspace, members and personal settings screens.
+- `src/pages/exams/`: exam creation, lists, details and the current exam marking workflow.
+- `src/pages/imports/`: CSV import and answer preview screens.
+- `src/pages/marking/`: legacy demo marking and coordinator review screens.
+- `src/components/rubric/`: rubric upload, editing, choices and document viewing.
+- `src/components/marking/`: question classifications and AI suggestion controls.
+- `src/components/profile/`: avatar display and image preparation.
+- `src/components/UI.tsx` and `Layout.tsx`: shared controls and application layout.
+- `src/models/`: shared data structures, demo data and question type definitions.
+- `src/services/`: CSV API requests, rubric import and document preparation.
+- `src/utils/`: local marking rules, rubric calculations and PDF text preparation.
+- `src/main.tsx`: application startup and routing.
+- `src/state.tsx`: shared state and browser-session persistence.
+- `tests/` and `e2e/`: unit tests and browser workflows; their imports follow the same source folders.
+
+This directory reorganisation does not change browser URLs, API endpoints or storage keys.

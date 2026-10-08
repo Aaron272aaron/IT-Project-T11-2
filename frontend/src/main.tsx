@@ -7,15 +7,15 @@ import "./styles.css";
 import "./rubric-preview.css";
 import { Provider, useApp, useRoute } from "./state";
 import { Layout } from "./components/Layout";
-import { Login } from "./pages/Login";
-import { WorkspaceForm, Members, UserSettings } from "./pages/Workspace";
-import { Dashboard, Exam } from "./pages/Exams";
-import { ImportPage } from "./pages/Import";
-import { CreateExam, CreatedExam } from "./pages/ExamSetup";
-import { CanvasUpload } from "./pages/CanvasUpload";
-import { QuestionOverview, Marking } from "./pages/Questions";
-import { SampleExam, SampleQuestion } from "./pages/SampleExam";
-import { Review } from "./pages/Review";
+import { Login } from "./pages/auth/Login";
+import { WorkspaceForm, Members, UserSettings } from "./pages/workspace/Workspace";
+import { Dashboard, Exam } from "./pages/exams/Exams";
+import { ImportPage } from "./pages/imports/Import";
+import { CreateExam, CreatedExam } from "./pages/exams/ExamSetup";
+import { CanvasUpload } from "./pages/imports/CanvasUpload";
+import { QuestionOverview, Marking } from "./pages/marking/Questions";
+import { SampleExam, SampleQuestion } from "./pages/exams/SampleExam";
+import { Review } from "./pages/marking/Review";
 function Redirect({ to }: { to: string }) {
   React.useEffect(() => {
     location.hash = to;

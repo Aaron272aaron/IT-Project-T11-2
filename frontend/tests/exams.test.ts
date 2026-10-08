@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { examsFor, updateExam, type ExamRecord } from "../src/exams";
+import { examsFor, updateExam, type ExamRecord } from "../src/models/exams";
 
 // A workspace switch must not expose another workspace's files, even when
 // their demo exam IDs are the same. Updating a rubric must keep its answers.

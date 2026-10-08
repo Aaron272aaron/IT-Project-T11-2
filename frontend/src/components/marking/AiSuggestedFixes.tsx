@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal } from "./UI";
+import { Button, Modal } from "../UI";
 
 // Placeholder only: opening this dialog sends no request and never modifies an answer.
 export function AiSuggestedFixes() {
