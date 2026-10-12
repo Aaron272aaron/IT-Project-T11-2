@@ -10,7 +10,6 @@ import os
 import re
 import sqlite3
 import tempfile
-from collections import Counter
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -477,14 +476,15 @@ def export_results(database_path: str | Path, output_path: str | Path,
                                          dir=output_path.parent, delete=False) as stream:
             temp_path = Path(stream.name)
             writer = csv.writer(stream)
+            # One row per student and one distinct mark column per question.
+            # Do not export student answers or implementation metadata.
             writer.writerow(["student_id", *[f"question_{qid}_mark" for qid in question_ids],
-                             "total_mark", "marking_complete", "missing_questions", "generated_at_utc"])
+                             "total_mark"])
             for student in students:
                 sid = student["student_id"]
                 values = [marks.get((sid, qid)) for qid in question_ids]
                 total = "" if sid in missing else str(sum((Decimal(v) for v in values), Decimal(0)))
-                writer.writerow([sid, *[v if v is not None else "" for v in values], total,
-                                 "no" if sid in missing else "yes", ";".join(missing.get(sid, [])), timestamp])
+                writer.writerow([sid, *[v if v is not None else "" for v in values], total])
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temp_path, output_path)
