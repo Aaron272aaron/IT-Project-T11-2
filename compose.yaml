@@ -1,0 +1,41 @@
+name: automark-local
+
+services:
+  database:
+    image: postgres:18
+    restart: unless-stopped
+    command:
+      - postgres
+      - -c
+      - log_statement=none
+      - -c
+      - log_min_error_statement=panic
+      - -c
+      - log_error_verbosity=terse
+    environment:
+      POSTGRES_DB: automark
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python3 database/manage.py start}
+      APP_PASSWORD: ${APP_PASSWORD:?Run python3 database/manage.py start}
+      WORKER_PASSWORD: ${WORKER_PASSWORD:?Run python3 database/manage.py start}
+      POSTGRES_INITDB_ARGS: --data-checksums
+    ports:
+      - "127.0.0.1:${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./database/init_roles.sql:/docker-entrypoint-initdb.d/01_roles.sql:ro
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/02_schema.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d automark"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    networks:
+      - local_database
+
+volumes:
+  postgres_data:
+
+networks:
+  local_database:
+    driver: bridge
