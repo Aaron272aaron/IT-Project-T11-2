@@ -1,4 +1,7 @@
-"""Import Canvas quiz CSVs, save marking progress, and export final marks.
+"""Task 35: import Canvas quiz CSVs, record human-approved rubric selections, export marks.
+
+Use the reviewed rubric_comp10001_2025s1.json catalogue with --rubric.
+This is local CLI code; authorization is the responsibility of the application.
 """
 
 from __future__ import annotations
@@ -197,7 +200,10 @@ def read_canvas_csv(path: str | Path, config: dict | None = None) -> ImportData:
                 # Other zero-mark questions remain markable unless explicitly configured.
                 is_intro = maximum == 0 and re.match(r"Part\s+\d+\b", text) is not None
                 default_kind = "instruction" if is_intro else "unclassified"
-                kind = config.get("question_types", {}).get(qid, default_kind)
+                # Config keys may use raw Canvas IDs OR stable Q1..Qn labels.
+                ordinal = 1 + sum(q.kind != "instruction" for q in result.questions)
+                kinds = config.get("question_types", {})
+                kind = kinds.get(qid, kinds.get(f"Q{ordinal}", default_kind)) if not is_intro else kinds.get(qid, default_kind)
                 if kind == "instruction" and maximum != 0:
                     issue("error", 1, qid, "A positive-mark question cannot be an instruction.")
                 if kind == "unclassified":
@@ -212,7 +218,8 @@ def read_canvas_csv(path: str | Path, config: dict | None = None) -> ImportData:
             for index, header in enumerate(cleaned):
                 if index not in question_columns and header not in metadata_headers:
                     issue("error", 1, f"column {index + 1}", "Unrecognised column; check the Canvas question/score layout.")
-            unknown = set(config.get("question_types", {})) - seen_questions
+            ordinal_keys = {f"Q{i}" for i in range(1, 1+sum(q.kind != "instruction" for q in result.questions))}
+            unknown = set(config.get("question_types", {})) - seen_questions - ordinal_keys
             if unknown:
                 issue("error", 1, "question_types", f"Configured question IDs not in this file: {sorted(unknown)}")
             if not result.questions:
@@ -309,6 +316,7 @@ CREATE TABLE answers (
     status TEXT NOT NULL CHECK(status IN ('unmarked','marked','not_applicable')),
     final_mark TEXT, comment TEXT NOT NULL DEFAULT '',
     marked_by TEXT, marked_at TEXT,
+    rubric_option TEXT, rubric_reason TEXT NOT NULL DEFAULT '',
     PRIMARY KEY(student_id, question_id),
     CHECK((status = 'marked' AND final_mark IS NOT NULL) OR
           (status != 'marked' AND final_mark IS NULL))
@@ -318,9 +326,10 @@ CREATE TABLE mark_history (
     previous_mark TEXT, new_mark TEXT NOT NULL,
     previous_comment TEXT NOT NULL, new_comment TEXT NOT NULL,
     marker TEXT NOT NULL, changed_at TEXT NOT NULL,
+    rubric_option TEXT, rubric_reason TEXT NOT NULL DEFAULT '',
     FOREIGN KEY(student_id, question_id) REFERENCES answers(student_id, question_id)
 );
-PRAGMA user_version = 1;
+PRAGMA user_version = 2;
 """
 
 
@@ -337,17 +346,127 @@ def open_database(path: str | Path, *, create: bool = False) -> sqlite3.Connecti
             connection.close()
             raise ValueError("Existing database has an unknown schema; use a new database path.")
         connection.executescript(SCHEMA)
-    elif version != 1:
+    elif version != 2:
         connection.close()
+        if version == 1:
+            raise ValueError("This is an older database (schema v1). Back it up, then run the migrate command before editing it.")
         raise ValueError("Unsupported marking database version.")
     return connection
 
 
-def import_canvas_csv(csv_path: str | Path, database_path: str | Path, config: dict | None = None) -> ImportData:
+def migrate_database(database_path: str | Path) -> None:
+    """Explicit, non-destructive upgrade for backed-up version-1 databases.
+
+    Call this only after backing up the original .db, while no other app uses it.
+    """
+    path = Path(database_path)
+    if not path.is_file():
+        raise ValueError("Database does not exist.")
+    con = sqlite3.connect(path, timeout=10)
+    try:
+        con.execute("PRAGMA foreign_keys = ON")
+        with con:
+            con.execute("BEGIN IMMEDIATE")
+            version = con.execute("PRAGMA user_version").fetchone()[0]
+            if version != 1:
+                raise ValueError(f"Expected schema v1; found schema v{version}.")
+            for table in ("answers", "mark_history"):
+                con.execute(f"ALTER TABLE {table} ADD COLUMN rubric_option TEXT")
+                con.execute(f"ALTER TABLE {table} ADD COLUMN rubric_reason TEXT NOT NULL DEFAULT ''")
+            con.execute("PRAGMA user_version = 2")
+    finally:
+        con.close()
+
+
+def read_rubric_catalog(path: str | Path) -> dict:
+    """Validate an explicitly reviewed JSON rubric (never blindly parse new DOCX files)."""
+    raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(raw, dict) or raw.get("schema_version") != 1 or not isinstance(raw.get("questions"), dict):
+        raise ValueError("Invalid rubric JSON structure/version.")
+    for n, spec in raw["questions"].items():
+        if not re.fullmatch(r"[1-9]\d*", n) or not isinstance(spec, dict):
+            raise ValueError("Invalid rubric question number.")
+        maximum = number(str(spec.get("max_mark", "")), f"Q{n} maximum")
+        if maximum < 0 or not isinstance(spec.get("options"), list):
+            raise ValueError(f"Invalid options/maximum for Q{n}.")
+        seen = set()
+        for opt in spec["options"]:
+            if not isinstance(opt, dict) or not isinstance(opt.get("option_id"), str) or not opt["option_id"] or opt["option_id"] in seen:
+                raise ValueError(f"Duplicate/invalid criterion identifier in Q{n}.")
+            seen.add(opt["option_id"])
+            if not 0 <= number(str(opt.get("mark", "")), "Rubric option") <= maximum:
+                raise ValueError(f"Rubric option exceeds maximum in Q{n}.")
+    return raw
+
+
+def match_rubric(data: ImportData, rubric: dict) -> dict[str, dict]:
+    """Bind ordinal Word Q1..Q37 to actual Canvas question IDs, verify each max mark."""
+    active = [q for q in data.questions if q.kind != "instruction"]
+    expected = rubric["questions"]
+    if len(active) != len(expected) or sorted(int(k) for k in expected) != list(range(1,len(active)+1)):
+        raise ValueError("Rubric question count/order does not match the Canvas exam.")
+    mapped = {}
+    for ordinal, q in enumerate(active,1):
+        entry = expected[str(ordinal)]
+        if number(q.max_mark,"Canvas maximum") != number(str(entry["max_mark"]),"Rubric maximum"):
+            raise ValueError(f"Rubric mismatch for Q{ordinal} (Canvas ID {q.question_id}): maximum marks differ.")
+        mapped[q.question_id] = {**entry, "canvas_id":q.question_id, "label":f"Q{ordinal}"}
+    return mapped
+
+
+def rubric_mapping(db_path: str | Path) -> dict[str,dict]:
+    con = open_database(db_path)
+    try:
+        entry=con.execute("SELECT value FROM metadata WHERE key='rubric_map'").fetchone()
+        return json.loads(entry[0]) if entry else {}
+    finally:
+        con.close()
+
+
+def resolve_question_id(con: sqlite3.Connection, question_reference: str) -> str:
+    """Accept Canvas question ID or human-oriented Q1..Q37 for CLI convenience."""
+    if re.fullmatch(r"[Qq][1-9]\d*", question_reference):
+        index = int(question_reference[1:])-1
+        rows=con.execute("SELECT question_id FROM questions WHERE kind != 'instruction' ORDER BY position").fetchall()
+        if index<0 or index>=len(rows):
+            raise ValueError(f"Unknown question: {question_reference}")
+        return rows[index]["question_id"]
+    return question_reference
+
+
+def attach_rubric(database_path: str | Path, rubric: dict) -> dict[str, dict]:
+    """Attach a reviewed rubric to a prior import, only if no marks exist yet.
+
+    Never retroactively pretend previous marks were validated against this rubric.
+    """
+    con = open_database(database_path)
+    try:
+        with con:
+            con.execute("BEGIN IMMEDIATE")
+            if con.execute("SELECT 1 FROM answers WHERE status='marked' LIMIT 1").fetchone():
+                raise ValueError("Cannot attach rubric to an exam with existing marks; review/migrate decisions manually.")
+            existing=con.execute("SELECT value FROM metadata WHERE key='rubric_map'").fetchone()
+            if existing and json.loads(existing[0]):
+                raise ValueError("This database already has a rubric. Do not overwrite it.")
+            questions = [Question(r['question_id'],r['question_text'],r['max_mark'],r['kind'],r['position'])
+                         for r in con.execute("SELECT * FROM questions ORDER BY position")]
+            mapped=match_rubric(ImportData(questions=questions),rubric)
+            con.execute("INSERT OR REPLACE INTO metadata(key,value) VALUES('rubric_map',?)",
+                        (json.dumps(mapped,ensure_ascii=False),))
+            con.execute("INSERT OR REPLACE INTO metadata(key,value) VALUES('rubric_warnings',?)",
+                        (json.dumps(rubric.get('warnings',[]),ensure_ascii=False),))
+            return mapped
+    finally:
+        con.close()
+
+
+def import_canvas_csv(csv_path: str | Path, database_path: str | Path, config: dict | None = None,
+                      *, rubric: dict | None = None) -> ImportData:
     """One exam per database. Never overwrite an existing exam or saved marks."""
     data = read_canvas_csv(csv_path, config)
     if data.errors:
         raise ValidationError(data.errors)
+    rubric_map = match_rubric(data, rubric) if rubric is not None else {}
     connection = open_database(database_path, create=True)
     try:
         # The transaction means all records are saved together, or none are saved.
@@ -360,6 +479,8 @@ def import_canvas_csv(csv_path: str | Path, database_path: str | Path, config: d
                 ("source_filename", Path(csv_path).name),
                 ("config", json.dumps(config or {}, ensure_ascii=False)),
                 ("source_headers", json.dumps(data.headers, ensure_ascii=False)),
+                ("rubric_map", json.dumps(rubric_map, ensure_ascii=False)),
+                ("rubric_warnings", json.dumps(rubric.get("warnings",[]) if rubric else [], ensure_ascii=False)),
             ])
             connection.executemany("INSERT INTO questions VALUES (?, ?, ?, ?, ?)", [
                 (q.question_id, q.text, q.max_mark, q.kind, index)
@@ -384,47 +505,66 @@ def import_canvas_csv(csv_path: str | Path, database_path: str | Path, config: d
 
 
 def save_mark(database_path: str | Path, student_id: str, question_id: str,
-              mark: str, marker: str, comment: str = "") -> None:
-    """Save a human-entered mark and audit entry in a single transaction.
+              mark: str, marker: str, comment: str = "", *,
+              option_id: str | None = None, override_reason: str = "") -> None:
+    """Human approval only. Validate selected rubric category and log each decision.
 
-    A web application must authenticate the human before calling this function.
-    The marker string is an audit label, not an authentication mechanism.
+    For an explicitly configured rubric, the human must choose an option ID.
+    MCQ source-score questions allow numeric marks but still need deliberate human confirmation.
+    A documented override requires a clear reason and is retained in the audit trail.
     """
     value = number(mark, "Final mark")
     if not marker.strip():
         raise ValueError("A marker name or identifier is required.")
-    connection = open_database(database_path)
+    con = open_database(database_path)
     try:
-        with connection:
-            # Lock before reading the previous mark so the audit trail stays accurate.
-            connection.execute("BEGIN IMMEDIATE")
-            answer = connection.execute(
-                """SELECT a.final_mark, a.comment, q.max_mark, q.kind
+        with con:
+            con.execute("BEGIN IMMEDIATE")
+            question_id = resolve_question_id(con, question_id)
+            answer = con.execute(
+                """SELECT a.final_mark, a.comment, a.source_score, q.max_mark, q.kind
                    FROM answers a JOIN questions q USING(question_id)
-                   WHERE a.student_id = ? AND a.question_id = ?""",
-                (student_id, question_id),
-            ).fetchone()
-            if answer is None:
-                raise ValueError("Student/question pair was not found.")
-            if answer["kind"] == "instruction":
-                raise ValueError("Section instructions do not receive final marks.")
-            if not Decimal(0) <= value <= Decimal(answer["max_mark"]):
+                   WHERE a.student_id=? AND a.question_id=?""", (student_id, question_id)).fetchone()
+            if answer is None: raise ValueError("Student/question pair was not found.")
+            if answer['kind']=='instruction': raise ValueError("Section instructions do not receive final marks.")
+            if not Decimal(0)<=value<=Decimal(answer['max_mark']):
                 raise ValueError(f"Final mark must be between 0 and {answer['max_mark']}.")
-            timestamp = utc_now()
-            connection.execute(
-                """UPDATE answers SET final_mark = ?, status = 'marked', comment = ?,
-                   marked_by = ?, marked_at = ? WHERE student_id = ? AND question_id = ?""",
-                (str(value), comment, marker, timestamp, student_id, question_id),
-            )
-            connection.execute(
-                """INSERT INTO mark_history (student_id, question_id, previous_mark,
-                   new_mark, previous_comment, new_comment, marker, changed_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-                (student_id, question_id, answer["final_mark"], str(value),
-                 answer["comment"], comment, marker, timestamp),
-            )
+            record = con.execute("SELECT value FROM metadata WHERE key='rubric_map'").fetchone()
+            catalog = json.loads(record[0]) if record else {}
+            entry = catalog.get(question_id)
+            if override_reason and not override_reason.strip():
+                raise ValueError("Override reason must not be blank.")
+            if entry:
+                if override_reason:
+                    if not override_reason.strip(): raise ValueError("Override requires an explanation.")
+                    if option_id is not None: raise ValueError("Use an override OR a rubric criterion, not both.")
+                elif entry['rubric_mode']=='source_score_confirmed':
+                    if option_id: raise ValueError("Automarked MCQ does not have Word rubric category IDs.")
+                    if not answer['source_score'].strip() or value != number(answer['source_score'], 'Canvas source score'):
+                        raise ValueError("MCQ mark differs from/has no Canvas source score; use a documented --override-reason.")
+                else:
+                    options={x['option_id']: x for x in entry['options']}
+                    if not option_id or option_id not in options:
+                        raise ValueError(f"Select one of the documented rubric options for {entry['label']}.")
+                    selected=options[option_id]
+                    if value!=number(str(selected['mark']),"Rubric selected mark"):
+                        raise ValueError("Entered mark does not match chosen rubric category.")
+                    if selected.get('requires_review'):
+                        raise ValueError("This rubric option was inferred and requires a documented --override-reason until coordinator approval.")
+            elif option_id or override_reason:
+                raise ValueError("This exam was not imported with a rubric catalogue.")
+            stamp=utc_now()
+            con.execute("""UPDATE answers SET final_mark=?, status='marked', comment=?, marked_by=?,
+                       marked_at=?, rubric_option=?, rubric_reason=?
+                       WHERE student_id=? AND question_id=?""",
+                       (str(value), comment, marker, stamp, option_id, override_reason, student_id, question_id))
+            con.execute("""INSERT INTO mark_history (student_id,question_id,previous_mark,new_mark,
+                       previous_comment,new_comment,marker,changed_at,rubric_option,rubric_reason)
+                       VALUES (?,?,?,?,?,?,?,?,?,?)""",
+                       (student_id,question_id,answer['final_mark'],str(value),answer['comment'],comment,
+                        marker,stamp,option_id,override_reason))
     finally:
-        connection.close()
+        con.close()
 
 
 def export_results(database_path: str | Path, output_path: str | Path,
@@ -478,7 +618,8 @@ def export_results(database_path: str | Path, output_path: str | Path,
             writer = csv.writer(stream)
             # One row per student and one distinct mark column per question.
             # Do not export student answers or implementation metadata.
-            writer.writerow(["student_id", *[f"question_{qid}_mark" for qid in question_ids],
+            # Stable readable Q1..Qn headings even when Canvas IDs differ by exam export.
+            writer.writerow(["student_id", *[f"Q{i}_mark" for i in range(1,len(question_ids)+1)],
                              "total_mark"])
             for student in students:
                 sid = student["student_id"]
@@ -510,6 +651,7 @@ def main() -> int:
         sub.add_argument("--report", help="Write validation issues to this JSON file")
         if name == "import":
             sub.add_argument("--db", required=True)
+            sub.add_argument("--rubric", help="Reviewed JSON rubric catalogue")
     mark = commands.add_parser("mark", help="Record a human-confirmed mark")
     mark.add_argument("--db", required=True)
     mark.add_argument("--student", required=True)
@@ -517,10 +659,17 @@ def main() -> int:
     mark.add_argument("--mark", required=True)
     mark.add_argument("--marker", required=True)
     mark.add_argument("--comment", default="")
+    mark.add_argument("--option", help="Rubric option_id from Task 36 rubric command")
+    mark.add_argument("--override-reason", default="", help="Audited coordinator-approved exception")
     export = commands.add_parser("export", help="Export recorded marks")
     export.add_argument("output")
     export.add_argument("--db", required=True)
     export.add_argument("--allow-incomplete", action="store_true")
+    attach = commands.add_parser("attach-rubric", help="Attach reviewed Word rubric JSON to an unmarked exam")
+    attach.add_argument("--db",required=True)
+    attach.add_argument("--rubric",required=True)
+    migrate = commands.add_parser("migrate", help="Upgrade a BACKED-UP old v1 SQLite database to v2")
+    migrate.add_argument("--db", required=True)
     args = parser.parse_args()
     try:
         if args.command in {"validate", "import"}:
@@ -528,7 +677,8 @@ def main() -> int:
             if args.command == "validate":
                 data = read_canvas_csv(args.csv_file, config)
             else:
-                data = import_canvas_csv(args.csv_file, args.db, config)
+                rubric = read_rubric_catalog(args.rubric) if args.rubric else None
+                data = import_canvas_csv(args.csv_file, args.db, config, rubric=rubric)
             if args.report:
                 write_issue_report(args.report, data.issues)
             print(json.dumps(data.summary(), indent=2))
@@ -538,8 +688,15 @@ def main() -> int:
                 print("More issues exist. Use --report issues.json to see all locations.")
             return 1 if data.errors else 0
         if args.command == "mark":
-            save_mark(args.db, args.student, args.question, args.mark, args.marker, args.comment)
+            save_mark(args.db, args.student, args.question, args.mark, args.marker, args.comment,
+                      option_id=args.option, override_reason=args.override_reason)
             print("Human-confirmed mark saved.")
+        elif args.command == "attach-rubric":
+            mapping = attach_rubric(args.db,read_rubric_catalog(args.rubric))
+            print(f"Rubric attached to {len(mapping)} markable questions.")
+        elif args.command == "migrate":
+            migrate_database(args.db)
+            print("Database schema upgraded to v2.")
         elif args.command == "export":
             print(json.dumps(export_results(args.db, args.output, allow_incomplete=args.allow_incomplete), indent=2))
     except ValidationError as error:
@@ -554,7 +711,7 @@ def main() -> int:
         # These IDs are intentionally local: the coordinator needs to identify omissions.
         print(json.dumps({"missing_marks": error.missing}, indent=2))
         return 1
-    except (ValueError, OSError, sqlite3.Error) as error:
+    except (ValueError, OSError, sqlite3.Error, json.JSONDecodeError) as error:
         print(f"Error: {error}")
         return 1
     return 0
