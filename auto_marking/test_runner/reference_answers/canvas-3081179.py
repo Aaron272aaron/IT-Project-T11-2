@@ -1,0 +1,1 @@
+if query == nums[i]:

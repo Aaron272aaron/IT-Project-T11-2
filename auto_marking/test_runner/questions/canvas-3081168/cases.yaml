@@ -1,0 +1,77 @@
+{
+  "question_key": "canvas:3081168",
+  "title": "Q10 · assignment-statement",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "assignment",
+  "target": "has_zero",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "one_assignment_statement",
+      "expected": true,
+      "marks": 0,
+      "check": "structure",
+      "input": "One assignment to has_zero"
+    },
+    {
+      "name": "assignment_1",
+      "expected": "False",
+      "marks": 0,
+      "expected_literal": "False",
+      "context_literals": {
+        "values": "[]"
+      },
+      "input": "values = []"
+    },
+    {
+      "name": "assignment_2",
+      "expected": "True",
+      "marks": 0,
+      "expected_literal": "True",
+      "context_literals": {
+        "values": "[0]"
+      },
+      "input": "values = [0]"
+    },
+    {
+      "name": "assignment_3",
+      "expected": "False",
+      "marks": 0,
+      "expected_literal": "False",
+      "context_literals": {
+        "values": "[1, 2, 3]"
+      },
+      "input": "values = [1, 2, 3]"
+    },
+    {
+      "name": "assignment_4",
+      "expected": "True",
+      "marks": 0,
+      "expected_literal": "True",
+      "context_literals": {
+        "values": "[1, 0, 2]"
+      },
+      "input": "values = [1, 0, 2]"
+    },
+    {
+      "name": "assignment_5",
+      "expected": "True",
+      "marks": 0,
+      "expected_literal": "True",
+      "context_literals": {
+        "values": "[-2, 0, -1, 0]"
+      },
+      "input": "values = [-2, 0, -1, 0]"
+    },
+    {
+      "name": "assignment_6",
+      "expected": "False",
+      "marks": 0,
+      "expected_literal": "False",
+      "context_literals": {
+        "values": "[-4, -2]"
+      },
+      "input": "values = [-4, -2]"
+    }
+  ]
+}

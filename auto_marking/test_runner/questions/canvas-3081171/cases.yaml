@@ -1,0 +1,87 @@
+{
+  "question_key": "canvas:3081171",
+  "title": "Q13 · assignment-statement",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "assignment",
+  "target": "secure_pw",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "one_assignment_statement",
+      "expected": true,
+      "marks": 0,
+      "check": "structure",
+      "input": "One assignment to secure_pw"
+    },
+    {
+      "name": "assignment_1",
+      "expected": "''",
+      "marks": 0,
+      "expected_literal": "''",
+      "context_literals": {
+        "password": "''"
+      },
+      "input": "password = ''"
+    },
+    {
+      "name": "assignment_2",
+      "expected": "'*****'",
+      "marks": 0,
+      "expected_literal": "'*****'",
+      "context_literals": {
+        "password": "'aeiou'"
+      },
+      "input": "password = 'aeiou'"
+    },
+    {
+      "name": "assignment_3",
+      "expected": "'*****'",
+      "marks": 0,
+      "expected_literal": "'*****'",
+      "context_literals": {
+        "password": "'AEIOU'"
+      },
+      "input": "password = 'AEIOU'"
+    },
+    {
+      "name": "assignment_4",
+      "expected": "'P*SsW0rd!'",
+      "marks": 0,
+      "expected_literal": "'P*SsW0rd!'",
+      "context_literals": {
+        "password": "'PaSsW0rd!'"
+      },
+      "input": "password = 'PaSsW0rd!'"
+    },
+    {
+      "name": "assignment_5",
+      "expected": "'rhythm 123'",
+      "marks": 0,
+      "expected_literal": "'rhythm 123'",
+      "context_literals": {
+        "password": "'rhythm 123'"
+      },
+      "input": "password = 'rhythm 123'"
+    },
+    {
+      "name": "assignment_6",
+      "expected": "'H*ll* W*rld'",
+      "marks": 0,
+      "expected_literal": "'H*ll* W*rld'",
+      "context_literals": {
+        "password": "'Hello World'"
+      },
+      "input": "password = 'Hello World'"
+    },
+    {
+      "name": "assignment_7",
+      "expected": "'éY'",
+      "marks": 0,
+      "expected_literal": "'éY'",
+      "context_literals": {
+        "password": "'éY'"
+      },
+      "input": "password = 'éY'"
+    }
+  ]
+}

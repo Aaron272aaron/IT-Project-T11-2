@@ -1,0 +1,14 @@
+{
+  "question_key": "canvas:3081189",
+  "title": "Q28 · debugging",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "counterexample",
+  "cases": [
+    {
+      "name": "reveals_a_further_bug",
+      "expected": "Different actual and required outputs after the Q27 slicing fix",
+      "marks": 0,
+      "input": "Your example call, with the slicing error already repaired"
+    }
+  ]
+}

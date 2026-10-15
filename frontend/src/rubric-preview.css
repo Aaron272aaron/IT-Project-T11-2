@@ -1,0 +1,172 @@
+/* Floating reference stays above cards without blocking marking underneath. */
+.demo-role {
+  display: grid;
+  gap: 7px;
+  padding: 16px 20px;
+}
+.demo-role small {
+  font-size: 11px;
+  color: #c0cde5;
+}
+.demo-role select {
+  width: 100%;
+}
+.page-number {
+  width: 85px;
+}
+.rubric-window {
+  position: fixed;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #8098a8;
+  border-radius: 12px;
+  box-shadow: 0 15px 55px #152c4240;
+  overflow: hidden;
+  color: #20333e;
+}
+.rubric-window-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 12px;
+  background: #eaf3f4;
+}
+.rubric-drag {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: move;
+  touch-action: none;
+}
+.rubric-drag small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rubric-window .rubric-context {
+  margin: 8px 14px;
+  font-size: 12px;
+}
+.rubric-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 0 12px 10px;
+}
+.rubric-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.rubric-toolbar select {
+  width: 64px;
+  padding: 5px;
+}
+.rubric-toolbar .button {
+  padding: 6px 9px;
+  font-size: 12px;
+}
+.rubric-paper {
+  flex: 1;
+  min-height: 0;
+  background: #e4e9ee;
+  overflow: auto;
+  padding: 12px;
+}
+.rubric-paper canvas {
+  display: block;
+  background: white;
+  margin: auto;
+  box-shadow: 0 1px 4px #0002;
+}
+.rubric-window-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+.rubric-window-footer small {
+  flex: 1;
+}
+.rubric-resize {
+  border: 0;
+  background: transparent;
+  color: #476775;
+  cursor: nwse-resize;
+  touch-action: none;
+  padding: 8px;
+}
+@media (max-width: 600px) {
+  .rubric-window-footer small {
+    display: none;
+  }
+  .rubric-window-footer {
+    justify-content: space-between;
+  }
+}
+
+.rubric-assignments > details > summary {
+  cursor: pointer;
+  padding: 4px 0;
+}
+.rubric-assignments > details > summary span {
+  margin-left: 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.rubric-assignments > details[open] > summary {
+  margin-bottom: 18px;
+}
+.sequential-pages {
+  padding: 16px;
+  background: #f3f7fb;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+.sequence-fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.sequence-fields label {
+  display: grid;
+  gap: 5px;
+}
+.sequence-fields input {
+  width: 100%;
+}
+.mapping-table {
+  max-height: 460px;
+  overflow: auto;
+  margin-top: 15px;
+}
+.mapping-question {
+  min-width: 220px;
+  max-width: 660px;
+}
+.mapping-question summary {
+  cursor: pointer;
+}
+.mapping-question p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-top: 10px;
+}
+@media (max-width: 640px) {
+  .sequence-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rubric-assignments > details > summary span {
+    display: block;
+    margin: 6px 0 0 18px;
+  }
+}

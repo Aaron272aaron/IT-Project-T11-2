@@ -1,0 +1,208 @@
+{
+  "question_key": "canvas:3081196",
+  "title": "Q34 · coding",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "function",
+  "entry": "best_word",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "provided_AAA",
+      "expected": "Any legal three-letter word scoring 21",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "A",
+            "B",
+            "C"
+          ]
+        ],
+        {
+          "A": 7,
+          "B": 1,
+          "C": 5
+        }
+      ],
+      "accepted": [
+        "AAA"
+      ]
+    },
+    {
+      "name": "provided_CCC",
+      "expected": "Any legal three-letter word scoring 15",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "B"
+          ],
+          [
+            "B",
+            "B",
+            "B"
+          ],
+          [
+            "C",
+            "C",
+            "C"
+          ]
+        ],
+        {
+          "A": 7,
+          "B": 1,
+          "C": 5
+        }
+      ],
+      "accepted": [
+        "ABA",
+        "CCC"
+      ]
+    },
+    {
+      "name": "smallest_board_ties",
+      "expected": "Any legal three-letter word scoring 3",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "A"
+          ]
+        ],
+        {
+          "A": 1,
+          "B": 1
+        }
+      ],
+      "accepted": [
+        "ABA",
+        "BAB"
+      ]
+    },
+    {
+      "name": "diagonal_is_not_a_neighbour",
+      "expected": "Any legal three-letter word scoring 19",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "Z",
+            "A",
+            "Z"
+          ],
+          [
+            "A",
+            "Z",
+            "A"
+          ],
+          [
+            "Z",
+            "A",
+            "Z"
+          ]
+        ],
+        {
+          "Z": 9,
+          "A": 1
+        }
+      ],
+      "accepted": [
+        "ZAZ"
+      ]
+    },
+    {
+      "name": "all_same_letter",
+      "expected": "Any legal three-letter word scoring 12",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "Q",
+            "Q"
+          ],
+          [
+            "Q",
+            "Q"
+          ]
+        ],
+        {
+          "Q": 4
+        }
+      ],
+      "accepted": [
+        "QQQ"
+      ]
+    },
+    {
+      "name": "rectangular_edges",
+      "expected": "Any legal three-letter word scoring 24",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "A",
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "B",
+            "B",
+            "B"
+          ]
+        ],
+        {
+          "A": 8,
+          "B": 1
+        }
+      ],
+      "accepted": [
+        "AAA"
+      ]
+    },
+    {
+      "name": "letter_values_not_alphabetical",
+      "expected": "Any legal three-letter word scoring 27",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "Z",
+            "Z",
+            "Z"
+          ],
+          [
+            "A",
+            "A",
+            "A"
+          ]
+        ],
+        {
+          "Z": 1,
+          "A": 9
+        }
+      ],
+      "accepted": [
+        "AAA"
+      ]
+    }
+  ]
+}

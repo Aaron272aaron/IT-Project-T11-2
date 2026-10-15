@@ -1,0 +1,24 @@
+{
+  "question_key": "canvas:3081162",
+  "title": "Q5 · expression-output",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "literal-answer",
+  "cases": [
+    {
+      "name": "answer_value",
+      "expected": "'HELLO WORLD'",
+      "marks": 0,
+      "check": "value",
+      "expected_literal": "'HELLO WORLD'",
+      "input": "Submitted answer value"
+    },
+    {
+      "name": "answer_type",
+      "expected": "str",
+      "marks": 0,
+      "check": "type",
+      "expected_literal": "'HELLO WORLD'",
+      "input": "Submitted answer type (including list element types)"
+    }
+  ]
+}

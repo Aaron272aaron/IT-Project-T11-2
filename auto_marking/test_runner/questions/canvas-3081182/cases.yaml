@@ -1,0 +1,111 @@
+{
+  "question_key": "canvas:3081182",
+  "title": "Q22 · code-completion",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "completion",
+  "slot": "E",
+  "entry": "larger_than_previous",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "completion_1",
+      "expected": true,
+      "marks": 0,
+      "args": [
+        [
+          1,
+          3,
+          5
+        ],
+        5
+      ]
+    },
+    {
+      "name": "completion_2",
+      "expected": false,
+      "marks": 0,
+      "args": [
+        [
+          4,
+          1,
+          3
+        ],
+        3
+      ]
+    },
+    {
+      "name": "completion_3",
+      "expected": true,
+      "marks": 0,
+      "args": [
+        [
+          5,
+          1,
+          3
+        ],
+        5
+      ]
+    },
+    {
+      "name": "completion_4",
+      "expected": false,
+      "marks": 0,
+      "args": [
+        [
+          1,
+          3,
+          5
+        ],
+        2
+      ]
+    },
+    {
+      "name": "completion_5",
+      "expected": true,
+      "marks": 0,
+      "args": [
+        [
+          7
+        ],
+        7
+      ]
+    },
+    {
+      "name": "completion_6",
+      "expected": false,
+      "marks": 0,
+      "args": [
+        [
+          7
+        ],
+        2
+      ]
+    },
+    {
+      "name": "completion_7",
+      "expected": false,
+      "marks": 0,
+      "args": [
+        [
+          -5,
+          -2,
+          -3
+        ],
+        -3
+      ]
+    },
+    {
+      "name": "completion_8",
+      "expected": false,
+      "marks": 0,
+      "args": [
+        [
+          2,
+          6,
+          4
+        ],
+        4
+      ]
+    }
+  ]
+}

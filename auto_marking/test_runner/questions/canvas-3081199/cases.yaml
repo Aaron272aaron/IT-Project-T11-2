@@ -1,0 +1,14 @@
+{
+  "question_key": "canvas:3081199",
+  "title": "Q36 · short-answer",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "text-answer",
+  "cases": [
+    {
+      "name": "recursive_output",
+      "expected": "1010",
+      "marks": 0,
+      "input": "The returned string from my_func(4)"
+    }
+  ]
+}

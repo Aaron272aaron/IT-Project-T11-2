@@ -1,0 +1,219 @@
+name,id,sis_id,section,section_id,section_sis_id,submitted,attempt,"3081157: Part 1 (18 marks)
+Write the output of each Python expression.
+Each subquestion is worth 2 marks. To get full marks you must specify both the correct value and be clear in your answer that you understand what the type will be. If you think an expression is not legal according to the rules of Python, you should writeErrorin the box.
+",0.0,"3081158: 8 // 3 * 2 + 1
+",2.0,"3081159: ""Py"" + ""thon""[1:3]
+",2.0,"3081160: [10, 20, 30][1:3]
+",2.0,"3081161: {1, 2, 3}  {3, 4, 5}
+",2.0,"3081162: "" hello world "".strip().upper()
+",2.0,"3081163: 3 * [1, 2]
+",2.0,"3081164: 5 + 4 / 2 * 3
+",2.0,"3081165: bin(0x10 + 0b101)
+",2.0,"3081166: [x % 3 for x in range(1, 5)]
+",2.0,"3081167: Part 2 (16 marks)
+For each subquestion, give asinglePython assignment statement.
+Each subquestion is worth 4 marks. If your answer uses more than one assignment statement, you will receive 0 marks
+",0.0,"3081168: Given a list values of integers, write one line of code to assign has_zero the value True if any element equals zero, otherwise False.
+",4.0,"3081169: Given a string s, assign to t the result of replacing all spaces in s with hyphens '-'.
+",4.0,"3081170: Suppose that data is a Python dictionary where all values are unique and hashable. Assign to swapped a new dictionary where the original values become keys and the original keys become values.
+",4.0,"3081171: Suppose that password is a Python string. Assign to secure_pw a new string where every vowel ('a', 'e', 'i', 'o', 'u', case-insensitive) is replaced with '*', and all other characters remain unchanged.
+",4.0,"3081172: Part 3 (8 marks)
+Select the correct response(s) to each of the subquestions below. Each of the questions below is worth two marks.
+",0.0,"3081173: Which conversions will raise an error? (Select all that apply)
+",2.0,"3081174: Which operations will NOT raise an error? (Select all that apply)
+",2.0,"3081175: Which of the following create the dictionary {1: 1, 2: 4, 3: 9}? (Select all that apply)
+",2.0,"3081176: Which statements about Python functions are true? (Select all that apply)
+",2.0,"3081177: Part 4 (15 marks)
+Consider the following function:
+def larger_than_previous(nums, query):  '''  Given a non-empty list of integers `nums` with no repetitions, and an  integer `query`, return True if query appears in nums and every integer  appearing in nums before query is smaller than query. We say that  nums[j] appears before nums[i] if j  i.  '''  # checks if query is in nums and obtains the index of query  XXXXXXXXXX # Line A  index = 0  for i in range(len(nums)):    XXXXXXXXXX # Line B      has_query = True      XXXXXXXXXX # Line C      break  # checks if every previous integer is smaller than query  is_larger_than_previous = True  XXXXXXXXXX # Line D    if nums[j]  query:      is_larger_than_previous = False       XXXXXXXXXX # Line E
+There are five locations in the function where one line of Python code has been replaced by XXXX symbols. These are labelled Line A, Line B, Line C, Line D and Line E. The number of X’s should not be used as an indication of the length of the text that has been covered up.
+In the boxes below, write the Python statement that has been covered up at each of the named locations. Each subquestion is worth 3 marks
+",0.0,"3081178: The function is repeated here for convenience:
+def larger_than_previous(nums, query):  '''  Given a non-empty list of integers `nums` with no repetitions, and an  integer `query`, return True if query appears in nums and every integer  appearing in nums before query is smaller than query. We say that  nums[j] appears before nums[i] if j  i.  '''  # checks if query is in nums and obtains the index of query XXXXXXXXXX # Line A  index = 0  for i in range(len(nums)):   XXXXXXXXXX # Line B      has_query = True     XXXXXXXXXX # Line C      break  # checks if every previous integer is smaller than query  is_larger_than_previous = True XXXXXXXXXX # Line D    if nums[j]  query:      is_larger_than_previous = False      XXXXXXXXXX # Line E
+What has been covered up at Line A?
+",3.0,"3081179: The function is repeated here for convenience:
+def larger_than_previous(nums, query):  '''  Given a non-empty list of integers `nums` with no repetitions, and an  integer `query`, return True if query appears in nums and every integer  appearing in nums before query is smaller than query. We say that  nums[j] appears before nums[i] if j  i.  '''  # checks if query is in nums and obtains the index of query XXXXXXXXXX # Line A  index = 0  for i in range(len(nums)):   XXXXXXXXXX # Line B      has_query = True     XXXXXXXXXX # Line C      break  # checks if every previous integer is smaller than query  is_larger_than_previous = True XXXXXXXXXX # Line D    if nums[j]  query:      is_larger_than_previous = False      XXXXXXXXXX # Line E
+What has been covered up at Line B?
+",3.0,"3081180: The function is repeated here for convenience:
+def larger_than_previous(nums, query):  '''  Given a non-empty list of integers `nums` with no repetitions, and an  integer `query`, return True if query appears in nums and every integer  appearing in nums before query is smaller than query. We say that  nums[j] appears before nums[i] if j  i.  '''  # checks if query is in nums and obtains the index of query XXXXXXXXXX # Line A  index = 0  for i in range(len(nums)):   XXXXXXXXXX # Line B      has_query = True     XXXXXXXXXX # Line C      break  # checks if every previous integer is smaller than query  is_larger_than_previous = True XXXXXXXXXX # Line D    if nums[j]  query:      is_larger_than_previous = False      XXXXXXXXXX # Line E
+What has been covered up at Line C?
+",3.0,"3081181: The function is repeated here for convenience:
+def larger_than_previous(nums, query):  '''  Given a non-empty list of integers `nums` with no repetitions, and an  integer `query`, return True if query appears in nums and every integer  appearing in nums before query is smaller than query. We say that  nums[j] appears before nums[i] if j  i.  '''  # checks if query is in nums and obtains the index of query XXXXXXXXXX # Line A  index = 0  for i in range(len(nums)):   XXXXXXXXXX # Line B      has_query = True     XXXXXXXXXX # Line C      break  # checks if every previous integer is smaller than query  is_larger_than_previous = True XXXXXXXXXX # Line D    if nums[j]  query:      is_larger_than_previous = False      XXXXXXXXXX # Line E
+What has been covered up at Line D?
+",3.0,"3081182: The function is repeated here for convenience:
+def larger_than_previous(nums, query):  '''  Given a non-empty list of integers `nums` with no repetitions, and an  integer `query`, return True if query appears in nums and every integer  appearing in nums before query is smaller than query. We say that  nums[j] appears before nums[i] if j  i.  '''  # checks if query is in nums and obtains the index of query XXXXXXXXXX # Line A  index = 0  for i in range(len(nums)):   XXXXXXXXXX # Line B      has_query = True     XXXXXXXXXX # Line C      break  # checks if every previous integer is smaller than query  is_larger_than_previous = True XXXXXXXXXX # Line D    if nums[j]  query:      is_larger_than_previous = False      XXXXXXXXXX # Line E
+What has been covered up at Line E?
+",3.0,"3081183: Part 5 (10 marks)
+Consider the following Python function:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Unfortunately, the function contains a few errors. The following subquestions are designed to help you first identify these errors, and then correct them.
+",0.0,"3081184: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Trace the computation that is performed for the function call
+match_prefix('app', ['application'])
+to determine what is returned. Write both the returnvalueand itstype, or, if you think an exception will be raised, indicate in English what error will arise (for example, “divide by zero”, or “index out of range”, or “invalid method for type int”, and so on).
+",1.0,"3081185: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Now write the output thatshouldhave been returned for that input if the function was working correctly. Write both the returnvalueand itstype, or, if you think an exception should be raised, indicate in English what error will arise (for example, “divide by zero”, or “index out of range”, or “invalid method for type int”, and so on).
+",1.0,"3081186: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Next, trace the function call
+match_prefix('begin', ['beginning', 'ending'])
+to determine what is returned. Write both the returnvalueand itstype, or, if you think an exception will be raised, indicate in English what error will arise (for example, “divide by zero”, or “index out of range”, or “invalid method for type int”, and so on).
+",1.0,"3081187: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Now write the output thatshouldhave been returned for that input if the function was working correctly. Write both the returnvalueand itstype, or, if you think an exception should be raised, indicate in English what error will arise (for example, “divide by zero”, or “index out of range”, or “invalid method for type int”, and so on).
+",1.0,"3081188: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+One error was responsible for the undesired behaviour revealed in Questions 23 and 25. Identify a minimal fix for this error, by stating the line in the code that is to change, and then providing one replacement line that corrects the error.
+",2.0,"3081189: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+There are two further errors present in the function that are not revealed by the previous two tests.Write a function call that would expose one of these other two errors (you may choose either).
+",1.0,"3081190: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Trace the function call you wrote in Question 28 to determine what is returned. Write both the returnvalueand itstype, or, if you think an exception will be raised, indicate in English what error will arise (for example, “divide by zero”, or “index out of range”, or “invalid method for type int”, and so on).
+Also write the output that shouldhave been returned for that input if the function was working correctly.
+",1.0,"3081191: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Identify a minimal fix for this error, by stating the line in the code that is to change, and then providing one replacement line that corrects the error. Ensure that you provide the entire line of code, not just the line number.
+",1.0,"3081192: The function is repeated here for convenience:
+def match_prefix(query, words):  '''  Given a possibly-empty list of strings `words`, return the list of strings in `words` that contain `query` as a prefix, case-insensitive. If there is no such string in `words`, return None instead  '''  if len(words) != 0:    prefix_list = []    for word in words:      word_prefix = word[:len(query)-1]      if query == word_prefix.lower():        prefix_list.append(word)    return prefix_list
+Now briefly describe the other error in the function in one sentence. You do not need to specify how to correct it.
+",1.0,"3081193: Part 6 (22 marks)
+Recall the Textoggle game from Assignment 1. Textoggle was played on an n x n board. Each square on the board could either have an uppercase English letter, or a 'blank' character. Like in Scrabble, blanks could be used to represent any character. The Textoggle board was represented as a list of lists of characters. The 'blank' character is represented as an underscore ('_'). For example, one Textoggle board could look like this:
+board = [['X', 'A', 'E', 'H'],['I', 'S', 'R', 'T'],['C', 'K', 'E', '_'],['M', 'U', 'O', 'S']]
+In this part, you will write a number of functions to process Textoggle boards. You may write other supporting functions if you wish, but are not required to. For each of these questions, you may assume the board is at least 2 x 2, and does not contain any blank tiles.
+Note that you will not be able to use the Tab key in the questions below. You should indicate indentation by using four space characters in place of a Tab. You are also encouraged to use the Preformatted font for consistent character spacing.
+",0.0,"3081194: Write a Python function
+similarity(board, char)
+that takes two parameters: board, a list of lists representing a Textoggle board, and char, a single-character string representing a character on the board.
+Your function should return a non-negative integer representing the number of times that char appears on the board.
+Here are two possible execution sequences:
+ similarity([['A', 'B', 'C'], ['B', 'B', 'C'], ['A', 'A', 'A']], 'B')3 similarity([['A', 'B', 'C'], ['C', 'D', 'A'], ['A', 'A', 'A']], 'E')0
+",6.0,"3081195: Write a Python function
+most_common_letter(board)
+that takes one parameter: board, a list of lists representing a Textoggle board. Your function should return the character that occurs most frequently on the board. In the event of a tie, the character that occurs first alphabetically should be returned. For example, 'A' should be returned instead of 'B' if both 'A' and 'B' occur the same number of times on the board.
+Here are two possible execution sequences
+ most_common_letter([['A', 'B', 'C'], ['D', 'E', 'F'], ['A', 'B', 'B']])'B' most_common_letter([['A', 'B', 'C'], ['A', 'B', 'C'], ['A', 'B', 'C']])'A'
+",8.0,"3081196: Recall that in Textoggle, word can be formed on the board if each letter (other than the first) is a horizontal or vertical (but not diagonal) neighbour of the letter immediately before it in the word. Write a Python function
+best_word(board, values)
+that takes two parameters: board, a list of lists representing a Textoggle board, and values, a dictionary representing the point value of each letter. The keys of values are English letters, while the values are the points value associated with each letter.
+Your function should return a string containing the highest value sequence of three characters that can be created on the board by following the Textoggle rules. The value of a sequence of characters is calculated by adding together the value of each character in the sequence. If there are multiple legal character sequences with the same value, any may be chosen arbitrarily.
+Here are two possible execution sequences:
+best_word([['A', 'B', 'C'], ['A', 'B', 'C'], ['A', 'B', 'C']], {'A': 7, 'B': 1, 'C': 5})'AAA' best_word([['A', 'B', 'B'], ['B', 'B', 'B'], ['C', 'C', 'C']], {'A': 7, 'B': 1, 'C': 5})'CCC'
+",8.0,"3081197: Part 7 (11 marks)
+Write a response to each of the short answer questions below.
+",0.0,"3081198: A company creates a new AI system designed to make it easier to hire graduates for programming roles. The system examines applicants' resumes and social media profiles and compares them to staff who have previously been successful in similar positions. The company claims their system will be completely fair in its hiring recommendations, as it uses computer algorithms and is thus free from human bias. Is this claim likely to be true? Explain your answer with the aid of an example relevant to this domain.
+",4.0,"3081199: Examine the following code snippet:
+def my_func(a):  if a == 0:    return '0'  if a == 1:    return '1'  return my_func(a-1) + my_func(a % 2)
+What will be returned by the function call my_func(4)?
+",4.0,"3081200: Give an example of a problem that you may choose to use Monte Carlo Simulation to help solve. Explain what features of the problem make Monte Carlo Simulation a suitable choice, and how Monte Carlo simulation can be used to help solve the problem.
+",3.0,n correct,n incorrect,score
+Aaron Shi,344299,1610363,"IT Project (COMP30022_2026_SM2), Tutorial 1 (11), Lecture 1 (1)","587071, 662929, 628394","COMP30022_2026_SM2, COMP30022_2026_SM2_T01_11, COMP30022_2026_SM2_L01_01",2026-08-31 01:12:58 UTC,1,"",0,12,0.0,"""yth""",0.0,Error,0.0,"{1,2,3,4,5}",0.0,"""HELLO WORLD""",0.0,"[1,2,1,2,1,2]",0.0,12,0.0,0x111,0.0,"",0.0,"",0,"",0.0,"",0.0,"",0.0,"",0.0,"",0,"",0.0,"",0.0,"",0.0,"",0.0,"",0,"",0.0,"",0.0,"",0.0,"",0.0,"",0.0,"",0,"",0.0,"",0.0,"",0.0,"",0.0,"",0.0,"",0.0,"",0.0,"",0.0,"",0.0,"",0,"",0.0,"",0.0,"",0.0,"",0,"",0.0,"",0.0,"",0.0,40,4,0.0
+Li Heng Wong,472852,1923422,"Tutorial 1 (11), IT Project (COMP30022_2026_SM2), Lecture 1 (1)","662929, 587071, 628394","COMP30022_2026_SM2_T01_11, COMP30022_2026_SM2, COMP30022_2026_SM2_L01_01",2026-08-29 17:32:10 UTC,1,"",0,5,0.0,yth,0.0,"10, 20, 30",0.0,FALSE,0.0,""" hello world """,0.0,"[3, 6]",0.0,11,0.0,1111,0.0,2,0.0,"",0,"",0.0,"",0.0,what,0.0,????,0.0,"",0,"float(""text"")",0.6666666666666666,"3.14 // 1.5,{""a"": 1} + {""b"": 2}",0.0,"{str(x): x**2 for x in range(1\, 4)},{x: x*2 for x in range(1\, 4)},dict([(x\, x**2) for x in [1\, 2\, 3]]),{k: k**2 for k in [3\, 2\, 1]},{x: x**2 for x in (1\, 2\, 3)}",0.6666666666666667,"Functions can be assigned to variables.,A function definition must include at least one parameter.,The return statement can only appear once in a function.,Variables defined inside a function are local to that function by default.,Default parameter values are re-evaluated each time the function is called.,Two functions in the same program can have parameters with the same name.",0.0,"",0,if (num<=query),0.0,if (query != 0),0.0,num + query,0.0,abcde,0.0,1+1=2,0.0,"",0,app no good,0.0,"""divide by zero""",0.0,"""index out of range""",0.0,0,0.0,word++,0.0,def ,0.0,0,0.0,a+b=c,0.0,out of range?,0.0,"",0,"def isSame (str A, str B)
+
+for i in range(len(strA)
+
+for i in range(len(strB)
+
+if (A==B)
+
+counter += 1",0.0,"def most (str A, str B, str C)
+
+if A==B,
+
+if A==C
+
+most = 'A'
+
+elseif B==C
+
+most == 'B'
+
+else
+
+most = 'C'",0.0,board == bored,0.0,"",0,"no the more it processes the information, the better it gets at learning what works and what doesnt, over time it will make a bias of its own",0.0,3,0.0,abcd,0.0,42,2,1.3333333333333333
+Mu-Chen Lin,376122,1674263,"Tutorial 1 (11), Lecture 1 (1), IT Project (COMP30022_2026_SM2)","662929, 628394, 587071","COMP30022_2026_SM2_T01_11, COMP30022_2026_SM2_L01_01, COMP30022_2026_SM2",2026-08-25 10:33:30 UTC,1,"",0,5,0.0,yth,0.0,"",0.0,{ },0.0,HELLOWORLD,0.0,\\\\\\\\\,0.0,10000,0.0,bin(0x10+0b101),0.0,"[1, 2, 0, 1]",0.0,"",0,has_zero = any(values == 0),0.0,"t = ""-"".join(s.split("" ""))",0.0,"swapped = {value: key for key, value in data.items()}",0.0,"secure_pw = ''.join('*' if char in 'aeiou' else char for char in password)
+
+ ",0.0,"",0,"int(""3.14""),float(""text"")",1.3333333333333333,"""Python"" in ""I love Python"",3.14 // 1.5,10 and ""2""",2.0,"dict([(x\, x**2) for x in [1\, 2\, 3]]),{x: x**2 for x in (1\, 2\, 3)}",1.3333333333333333,"Functions can be assigned to variables.,Variables defined inside a function are local to that function by default.,Two functions in the same program can have parameters with the same name.",2.0,"",0,has_query = False,0.0,if nums[i] = query:,0.0,index = nums.index(query),0.0,"for j in range(index + 1):
+
+ ",0.0,return is_larger_than_previous,0.0,"",0,[] of type list,0.0,'application' of type string,0.0,"None, of type NoneType",0.0,word_prefix = word[:len(query)],0.0,['beginning'] of type list,0.0,"match_prefix('APP', ['application'])",0.0,"The function returns [] of type list.
+
+It should return ['application'] of type list.",0.0,if query.lower() = word_prefix.lower():,0.0,"When there are no matching words, the function returns an empty list instead of None.",0.0,"",0,"def similarity(board, char):
+    count = 0
+    for row in board:
+        for letter in row:
+            if letter == char:
+                count += 1
+    return count",0.0,"def most_common_letter(board):
+    letters = []
+
+    for row in board:
+        for letter in row:
+            letters.append(letter)
+
+    return max(letters, key=letters.count)",0.0,"def best_word(board, values):
+    best = ''
+    best_score = 0
+
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            for dr, dc in directions:
+                row2 = row + dr
+                col2 = col + dc
+                word = board[row][col] + board[row2][col2]
+                score = values[word[0]] + values[word[1]]
+
+                if score > best_score:
+                    best = word
+                    best_score = score
+
+    return best",0.0,"",0,"The claim is probably not true because an algorithm learns from existing
+information, and that information may already contain human bias. For example,
+if most successful programmers previously hired by the company were men, the
+system may prefer male applicants because they are more similar to previous
+employees.",0.0,101,0.0,"Monte Carlo simulation could be used to predict the weather. It is suitable
+because weather is random. The computer generates random weather many times
+and then chooses the most common result.",0.0,44,0,6.666666666666666
+Bohan Zhu,374152,1678427,"Tutorial 1 (11), IT Project (COMP30022_2026_SM2), Lecture 1 (1)","662929, 587071, 628394","COMP30022_2026_SM2_T01_11, COMP30022_2026_SM2, COMP30022_2026_SM2_L01_01",2026-08-24 12:07:08 UTC,1,"",0,5 (int),0.0,'Pyho' (str),0.0,"[20, 30] (list)",0.0,{3} (set),0.0,'HELLO WORLD' (str),0.0,"[1, 2, 1, 2, 1, 2] (list)",0.0,11.0 (float),0.0,'0b10101' (str),0.0,"[1, 2, 0, 1] (list)",0.0,"",0,has_zero = 0 in values,0.0,"t = s.replace(' ', '-')",0.0,"swapped = {value: key for key, value in data.items()}",0.0,secure_pw = ''.join('*' if char.lower() in 'aeiou' else char for char in password),0.0,"",0,"int(""3.14""),float(""text""),set(123)",2.0,"""Python"" in ""I love Python"",3.14 // 1.5,10 and ""2""",2.0,"dict([(x\, x**2) for x in [1\, 2\, 3]]),{k: k**2 for k in [3\, 2\, 1]},{x: x**2 for x in (1\, 2\, 3)}",2.0,"Functions can be assigned to variables.,Variables defined inside a function are local to that function by default.,Two functions in the same program can have parameters with the same name.",2.0,"",0,has_query = False,0.0,if nums[i] == query:,0.0,index = i,0.0,for j in range(index):,0.0,return has_query and is_larger_than_previous,0.0,"",0,[] (list),0.0,['application'] (list),0.0,[] (list),0.0,['beginning'] (list),0.0,"Change: word_prefix = word[:len(query)-1]
+Replacement: word_prefix = word[:len(query)]",0.0,"match_prefix('x', ['apple'])",0.0,"Actual: [] (list)
+Correct: None (NoneType)",0.0,"Change: return prefix_list
+Replacement: return prefix_list if prefix_list else None",0.0,"The comparison lowercases word_prefix but not query, so an uppercase or mixed-case query can fail even when the prefix matches case-insensitively.",0.0,"",0,"def similarity(board, char):
+    count = 0
+    for row in board:
+        for cell in row:
+            if cell == char:
+                count += 1
+    return count",0.0,"def most_common_letter(board):
+    counts = {}
+    for row in board:
+        for letter in row:
+            counts[letter] = counts.get(letter, 0) + 1
+
+    best_letter = None
+    for letter in counts:
+        if (best_letter is None or counts[letter] > counts[best_letter]
+                or (counts[letter] == counts[best_letter] and letter < best_letter)):
+            best_letter = letter
+    return best_letter",0.0,"def best_word(board, values):
+    directions = ((-1, 0), (1, 0), (0, -1), (0, 1))
+    rows = len(board)
+    cols = len(board[0])
+    best = None
+    best_value = -1
+
+    for r1 in range(rows):
+        for c1 in range(cols):
+            for dr1, dc1 in directions:
+                r2, c2 = r1 + dr1, c1 + dc1
+                if 0 <= r2 < rows and 0 <= c2 < cols:
+                    for dr2, dc2 in directions:
+                        r3, c3 = r2 + dr2, c2 + dc2
+                        if (0 <= r3 < rows and 0 <= c3 < cols
+                                and (r3, c3) != (r1, c1)):
+                            word = board[r1][c1] + board[r2][c2] + board[r3][c3]
+                            word_value = sum(values[letter] for letter in word)
+                            if word_value > best_value:
+                                best = word
+                                best_value = word_value
+    return best",0.0,"",0,"No. An algorithm can reproduce or amplify bias in its historical training data and in the features chosen by its designers. For example, if previously successful programmers were disproportionately men from a small set of universities, the system may learn proxies for gender or university prestige from names, resume wording, or social-media networks and rank equally capable women or applicants from other universities lower. Using an algorithm therefore does not by itself make the recommendations fair; the data, features, outcomes, and error rates must be audited across relevant groups.",0.0,'1010' (str),0.0,"A project manager could use Monte Carlo simulation to estimate the probability that a software project will finish before a deadline. Task durations are uncertain, some tasks depend on others, and the combined completion-time distribution can be difficult to calculate analytically. Assign a probability distribution to each uncertain task duration, repeatedly sample one duration for every task, compute the resulting project completion time, and use thousands of simulated schedules to estimate the probability of meeting the deadline and useful percentiles such as the 90th-percentile completion date.",0.0,44,0,8.0

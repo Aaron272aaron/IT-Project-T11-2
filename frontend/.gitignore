@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tsbuildinfo
+playwright-report/
+test-results/
+runner-test-results/
+grouping-test-results/
+auth-test-results/
+setup-test-results/
+preparation-test-results/

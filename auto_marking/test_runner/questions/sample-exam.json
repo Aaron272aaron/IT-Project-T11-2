@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 1,
+  "rubricSha256": "b0d2c357e222ac293cc7d284719b75abfdc8f0cadf439958ddc0e8b163c9e74a",
+  "questions": [
+    {
+      "questionKey": "canvas:3081158",
+      "questionNumber": 1,
+      "questionType": "expression-output",
+      "title": "Q1",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081159",
+      "questionNumber": 2,
+      "questionType": "expression-output",
+      "title": "Q2",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081160",
+      "questionNumber": 3,
+      "questionType": "expression-output",
+      "title": "Q3",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081161",
+      "questionNumber": 4,
+      "questionType": "expression-output",
+      "title": "Q4",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. The CSV omits the operator; the DOCX specifies set intersection (&)."
+    },
+    {
+      "questionKey": "canvas:3081162",
+      "questionNumber": 5,
+      "questionType": "expression-output",
+      "title": "Q5",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081163",
+      "questionNumber": 6,
+      "questionType": "expression-output",
+      "title": "Q6",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081164",
+      "questionNumber": 7,
+      "questionType": "expression-output",
+      "title": "Q7",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081165",
+      "questionNumber": 8,
+      "questionType": "expression-output",
+      "title": "Q8",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081166",
+      "questionNumber": 9,
+      "questionType": "expression-output",
+      "title": "Q9",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081168",
+      "questionNumber": 10,
+      "questionType": "assignment-statement",
+      "title": "Q10",
+      "automated": true,
+      "caseCount": 7,
+      "mode": "assignment",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081169",
+      "questionNumber": 11,
+      "questionType": "assignment-statement",
+      "title": "Q11",
+      "automated": true,
+      "caseCount": 7,
+      "mode": "assignment",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081170",
+      "questionNumber": 12,
+      "questionType": "assignment-statement",
+      "title": "Q12",
+      "automated": true,
+      "caseCount": 7,
+      "mode": "assignment",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081171",
+      "questionNumber": 13,
+      "questionType": "assignment-statement",
+      "title": "Q13",
+      "automated": true,
+      "caseCount": 8,
+      "mode": "assignment",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081173",
+      "questionNumber": 14,
+      "questionType": "multiple-choice",
+      "title": "Q14",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "The supplied CSV omits the choices and the rubric supplies no option answer key. Review the original Canvas result; do not infer a key from student answers.",
+      "checklist": [
+        "Confirm selected options against the original Canvas question/key.",
+        "Keep the original source score separate from confirmed marks."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081174",
+      "questionNumber": 15,
+      "questionType": "multiple-choice",
+      "title": "Q15",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "The supplied CSV omits the choices and the rubric supplies no option answer key. Review the original Canvas result; do not infer a key from student answers.",
+      "checklist": [
+        "Confirm selected options against the original Canvas question/key.",
+        "Keep the original source score separate from confirmed marks."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081175",
+      "questionNumber": 16,
+      "questionType": "multiple-choice",
+      "title": "Q16",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "The supplied CSV omits the choices and the rubric supplies no option answer key. Review the original Canvas result; do not infer a key from student answers.",
+      "checklist": [
+        "Confirm selected options against the original Canvas question/key.",
+        "Keep the original source score separate from confirmed marks."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081176",
+      "questionNumber": 17,
+      "questionType": "multiple-choice",
+      "title": "Q17",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "The supplied CSV omits the choices and the rubric supplies no option answer key. Review the original Canvas result; do not infer a key from student answers.",
+      "checklist": [
+        "Confirm selected options against the original Canvas question/key.",
+        "Keep the original source score separate from confirmed marks."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081178",
+      "questionNumber": 18,
+      "questionType": "code-completion",
+      "title": "Q18",
+      "automated": true,
+      "caseCount": 8,
+      "mode": "completion",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+    },
+    {
+      "questionKey": "canvas:3081179",
+      "questionNumber": 19,
+      "questionType": "code-completion",
+      "title": "Q19",
+      "automated": true,
+      "caseCount": 8,
+      "mode": "completion",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+    },
+    {
+      "questionKey": "canvas:3081180",
+      "questionNumber": 20,
+      "questionType": "code-completion",
+      "title": "Q20",
+      "automated": true,
+      "caseCount": 8,
+      "mode": "completion",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+    },
+    {
+      "questionKey": "canvas:3081181",
+      "questionNumber": 21,
+      "questionType": "code-completion",
+      "title": "Q21",
+      "automated": true,
+      "caseCount": 8,
+      "mode": "completion",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+    },
+    {
+      "questionKey": "canvas:3081182",
+      "questionNumber": 22,
+      "questionType": "code-completion",
+      "title": "Q22",
+      "automated": true,
+      "caseCount": 8,
+      "mode": "completion",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+    },
+    {
+      "questionKey": "canvas:3081184",
+      "questionNumber": 23,
+      "questionType": "debugging",
+      "title": "Q23",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081185",
+      "questionNumber": 24,
+      "questionType": "debugging",
+      "title": "Q24",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081186",
+      "questionNumber": 25,
+      "questionType": "debugging",
+      "title": "Q25",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081187",
+      "questionNumber": 26,
+      "questionType": "debugging",
+      "title": "Q26",
+      "automated": true,
+      "caseCount": 2,
+      "mode": "literal-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081188",
+      "questionNumber": 27,
+      "questionType": "debugging",
+      "title": "Q27",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "The answer identifies an original line and a replacement, often in prose. Compare both with the rubric; a code-only runner cannot assess that explanation fairly.",
+      "checklist": [
+        "Identify word_prefix = word[:len(query)-1].",
+        "Check a replacement that retains the full prefix, such as word[:len(query)].",
+        "Review alternative fixes and partial credit manually."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081189",
+      "questionNumber": 28,
+      "questionType": "debugging",
+      "title": "Q28",
+      "automated": true,
+      "caseCount": 1,
+      "mode": "counterexample",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Enter a literal match_prefix(...) call. This check isolates the two remaining bugs after the Q27 slicing fix."
+    },
+    {
+      "questionKey": "canvas:3081190",
+      "questionNumber": 29,
+      "questionType": "debugging",
+      "title": "Q29",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "This trace depends on the student's own Q28 example. The runner must not assume a fixed call or ignore the required type/explanation.",
+      "checklist": [
+        "Read this student's Q28 call.",
+        "Verify the actual value and type, then the intended value and type.",
+        "Account for the slicing bug when tracing the original function."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081191",
+      "questionNumber": 30,
+      "questionType": "debugging",
+      "title": "Q30",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "Either remaining error can be fixed, depending on Q28–29. A prose line-and-replacement answer needs contextual review.",
+      "checklist": [
+        "For query case: compare query.lower() with the lowercased prefix.",
+        "For absent matches: return None instead of an empty list.",
+        "Check that the named line and full replacement agree with the student's earlier answer."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081192",
+      "questionNumber": 31,
+      "questionType": "debugging",
+      "title": "Q31",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "This asks for the other error in one sentence, depending on the student's earlier choices. No deterministic code test can assess the explanation.",
+      "checklist": [
+        "Identify the remaining case-sensitivity or no-match-return bug.",
+        "Confirm it was not the same bug already addressed in Q28–30."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081194",
+      "questionNumber": 32,
+      "questionType": "coding",
+      "title": "Q32",
+      "automated": true,
+      "caseCount": 6,
+      "mode": "function",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081195",
+      "questionNumber": 33,
+      "questionType": "coding",
+      "title": "Q33",
+      "automated": true,
+      "caseCount": 7,
+      "mode": "function",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081196",
+      "questionNumber": 34,
+      "questionType": "coding",
+      "title": "Q34",
+      "automated": true,
+      "caseCount": 7,
+      "mode": "function",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Orthogonal neighbours only; any optimal tied word is accepted. These cases do not enforce a tile-reuse policy; the highest score is the same with or without reuse."
+    },
+    {
+      "questionKey": "canvas:3081198",
+      "questionNumber": 35,
+      "questionType": "short-answer",
+      "title": "Q35",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "This explanation and relevant hiring example require human rubric judgment. Keyword presence is not evidence of a correct argument.",
+      "checklist": [
+        "Explain how historical/training-data bias can carry into recommendations.",
+        "Evaluate the relevance and accuracy of the hiring-domain example."
+      ]
+    },
+    {
+      "questionKey": "canvas:3081199",
+      "questionNumber": 36,
+      "questionType": "short-answer",
+      "title": "Q36",
+      "automated": true,
+      "caseCount": 1,
+      "mode": "text-answer",
+      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+    },
+    {
+      "questionKey": "canvas:3081200",
+      "questionNumber": 37,
+      "questionType": "short-answer",
+      "title": "Q37",
+      "automated": false,
+      "caseCount": 0,
+      "mode": "manual",
+      "note": "The suitability and explanation of Monte Carlo simulation require human rubric judgment; multiple examples can be valid.",
+      "checklist": [
+        "Identify a suitable problem.",
+        "Explain the role of randomness or uncertainty.",
+        "Describe repeated random sampling over many trials and interpretation of results."
+      ]
+    }
+  ]
+}

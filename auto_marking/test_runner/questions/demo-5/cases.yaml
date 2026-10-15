@@ -1,0 +1,56 @@
+{
+  "question_key": "demo:5",
+  "title": "String transformation \u00b7 clean_text(s)",
+  "entry": "clean_text",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "leading_and_trailing_spaces",
+      "args": [
+        " HELLO "
+      ],
+      "expected": "hello",
+      "marks": 0
+    },
+    {
+      "name": "mixed_case",
+      "args": [
+        "PyThOn"
+      ],
+      "expected": "python",
+      "marks": 0
+    },
+    {
+      "name": "empty_string",
+      "args": [
+        ""
+      ],
+      "expected": "",
+      "marks": 0
+    },
+    {
+      "name": "only_whitespace",
+      "args": [
+        " \t\n "
+      ],
+      "expected": "",
+      "marks": 0
+    },
+    {
+      "name": "preserves_internal_spaces",
+      "args": [
+        " A  B "
+      ],
+      "expected": "a  b",
+      "marks": 0
+    },
+    {
+      "name": "tabs_and_newlines",
+      "args": [
+        "\tHeLLo\n"
+      ],
+      "expected": "hello",
+      "marks": 0
+    }
+  ]
+}

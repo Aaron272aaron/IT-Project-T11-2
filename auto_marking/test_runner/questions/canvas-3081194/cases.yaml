@@ -1,0 +1,155 @@
+{
+  "question_key": "canvas:3081194",
+  "title": "Q32 · coding",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "entry": "similarity",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "provided_repeated_B",
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "B",
+            "B",
+            "C"
+          ],
+          [
+            "A",
+            "A",
+            "A"
+          ]
+        ],
+        "B"
+      ],
+      "expected": 3,
+      "marks": 0
+    },
+    {
+      "name": "provided_absent_E",
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "C",
+            "D",
+            "A"
+          ],
+          [
+            "A",
+            "A",
+            "A"
+          ]
+        ],
+        "E"
+      ],
+      "expected": 0,
+      "marks": 0
+    },
+    {
+      "name": "smallest_board_one_match",
+      "args": [
+        [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "C",
+            "D"
+          ]
+        ],
+        "D"
+      ],
+      "expected": 1,
+      "marks": 0
+    },
+    {
+      "name": "all_tiles_match",
+      "args": [
+        [
+          [
+            "A",
+            "A"
+          ],
+          [
+            "A",
+            "A"
+          ]
+        ],
+        "A"
+      ],
+      "expected": 4,
+      "marks": 0
+    },
+    {
+      "name": "matches_in_last_row_and_column",
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "Z"
+          ],
+          [
+            "C",
+            "D",
+            "Z"
+          ],
+          [
+            "Z",
+            "Z",
+            "Z"
+          ]
+        ],
+        "Z"
+      ],
+      "expected": 5,
+      "marks": 0
+    },
+    {
+      "name": "larger_board_repeated_letters",
+      "args": [
+        [
+          [
+            "X",
+            "A",
+            "E",
+            "H"
+          ],
+          [
+            "I",
+            "S",
+            "R",
+            "T"
+          ],
+          [
+            "C",
+            "K",
+            "E",
+            "A"
+          ],
+          [
+            "M",
+            "U",
+            "O",
+            "S"
+          ]
+        ],
+        "S"
+      ],
+      "expected": 2,
+      "marks": 0
+    }
+  ],
+  "mode": "function"
+}
