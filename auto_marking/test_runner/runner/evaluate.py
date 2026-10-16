@@ -81,13 +81,45 @@ COMPLETION = """def larger_than_previous(nums, query):
 LINES = {"A": "has_query = False", "B": "if query == nums[i]:", "C": "index = i", "D": "for j in range(index):", "E": "return has_query and is_larger_than_previous"}
 
 
+def assigned_names(source):
+    """Plain variable names assigned at top level, in source order."""
+    names = []
+    for node in ast.parse(source).body:
+        if isinstance(node, ast.Assign):
+            targets = node.targets
+        elif isinstance(node, (ast.AnnAssign, ast.AugAssign)):
+            targets = [node.target]
+        else:
+            continue
+        names += [target.id for target in targets if isinstance(target, ast.Name)]
+    return names
+
+
 def one_assignment(source, target):
+    """Return (passed, detail) so a different variable name is reported, not hidden."""
     tree = ast.parse(source)
     if len(tree.body) != 1 or not isinstance(tree.body[0], (ast.Assign, ast.AnnAssign)):
-        return False
+        return False, "Not exactly one assignment statement"
     node = tree.body[0]
     targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-    return len(targets) == 1 and isinstance(targets[0], ast.Name) and targets[0].id == target
+    if len(targets) != 1 or not isinstance(targets[0], ast.Name):
+        return False, "Assignment must target a single variable name"
+    if targets[0].id != target:
+        return False, f"One assignment, but to {targets[0].id!r} instead of {target!r}"
+    return True, True
+
+
+def assignment_value(source, namespace, target, context_names):
+    """Single assignment questions: use the expected name, else the student's one new variable."""
+    names = assigned_names(source)
+    if target in names:
+        return namespace[target]
+    fresh = list(dict.fromkeys(name for name in names if name not in context_names))
+    candidates = fresh or list(dict.fromkeys(names))
+    if len(candidates) == 1:
+        return namespace[candidates[0]]
+    found = f"; found {', '.join(candidates)}" if candidates else ""
+    raise AnswerFormatError(f"Expected an assignment to {target}{found}.")
 
 
 def match_prefix(query, words, *, fixed):
@@ -125,7 +157,10 @@ def evaluate(source, spec, case):
     namespace.update({key: ast.literal_eval(value) for key, value in case.get("context_literals", {}).items()})
     namespace["__name__"] = "student_submission"
     if mode == "assignment" and case.get("check") == "structure":
-        actual = one_assignment(source, spec["target"])
+        passed, detail = one_assignment(source, spec["target"])
+        if not passed:
+            return detail, False
+        actual = detail
     else:
         executable = source
         if mode == "completion":
@@ -133,11 +168,10 @@ def evaluate(source, spec, case):
             if len(line.splitlines()) != 1:
                 raise AnswerFormatError("Enter the single missing code line; surrounding indentation is supplied by the question.")
             executable = COMPLETION.format(**{**LINES, spec["slot"]: line})
+        context_names = set(namespace)
         exec(compile(executable, "<student-answer>", "exec"), namespace)
         if mode == "assignment":
-            if spec["target"] not in namespace:
-                raise AnswerFormatError(f"Expected an assignment to {spec['target']}.")
-            actual = namespace[spec["target"]]
+            actual = assignment_value(source, namespace, spec["target"], context_names)
         else:
             function = namespace.get(spec["entry"])
             if not callable(function):

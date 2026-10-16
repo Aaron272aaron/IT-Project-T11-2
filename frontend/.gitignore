@@ -8,3 +8,6 @@ grouping-test-results/
 auth-test-results/
 setup-test-results/
 preparation-test-results/
+
+# iCloud-excluded dependencies
+node_modules.nosync/
