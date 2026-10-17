@@ -17,6 +17,8 @@
     "test:e2e:runner": "playwright test --config config/playwright/runner.ts",
     "test:e2e:grouping": "playwright test --config config/playwright/grouping.ts",
     "test:e2e:auth": "playwright test --config config/playwright/auth.ts",
+    "dev:demo": "vite --host 127.0.0.1",
+    "predev:demo": "node scripts/prepare-pdf-assets.mjs",
     "dev:frontend": "vite --host 127.0.0.1",
     "predev:frontend": "node scripts/prepare-pdf-assets.mjs",
     "test:e2e:preparation": "playwright test --config config/playwright/preparation.ts",

@@ -195,7 +195,7 @@ export function RubricEditor({ exam }: { exam: ExamRecord }) {
               <summary>Automatically create rubric from document</summary>
               <p>
                 Upload a DOCX or text-based PDF using the standard guide format.
-                Python reads the document; check the proposed question
+                Review the proposed question
                 associations before applying. Scanned PDFs are not supported.
               </p>
               <Field label="Import rubric document">

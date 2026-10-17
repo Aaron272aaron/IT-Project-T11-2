@@ -20,7 +20,12 @@ export function Members() {
   const [role, setRole] = useState("All roles");
   const [editing, setEditing] = useState<Member | "new" | null>(null);
   const [removing, setRemoving] = useState<Member | null>(null);
-  const members = workspace.members.filter(
+  // Use the same profile as the sidebar, including for older saved demo sessions.
+  const members = workspace.members.map((member) =>
+    member.id === "me"
+      ? { ...member, name: data.profile.name, email: data.profile.email }
+      : member,
+  ).filter(
     (m) =>
       (role === "All roles" || m.role === role) &&
       `${m.name} ${m.email}`.toLowerCase().includes(query.toLowerCase()),

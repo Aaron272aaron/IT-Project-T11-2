@@ -146,14 +146,13 @@ export function QuestionOverview({ id }: { id: number }) {
               <div>
                 <b>Automated testing · Demonstration data</b>
                 <p>
-                  The Python runner is not connected. Imported code is not
-                  executed in the browser.
+                  This overview shows example test results for the bundled responses.
                 </p>
               </div>
               <Button
                 onClick={() =>
                   notify(
-                    "These are example test results. Connect a backend API to run the Python sandbox.",
+                    "These are example results. Open a supported response to run its configured tests.",
                   )
                 }
               >
@@ -564,8 +563,7 @@ export function Marking({ id, student }: { id: number; student: string }) {
                 </>
               ) : (
                 <Notice>
-                  Tests have not been run for this response. A backend
-                  connection is required.
+                  No test results are available for this response.
                 </Notice>
               )}
             </Card>

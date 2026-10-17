@@ -1,3 +1,4 @@
+import { isDemoSession } from "../../api/auth";
 import { RubricAccess } from "../../components/rubric/RubricWindow";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -212,13 +213,13 @@ export function CanvasUpload({
       <Notice>
         <b>
           {view
-            ? "Saved to this exam on this computer"
+            ? "Saved to this exam"
             : "Validate first, then save to this exam"}
         </b>
         <p>
           {view
-            ? "Answers remain available after refresh in this tab. No database is connected."
-            : "Python checks your CSV. Save the valid result to this exam after reviewing it. Leaving before saving discards the new preview."}
+            ? "Answers are saved to this workspace and remain available after refresh."
+            : "Validate your CSV, review the preview, then save it to this exam."}
         </p>
       </Notice>
       {view && !preview && isCoordinator && (
@@ -256,7 +257,7 @@ export function CanvasUpload({
                 </span>
                 <h3>
                   {validating
-                    ? "Python is checking your CSV…"
+                    ? "Checking your CSV…"
                     : (file?.name ?? "Drag and drop your CSV here")}
                 </h3>
                 <p>
@@ -286,7 +287,7 @@ export function CanvasUpload({
                   disabled={!file || validating}
                   onClick={validate}
                 >
-                  {validating ? "Waiting for Python…" : "Validate and preview"}
+                  {validating ? "Validating…" : "Validate and preview"}
                 </Button>
               </div>
               <div className="sample-links">
@@ -329,7 +330,7 @@ export function CanvasUpload({
       {preview && (
         <>
           <div role="status" aria-live="polite">
-            <p>Processed by Python</p>
+            <p>{isDemoSession() ? "CSV preview ready" : "Processed by Python"}</p>
             <Notice tone={ready ? "success" : "danger"}>
               <b>
                 {ready

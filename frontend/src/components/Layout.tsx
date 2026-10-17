@@ -175,8 +175,8 @@ export function Layout({
       <main id="main-content" tabIndex={-1}>
         {storageError && (
           <div role="alert" className="notice warning">
-            Browser storage is full. Changes remain in memory only; export your
-            marks before closing this page.
+            Browser storage is full. Personal preferences and local workspace
+            settings could not be saved. Exam saves are handled separately.
           </div>
         )}
         {route !== "/user-settings" && <ModelSetup compact />}
@@ -188,8 +188,7 @@ export function Layout({
               ? "Demo workspace"
               : "Local marking workspace"}
           </span>
-          {/* CSV previews use Python; demo marking data still uses sessionStorage. */}
-          <span>Saved exams and marks stay in this browser</span>
+          <span>{auth.mode === "demo" ? "Presentation data saved in this browser" : "Exams and confirmed marks are saved to this workspace"}</span>
         </footer>
       </main>
     </div>

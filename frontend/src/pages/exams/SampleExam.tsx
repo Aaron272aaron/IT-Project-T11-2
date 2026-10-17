@@ -442,9 +442,7 @@ export function SampleQuestion({
               </Notice>
             ) : automatic ? (
               <Notice>
-                This section is identified as automatically marked in the
-                supplied rubric. Its original CSV score is shown for review;
-                this prototype does not rerun automatic marking.
+                This section uses the original CSV score for review.
               </Notice>
             ) : (
               <>

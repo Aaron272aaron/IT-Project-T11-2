@@ -1,3 +1,4 @@
+import { isDemoSession } from "../../api/auth";
 import { useEffect, useRef, useState } from "react";
 import { runTests, type TestRunResult } from "../../api/testRuns";
 import { Button } from "../UI";
@@ -61,6 +62,7 @@ export function AutomatedTests({
       className="runner-results"
       aria-label={`${resultLabel} test results`}
     >
+      {isDemoSession() && <p className="helper">Demo test results</p>}
       {suite && <p className="helper">{suite.note}</p>}
       {suite?.automated === false ? (
         <>

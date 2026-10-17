@@ -1,3 +1,4 @@
+import { demoRequest } from "../demo/transport";
 export type AccountUser = {
   id: string;
   name: string;
@@ -19,10 +20,21 @@ export function setApiSession(session: AccountSession | null, isDemo = false) {
   demo = isDemo;
   generation++;
 }
+export function isDemoSession() {
+  return demo;
+}
 export async function apiFetch(
   input: RequestInfo | URL,
   options: RequestInit = {},
 ) {
+  const demoPath =
+    typeof input === "string"
+      ? input
+      : input instanceof URL
+        ? input.pathname
+        : new URL(input.url, location.href).pathname;
+  if (demo && demoPath.startsWith("/api/"))
+    return demoRequest(demoPath, options);
   const headers = new Headers(options.headers);
   headers.set("X-App-Request", "AutoMarktic");
   if (csrfToken) headers.set("X-CSRF-Token", csrfToken);

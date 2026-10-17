@@ -91,10 +91,7 @@ export function CreateExam() {
             Open the exam to upload its answer CSV. You can upload or replace
             the rubric from the same exam page.
           </p>
-          <Notice>
-            Exam files stay in this browser tab, including across refreshes.
-            They are not saved to a database.
-          </Notice>
+          <Notice>Exam files and confirmed marks are saved to this workspace.</Notice>
         </Card>
       </div>
     </>
@@ -261,7 +258,7 @@ export function CreatedExam({ exam }: { exam: ExamRecord }) {
         actions={<Button onClick={() => go("/exams")}>Back to exams</Button>}
       />
       <Notice>
-        Saved in this browser tab. Open a question to review answers and confirm
+        Open a question to review answers and confirm
         marks. Tutors and coordinators use the same marking workspace.
       </Notice>
       <div className="stats-grid">

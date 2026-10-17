@@ -219,7 +219,7 @@ export function ImportPage() {
             <div className="info-section">
               <b>CSV export format</b>
               <p>
-                This prototype reads one answer per row, using the column names
+                This import format uses one answer per row, with the column names
                 below. Convert your Canvas export to this template first.
               </p>
               <code>student_id, question_id, answer</code>
@@ -242,8 +242,7 @@ export function ImportPage() {
             <div className="info-section">
               <b>Local demo</b>
               <p>
-                Imports stay in this browser tab’s session. This is not a
-                permanent database.
+                This legacy import stores responses for the current browser session.
               </p>
             </div>
           </Card>

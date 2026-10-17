@@ -183,7 +183,7 @@ function useStore() {
     const controller = new AbortController();
     setSampleLoading(true);
     setSampleError("");
-    // Load the bundled fixture from Vite/static hosting; the demo needs no Python API.
+    // Load the bundled fixture, then persist the exam through the backend API.
     // Upgrade only the old Final exam, once. Later user edits and marks are retained.
     fetch(`${import.meta.env.BASE_URL}demo/sample-exam.json`, {
       signal: controller.signal,

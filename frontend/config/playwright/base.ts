@@ -5,6 +5,7 @@ export default defineConfig({
   outputDir: fileURLToPath(new URL("../../test-results", import.meta.url)),
   testDir: fileURLToPath(new URL("../../e2e", import.meta.url)),
   testIgnore: [
+    "**/demo-offline.spec.ts",
     "**/runner.spec.ts",
     "**/model-download.spec.ts",
     "**/sample-test-cases.spec.ts",

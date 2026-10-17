@@ -3,7 +3,7 @@ import { prepareRubric } from "../../services/rubricDocument";
 import type { ExamAttachment } from "../../models/exams";
 
 // Keep the original document as an attachment; do not infer scoring rules.
-// The limit is deliberately small because this prototype uses sessionStorage.
+// Bound document sizes to keep uploads and exam snapshots manageable.
 export const MAX_RUBRIC_BYTES = 2 * 1024 * 1024;
 export function RubricPicker({
   onChange,
