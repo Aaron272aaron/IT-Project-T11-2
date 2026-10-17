@@ -1,3 +1,5 @@
+import { isDemoSession } from "../../api/auth";
+import { loadExampleData } from "../../demo/examples";
 import { useEffect, useRef, useState } from "react";
 import { prepareRubric } from "../../services/rubricDocument";
 import type { ExamAttachment } from "../../models/exams";
@@ -107,6 +109,28 @@ export function RubricPicker({
       if (token === version.current) onBusy(false);
     }
   }
+  async function useExample() {
+    const token = ++version.current;
+    reader.current?.abort();
+    request.current?.abort();
+    setError("");
+    onBusy(true);
+    try {
+      const example = await loadExampleData();
+      if (token !== version.current) return;
+      onChange({ ...example.rubric!, exampleCategories: example.categories, uploadedAt: new Date().toISOString() });
+      setName(example.rubric!.name);
+    } catch (reason) {
+      if (token === version.current)
+        setError(
+          reason instanceof Error
+            ? reason.message
+            : "Could not load example rubric.",
+        );
+    } finally {
+      if (token === version.current) onBusy(false);
+    }
+  }
   return (
     <div className="rubric-picker">
       <label className="field">
@@ -124,6 +148,15 @@ export function RubricPicker({
       <p className="helper">
         Word or PDF · Up to 2 MB · You can add or replace it later.
       </p>
+      {isDemoSession() && (
+        <button
+          type="button"
+          className="button"
+          onClick={() => void useExample()}
+        >
+          Use example data
+        </button>
+      )}
       {name && (
         <p className="attachment-name">
           Selected: {name}{" "}

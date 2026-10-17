@@ -112,7 +112,7 @@ export function Layout({
               <option>Coordinator</option>
               <option>Tutor</option>
             </select>
-            <small>Preview only · Not account permissions</small>
+            <small>Preview only</small>
           </label>
         )}
         <div className="nav-label">WORKSPACE</div>

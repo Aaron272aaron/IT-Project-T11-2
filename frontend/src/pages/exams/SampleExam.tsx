@@ -471,7 +471,8 @@ export function SampleQuestion({
             )}
             <Field label="Marker comment (optional)">
               <textarea
-                disabled={!!lockedBy}
+                aria-label="Marker comment (optional)"
+                disabled={!!lockedBy || !!automatic}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />

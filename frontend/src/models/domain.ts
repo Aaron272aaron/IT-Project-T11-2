@@ -132,7 +132,7 @@ export const questions: Question[] = [
 ];
 export const initialProfile: Profile = {
   avatar: `${import.meta.env.BASE_URL}demo/avatar.png`,
-  name: "Fran Neumann",
+  name: "Raphael Neumann",
   email: "fran.neumann@example.edu",
   username: "fran.neumann",
   language: "English",

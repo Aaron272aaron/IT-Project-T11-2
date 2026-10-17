@@ -1,3 +1,4 @@
+import { DemoPasswordRecovery } from "../../components/auth/DemoPasswordRecovery";
 import { useState, type FormEvent } from "react";
 import type { Member, Role } from "../../models/domain";
 import { Avatar } from "../../components/profile/Avatar";
@@ -15,7 +16,7 @@ import {
 } from "../../components/UI";
 export function Members() {
   const auth = useAuth();
-  const { data, workspace, setData, notify } = useApp();
+  const { data, workspace, setData, notify, isCoordinator } = useApp();
   const [query, setQuery] = useState("");
   const [role, setRole] = useState("All roles");
   const [editing, setEditing] = useState<Member | "new" | null>(null);
@@ -143,6 +144,7 @@ export function Members() {
           a local demo; no invitations are sent.
         </p>
       </Card>
+      {isCoordinator && <DemoPasswordRecovery members={workspace.members.map((member) => member.id === "me" ? { ...member, name: data.profile.name, email: data.profile.email } : member)} />}
       {editing && (
         <MemberDialog
           member={editing}

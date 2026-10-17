@@ -1,3 +1,5 @@
+import { isDemoSession } from "../../api/auth";
+import { loadExampleData } from "../../demo/examples";
 import { useState, type FormEvent } from "react";
 import { useApp, go } from "../../state";
 import type { ExamAttachment, ExamRecord } from "../../models/exams";
@@ -11,12 +13,29 @@ export function CreateExam() {
   const { saveExam, notify, exams } = useApp();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [example, setExample] = useState<ExamRecord | null>(null);
+  const [loadingExample, setLoadingExample] = useState(false);
   const [rubric, setRubric] = useState<ExamAttachment | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  async function useExampleAnswers() {
+    setLoadingExample(true);
+    setError("");
+    try {
+      setExample(await loadExampleData());
+    } catch (reason) {
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "Could not load example answers.",
+      );
+    } finally {
+      setLoadingExample(false);
+    }
+  }
   async function create(event: FormEvent) {
     event.preventDefault();
-    if (busy || !title.trim()) return;
+    if (busy || loadingExample || !title.trim()) return;
     if (
       exams.some(
         (exam) => exam.title.toLowerCase() === title.trim().toLowerCase(),
@@ -30,6 +49,16 @@ export function CreateExam() {
       title: title.trim(),
       description: description.trim(),
       ...(rubric ? { rubric } : {}),
+      // Copy the questions and classifications, never the sample's saved marks.
+      ...(example
+        ? {
+            answers: {
+              ...example.answers!,
+              uploadedAt: new Date().toISOString(),
+            },
+            questionTypes: example.questionTypes,
+          }
+        : {}),
     };
     try {
       await saveExam(exam);
@@ -71,6 +100,36 @@ export function CreateExam() {
               />
             </Field>
             <RubricPicker onChange={setRubric} onBusy={setBusy} />
+            {isDemoSession() && (
+              <fieldset>
+                <legend>Answer CSV (optional)</legend>
+                <p>
+                  Start with the example student answers, or upload your own CSV
+                  after creating the exam.
+                </p>
+                <Button
+                  type="button"
+                  disabled={loadingExample}
+                  onClick={() => void useExampleAnswers()}
+                >
+                  {loadingExample ? "Loading example…" : "Use example data"}
+                </Button>
+                {example && (
+                  <p role="status">
+                    {example.answers!.preview.students.length} students ·{" "}
+                    {
+                      example.answers!.preview.questions.filter(
+                        (q) => !q.instruction,
+                      ).length
+                    }{" "}
+                    questions selected{" "}
+                    <Button type="button" onClick={() => setExample(null)}>
+                      Remove example answers
+                    </Button>
+                  </p>
+                )}
+              </fieldset>
+            )}
             {error && (
               <p role="alert" className="error">
                 {error}
@@ -80,7 +139,7 @@ export function CreateExam() {
               <Button type="button" onClick={() => go("/exams")}>
                 Cancel
               </Button>
-              <Button variant="primary" disabled={busy}>
+              <Button variant="primary" disabled={busy || loadingExample}>
                 {busy ? "Reading rubric…" : "Create exam"}
               </Button>
             </div>
@@ -91,7 +150,9 @@ export function CreateExam() {
             Open the exam to upload its answer CSV. You can upload or replace
             the rubric from the same exam page.
           </p>
-          <Notice>Exam files and confirmed marks are saved to this workspace.</Notice>
+          <Notice>
+            Exam files and confirmed marks are saved to this workspace.
+          </Notice>
         </Card>
       </div>
     </>
@@ -112,9 +173,7 @@ export function ExamFiles({ exam }: { exam: ExamRecord }) {
         ...exam,
         rubric: replacement,
         rubricPages: {},
-        ...(exam.sampleVersion
-          ? { categories: {}, autoMarkedQuestionIds: [] }
-          : {}),
+
       });
       setReplacement(null);
       setPickerKey((key) => key + 1);
@@ -222,8 +281,7 @@ export function ExamFiles({ exam }: { exam: ExamRecord }) {
             </div>
           )}
           <p className="helper">
-            CSV validation runs in Python. Review the file before saving it to
-            this exam.
+            Review the answer preview before saving it to this exam.
           </p>
         </Card>
       </div>
@@ -237,6 +295,7 @@ export function ExamFiles({ exam }: { exam: ExamRecord }) {
         <RubricEditor
           key={`options-${exam.id}-${exam.answers?.uploadedAt}-${exam.rubric?.uploadedAt}`}
           exam={exam}
+          exampleRubric={replacement?.exampleCategories ? replacement : undefined}
         />
       )}
     </>
@@ -258,8 +317,8 @@ export function CreatedExam({ exam }: { exam: ExamRecord }) {
         actions={<Button onClick={() => go("/exams")}>Back to exams</Button>}
       />
       <Notice>
-        Open a question to review answers and confirm
-        marks. Tutors and coordinators use the same marking workspace.
+        Open a question to review answers and confirm marks. Tutors and
+        coordinators use the same marking workspace.
       </Notice>
       <div className="stats-grid">
         <Stat

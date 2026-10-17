@@ -5,6 +5,8 @@ import type { GroupSnapshot } from "../api/answerGroups";
 // Exams belong to a workspace. Uploaded documents are references, not rules
 // that can silently overwrite human-confirmed marks in the demo workflow.
 export type ExamAttachment = {
+  // Bundled demo options are a draft seed, never confirmed marks.
+  exampleCategories?: Record<string, RubricCategory[]>;
   name: string;
   size: number;
   uploadedAt: string;

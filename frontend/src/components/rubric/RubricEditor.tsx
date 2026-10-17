@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { ExamRecord, RubricCategory } from "../../models/exams";
+import type { ExamAttachment, ExamRecord, RubricCategory } from "../../models/exams";
 import { useApp } from "../../state";
 import {
   affectedMarks,
@@ -12,7 +12,7 @@ import { importRubric, type RubricImport } from "../../api/rubric";
 import { Button, Card, Field, Notice } from "../UI";
 
 // Coordinator-only drafts: document parsing never writes to saved exam state.
-export function RubricEditor({ exam }: { exam: ExamRecord }) {
+export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampleRubric?: ExamAttachment }) {
   const { saveExam, notify, isCoordinator } = useApp();
   const questions =
     exam.answers?.preview.questions.filter((q) => !q.instruction) ?? [];
@@ -28,6 +28,23 @@ export function RubricEditor({ exam }: { exam: ExamRecord }) {
   const [targets, setTargets] = useState<Record<string, string>>({});
   const request = useRef<AbortController | null>(null);
   useEffect(() => () => request.current?.abort(), []);
+  // A selected example immediately populates the editor, but saving still
+  // uses the normal review flow so existing marks are never silently changed.
+  const exampleSeed = exampleRubric ?? (Object.keys(exam.categories ?? {}).length ? undefined : exam.rubric);
+  useEffect(() => {
+    if (!exampleSeed?.exampleCategories) return;
+    const available = exam.answers?.preview.questions.filter(q => !q.instruction) ?? [];
+    const matching = Object.fromEntries(available.flatMap(q => {
+      const options = exampleSeed.exampleCategories?.[q.id];
+      return options?.length && options.every(option => option.score <= q.maxMark)
+        ? [[q.id, options]] : [];
+    }));
+    if (!Object.keys(matching).length) return;
+    setDraft(groupCategoryMap({ ...exam.categories, ...matching }));
+    setQid(Object.keys(matching)[0]);
+    setReview(false);
+    setError("");
+  }, [exampleSeed, exam.answers?.uploadedAt]);
   const question = questions.find((q) => q.id === qid);
   const options = draft[qid] ?? [];
   const affected = affectedMarks(exam, draft);
@@ -171,7 +188,7 @@ export function RubricEditor({ exam }: { exam: ExamRecord }) {
   }
   return (
     <Card className="rubric-editor">
-      <details>
+      <details open={exampleSeed?.exampleCategories ? true : undefined}>
         <summary>
           <strong>Rubric options by question</strong>
           <span className="helper">

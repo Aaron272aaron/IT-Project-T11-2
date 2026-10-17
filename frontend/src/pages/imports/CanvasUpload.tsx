@@ -1,3 +1,4 @@
+import { loadExampleCsv } from "../../demo/examples";
 import { isDemoSession } from "../../api/auth";
 import { RubricAccess } from "../../components/rubric/RubricWindow";
 import { useEffect, useRef, useState } from "react";
@@ -88,8 +89,26 @@ export function CanvasUpload({
     setFile(selected);
   }
 
-  async function validate() {
-    if (!file || validating) return;
+  async function useExampleAnswers() {
+    clear();
+    const version = readVersion.current;
+    try {
+      const selected = await loadExampleCsv();
+      if (version !== readVersion.current) return;
+      setFile(selected);
+      await validate(selected);
+    } catch (reason) {
+      if (version === readVersion.current)
+        setError(
+          reason instanceof Error
+            ? reason.message
+            : "Could not load example answers.",
+        );
+    }
+  }
+
+  async function validate(selected = file) {
+    if (!selected || validating) return;
     const version = ++readVersion.current;
     request.current?.abort();
     const controller = new AbortController();
@@ -105,7 +124,7 @@ export function CanvasUpload({
       controller.abort();
     }, 30_000);
     try {
-      const result = await previewCanvasCsv(file, controller.signal);
+      const result = await previewCanvasCsv(selected, controller.signal);
       if (version !== readVersion.current) return;
       setPreview(result);
       setQuestionId(
@@ -271,6 +290,14 @@ export function CanvasUpload({
                 >
                   Choose CSV file
                 </Button>
+                {isDemoSession() && (
+                  <Button
+                    disabled={validating}
+                    onClick={() => void useExampleAnswers()}
+                  >
+                    Use example data
+                  </Button>
+                )}
                 <small>UTF-8 .csv · Up to 10,000 students · 10 MB</small>
               </div>
               {error && (
@@ -285,7 +312,7 @@ export function CanvasUpload({
                 <Button
                   variant="primary"
                   disabled={!file || validating}
-                  onClick={validate}
+                  onClick={() => void validate()}
                 >
                   {validating ? "Validating…" : "Validate and preview"}
                 </Button>
@@ -330,7 +357,9 @@ export function CanvasUpload({
       {preview && (
         <>
           <div role="status" aria-live="polite">
-            <p>{isDemoSession() ? "CSV preview ready" : "Processed by Python"}</p>
+            <p>
+              {isDemoSession() ? "CSV preview ready" : "Processed by Python"}
+            </p>
             <Notice tone={ready ? "success" : "danger"}>
               <b>
                 {ready
