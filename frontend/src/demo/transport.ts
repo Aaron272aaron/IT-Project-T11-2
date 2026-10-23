@@ -1,3 +1,4 @@
+import { loadMixedExams, saveMixedExams } from "./examStorage";
 import testExamples from "./testExamples.json";
 import Papa from "papaparse";
 import type { ExamRecord, ExamRegistry } from "../models/exams";
@@ -121,20 +122,12 @@ export async function demoRequest(
   options.signal?.throwIfAborted();
   const body = typeof options.body === "string" ? JSON.parse(options.body) : {};
   if (path === "/api/exams") {
-    if (options.method === "POST") {
-      const saved = await store();
-      if (saved.revision !== body.revision)
-        return json(
-          {
-            message: "This demo was updated in another tab. Refresh and retry.",
-          },
-          409,
-        );
-      const next = { registry: body.registry, revision: saved.revision + 1 };
-      await store(next);
-      return json({ revision: next.revision });
+    try {
+      if (options.method === "POST") return json({ revision: await saveMixedExams(store, body) });
+      return json(await loadMixedExams(store));
+    } catch (error) {
+      return json({ message: error instanceof Error ? error.message : "Exam storage is unavailable." }, 503);
     }
-    return json(await store());
   }
   if (path === "/api/ai/reviews") return json({ reviews: [] });
   if (path.startsWith("/api/ai/model"))

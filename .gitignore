@@ -1,5 +1,8 @@
 # Local Python environments and caches
 .venv/
+.venv-ai/
+.runtime/
+.ai-model-cache/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -13,3 +16,20 @@ __pycache__/
 # Generated marking reports
 marking/out/*.json
 marking/out/*/
+/auto_marking/test_runner/out/*
+!/auto_marking/test_runner/out/.gitkeep
+
+# Local build output and temporary files
+node_modules/
+node_modules.nosync/
+dist/
+*.tsbuildinfo
+*.log
+*.tmp
+
+# Local database backups and SQLite working files
+/backend/data/private/exams.sqlite3
+/backend/data/private/*-before-*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite3-journal

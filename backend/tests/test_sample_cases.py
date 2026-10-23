@@ -48,6 +48,15 @@ class SampleCaseTests(unittest.TestCase):
         lowercase_only = "secure_pw = ''.join('*' if c in 'aeiou' else c for c in password)"
         self.assertFalse(evaluate(lowercase_only, spec, spec["cases"][3])[1])
 
+    def test_q10_student_two_wrong_target_fails_structure_only(self):
+        spec = self.spec(10)
+        code = "contains_zero = 0 in values"
+        actual, passed = evaluate(code, spec, spec["cases"][0])
+        self.assertFalse(passed)
+        self.assertIn("contains_zero", actual)
+        self.assertIn("has_zero", actual)
+        self.assertTrue(all(evaluate(code, spec, case)[1] for case in spec["cases"][1:]))
+
     def test_code_completion_uses_the_context_and_catches_off_by_one(self):
         spec = self.spec(19)
         self.assertTrue(all(evaluate("if nums[i] == query:", spec, case)[1] for case in spec["cases"]))

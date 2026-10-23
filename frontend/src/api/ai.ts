@@ -1,4 +1,5 @@
-import { apiFetch } from "./auth";
+import { apiFetch, isDemoSession } from "./auth";
+import { isDatabaseReviewKey } from "../demo/examStorage";
 export type FixRecommendation = {
   status: "already_valid" | "repaired" | "invalid_generation";
   originalCode: string;
@@ -86,5 +87,5 @@ export async function loadAiReviews(): Promise<SavedAiReview[]> {
   const data = await response.json();
   if (!response.ok || !Array.isArray(data.reviews))
     throw new Error(data.message || "Could not load saved AI reviews.");
-  return data.reviews;
+  return isDemoSession() ? data.reviews.filter((review: SavedAiReview) => isDatabaseReviewKey(review.key)) : data.reviews;
 }

@@ -1,3 +1,4 @@
+import { isDatabaseReviewKey } from "../demo/examStorage";
 import { demoRequest } from "../demo/transport";
 export type AccountUser = {
   id: string;
@@ -33,7 +34,13 @@ export async function apiFetch(
       : input instanceof URL
         ? input.pathname
         : new URL(input.url, location.href).pathname;
-  if (demo && demoPath.startsWith("/api/"))
+  const realTests = demoPath === "/api/test-runs" || demoPath.startsWith("/api/test-runs/");
+  let realCorrection = false;
+  if (demoPath === "/api/ai/suggest-fix" && typeof options.body === "string") {
+    try { realCorrection = isDatabaseReviewKey(JSON.parse(options.body).reviewKey); } catch { /* Let the normal transport validate invalid input. */ }
+  }
+  const realAi = demoPath === "/api/ai/reviews" || demoPath.startsWith("/api/ai/model") || realCorrection;
+  if (demo && demoPath.startsWith("/api/") && !realTests && !realAi)
     return demoRequest(demoPath, options);
   const headers = new Headers(options.headers);
   headers.set("X-App-Request", "AutoMarktic");
