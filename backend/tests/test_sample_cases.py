@@ -1,8 +1,13 @@
 """Reviewed sample-question checks: valid alternatives and meaningful mistakes."""
 import json
+from pathlib import Path
+import stat
+import tempfile
 import unittest
+from unittest.mock import patch
 
 from backend.paths import MARKING_DIR
+from auto_marking.scripts import verify_sample_tests as verification
 from auto_marking.scripts.verify_sample_tests import suites, verify_fixture
 from auto_marking.test_runner.runner.evaluate import evaluate, parse_answer
 
@@ -10,6 +15,28 @@ from auto_marking.test_runner.runner.evaluate import evaluate, parse_answer
 class SampleCaseTests(unittest.TestCase):
     def spec(self, number):
         return next(spec for item, _, spec, _ in suites() if item["questionNumber"] == number)
+
+    def test_docker_fixtures_are_readable_by_a_different_user(self):
+        entry = next(suites())
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "submissions").mkdir()
+
+            def run_fixture(suite_id, submission_id, **kwargs):
+                submission = root / "submissions" / submission_id
+                required = stat.S_IROTH | stat.S_IXOTH
+                self.assertEqual(submission.stat().st_mode & required, required)
+                source = submission / "submission.py"
+                self.assertTrue(source.stat().st_mode & stat.S_IROTH)
+                total = len(entry[2]["cases"])
+                return {"status": "completed", "total": total,
+                        "passed": total if source.read_text() == entry[3] else 0}
+
+            with patch.object(verification, "MARKING_DIR", root), patch.object(
+                verification, "run_marking", side_effect=run_fixture
+            ) as runner:
+                verify_fixture(*entry, docker=True)
+                self.assertEqual(runner.call_count, 2)
 
     def test_all_questions_have_an_explicit_automated_or_manual_plan(self):
         catalog = json.loads((MARKING_DIR / "questions/sample-exam.json").read_text())["questions"]

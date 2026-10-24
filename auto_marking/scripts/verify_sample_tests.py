@@ -46,7 +46,13 @@ def verify_fixture(item, suite_id, spec, source, *, docker=False):
         return len(correct)
     for variant, code in (("reference", source), ("incorrect", incorrect(spec))):
         with tempfile.TemporaryDirectory(prefix="verify-", dir=MARKING_DIR / "submissions") as directory:
-            (Path(directory) / "submission.py").write_text(code)
+            submission = Path(directory)
+            source_path = submission / "submission.py"
+            source_path.write_text(code, encoding="utf-8")
+            # TemporaryDirectory defaults to 0700. The non-root container user
+            # needs to read these synthetic fixtures when host UIDs differ.
+            source_path.chmod(0o644)
+            submission.chmod(0o755)
             result = run_marking(suite_id, Path(directory).name, timeout_seconds=60)
         if result["status"] != "completed":
             raise AssertionError(f"Q{item['questionNumber']} {variant}: runner failed: {result.get('error')}")
