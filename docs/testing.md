@@ -2,6 +2,29 @@
 
 Tests use synthetic accounts and submissions. Authentication browser tests use a disposable account database with demo access disabled; the general and live runner suites exercise default demo access on their isolated servers. No real account passwords are committed or printed.
 
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on every push and pull request, and can also be
+started from GitHub's **Actions → CI → Run workflow** page after it reaches the
+default branch. Four independent jobs check:
+
+- The complete backend unit/HTTP test suite with Python 3.12.
+- Frontend unit tests, TypeScript checks and the production build with Node 24.
+- Real login, invitation, role and session browser tests with Chrome and disposable accounts.
+- All 27 automated marking suites in Docker, checking correct reference answers
+  and deliberately incorrect answers against the authored cases.
+
+Any failed test or build fails its job. New pushes cancel older runs for the same
+branch or pull request. Browser reports and failure output are downloadable from
+the run for seven days; failed marking jobs also retain their generated reports.
+
+The backend job installs `requirements-ci.txt`: the root dependencies plus the
+Hugging Face client needed for simulated download tests. CI does not install
+PyTorch or download AI weights. AI unit tests use simulated models. Full local
+model inference, installer acceptance, the other browser suites and the separate
+PostgreSQL database integration are not covered by this workflow. CI uses its own
+checkout and disposable test data, leaving local saved exams unchanged.
+
 ## Backend
 
 From the project root:

@@ -360,7 +360,10 @@ test("earlier saved exams can be reviewed and copied without losing the original
     .click();
   await page.goto("/#/exam/saved/question/q");
   await expect(
-    page.getByRole("button", { name: "Group 1: 2 students", exact: true }),
+    page.getByRole("button", { name: "Mark s1", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Mark s2", exact: true }),
   ).toBeVisible();
   const preserved = await page.evaluate(
     () =>

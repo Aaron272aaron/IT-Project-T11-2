@@ -45,8 +45,7 @@ class ExamStorageTests(unittest.TestCase):
         self.assertTrue(self.server.exam_db_path.is_file())
 
     def test_large_exam_roundtrip(self):
-        fixture = Path(__file__).resolve().parents[3] / 'Project/data/samples/sample-exam-2000-students.csv'
-        if not fixture.exists(): self.skipTest('Large CSV fixture is not installed')
+        fixture = Path(__file__).resolve().parents[2] / 'sample-exam-2000-students.csv'
         parsed = preview_csv(fixture.read_bytes())
         self.assertEqual(parsed['status'], 'ok')
         registry = {'course': [{'id': 'large', 'title': '2000 students', 'description': '', 'answers': {'name': fixture.name, 'uploadedAt': 'now', 'preview': parsed['preview']}}]}
