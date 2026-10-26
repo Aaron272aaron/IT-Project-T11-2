@@ -6,34 +6,21 @@ import type { CanvasPreview } from "../models/canvasCsv";
 
 // This transport is selected only for Explore demo workspace. Account APIs
 // retain their normal network transport and never consume these snapshots.
-const database = "automarktic-presentation-v1";
-async function store(value?: { registry: ExamRegistry; revision: number }) {
-  return new Promise<{ registry: ExamRegistry; revision: number }>(
-    (resolve, reject) => {
-      const opening = indexedDB.open(database, 1);
-      opening.onupgradeneeded = () => opening.result.createObjectStore("state");
-      opening.onerror = () => reject(opening.error);
-      opening.onsuccess = () => {
-        const db = opening.result;
-        const tx = db.transaction("state", value ? "readwrite" : "readonly");
-        const request = value
-          ? tx.objectStore("state").put(value, "exams")
-          : tx.objectStore("state").get("exams");
-        tx.oncomplete = () => {
-          db.close();
-          resolve(value ?? request.result ?? { registry: {}, revision: 0 });
-        };
-        tx.onabort = () => {
-          db.close();
-          reject(tx.error);
-        };
-        tx.onerror = () => {
-          db.close();
-          reject(tx.error);
-        };
-      };
-    },
-  );
+// Page-local state: navigation keeps the current presentation; reload resets it.
+let snapshot: { registry: ExamRegistry; revision: number } = {registry:{},revision:0};
+export function resetDemoData() {
+  snapshot = {registry:{},revision:0};
+  // Retire only old demo storage, never account-scoped data.
+  if (typeof window !== "undefined") {
+    for (const key of ["automarktic-demo-v1", "automarktic-exams-v1"]) {
+      try { window.sessionStorage.removeItem(key); window.localStorage.removeItem(key); } catch { /* Storage may be disabled. */ }
+    }
+    if (typeof indexedDB !== "undefined") indexedDB.deleteDatabase("automarktic-presentation-v1");
+  }
+}
+async function store(value?: {registry: ExamRegistry; revision: number}) {
+  if (value) snapshot = structuredClone(value);
+  return structuredClone(snapshot);
 }
 let samplePromise: Promise<ExamRecord> | undefined;
 function sample(): Promise<ExamRecord> {

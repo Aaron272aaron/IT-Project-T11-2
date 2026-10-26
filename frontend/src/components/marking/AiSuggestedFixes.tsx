@@ -31,7 +31,7 @@ export function AiSuggestedFixes({
     !review?.error;
   const loadingMessage =
     review?.status === "running"
-      ? "Preparing AI correction…"
+      ? review.phase === "testing" ? "Checking original tests before AI review…" : "Preparing AI correction…"
       : aiReviewQueue.progress().paused
         ? "AI preparation is paused."
         : aiReviewQueue.progress().waiting
@@ -65,13 +65,15 @@ export function AiSuggestedFixes({
     return (
       <div role="alert">
         <Notice tone="error">{error}</Notice>
-        <p className="helper">
+        {review?.phase === "testing" ? (
+          <p className="helper">Check the question's test configuration and test runner, then retry. No AI correction was requested.</p>
+        ) : <p className="helper">
           Set up or check the model in{" "}
           <a href="#/user-settings" onClick={close}>
             Local AI setup
           </a>
           .
-        </p>
+        </p>}
       </div>
     );
   }
@@ -86,6 +88,9 @@ export function AiSuggestedFixes({
         {loading && progress()}
         {!code.trim() && (
           <p className="helper">There is no code to review in this response.</p>
+        )}
+        {review?.status === "skipped" && (
+          <p role="status">All original tests passed. No AI correction is needed.</p>
         )}
         {error && failure()}
         {result && !rejected && (
@@ -108,7 +113,7 @@ export function AiSuggestedFixes({
           </p>
         )}
         {error ? (
-          <Button onClick={() => void generate()}>Retry AI correction</Button>
+          <Button onClick={() => void generate()}>{review?.phase === "testing" ? "Retry original tests" : "Retry AI correction"}</Button>
         ) : (
           <Button
             disabled={!code.trim() || loading || !result}

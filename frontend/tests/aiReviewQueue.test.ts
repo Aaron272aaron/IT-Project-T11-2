@@ -1,4 +1,4 @@
-import { afterEach, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import {
   AiReviewQueue,
   aiReviewKey,
@@ -6,6 +6,14 @@ import {
 } from "../src/services/aiReviewQueue";
 import { collectAiReviewTasks } from "../src/models/aiReviewTasks";
 import type { ExamRecord } from "../src/models/exams";
+
+import { runTests, type TestRunResult } from "../src/api/testRuns";
+vi.mock("../src/api/testRuns", () => ({ runTests: vi.fn() }));
+// Existing queue tests simulate a completed run with a failing original case.
+beforeEach(() => {
+  vi.mocked(runTests).mockReset();
+  vi.mocked(runTests).mockResolvedValue({ status: "completed", passed: 0, total: 1 } as TestRunResult);
+});
 
 const task = (id: string, code = "pass"): AiReviewTask => ({
   workspaceId: "workspace",
@@ -223,4 +231,82 @@ it("restores completed reviews without requests, but retries and changed code ru
   await eventually(() => expect(runner.progress().finished).toBe(1));
   runner.configure([task("saved", "pass # changed")]);
   await eventually(() => expect(fetcher).toHaveBeenCalledTimes(2));
+});
+
+
+it("skips AI for fully passing originals and only sends failed originals for repair", async () => {
+  vi.mocked(runTests).mockImplementation(async (_question, code) => ({
+    status: "completed", passed: code === "good" ? 2 : 1, total: 2,
+  } as TestRunResult));
+  const fetcher = vi.fn(async (_url: string, options: RequestInit) =>
+    new Response(JSON.stringify(valid(JSON.parse(String(options.body)).code))));
+  vi.stubGlobal("fetch", fetcher);
+  const passing = task("passing", "good");
+  const failing = task("failing", "wrong");
+  const runner = queue([passing, failing]);
+  await eventually(() => expect(runner.progress().finished).toBe(2));
+  expect(runner.get(aiReviewKey(passing))?.status).toBe("skipped");
+  expect(fetcher).toHaveBeenCalledTimes(1);
+  expect(JSON.parse(String(fetcher.mock.calls[0][1].body)).code).toBe("wrong");
+  expect(runTests).toHaveBeenCalledWith(passing.questionKey, "good", "original", expect.any(AbortSignal));
+});
+
+it("waits for original tests before issuing an AI request", async () => {
+  let release!: (result: TestRunResult) => void;
+  vi.mocked(runTests).mockReturnValue(new Promise(resolve => { release = resolve; }));
+  const fetcher = vi.fn(async () => new Response(JSON.stringify(valid("pass"))));
+  vi.stubGlobal("fetch", fetcher);
+  const runner = queue([task("waiting")]);
+  await eventually(() => expect(runTests).toHaveBeenCalledTimes(1));
+  expect(fetcher).not.toHaveBeenCalled();
+  release({ status: "completed", passed: 0, total: 1 } as TestRunResult);
+  await eventually(() => expect(runner.progress().finished).toBe(1));
+  expect(fetcher).toHaveBeenCalledTimes(1);
+});
+
+it("does not generate fixes for unavailable or empty test results and continues the queue", async () => {
+  vi.mocked(runTests)
+    .mockRejectedValueOnce(new Error("No test suite configured"))
+    .mockResolvedValueOnce({ status: "runner_error", message: "Docker unavailable" } as TestRunResult)
+    .mockResolvedValueOnce({ status: "completed", total: 0, passed: 0 } as TestRunResult)
+    .mockResolvedValueOnce({ status: "completed", total: 1, passed: 1 } as TestRunResult);
+  const fetcher = vi.fn();
+  vi.stubGlobal("fetch", fetcher);
+  const runner = queue([task("missing"), task("outage"), task("empty"), task("good")]);
+  await eventually(() => expect(runner.progress().finished).toBe(4));
+  expect(fetcher).not.toHaveBeenCalled();
+  expect(runner.progress().needsReview).toBe(3);
+});
+
+it("rechecks saved reviews and regeneration so passing code never calls AI", async () => {
+  vi.mocked(runTests).mockResolvedValue({ status: "completed", passed: 1, total: 1 } as TestRunResult);
+  const original = task("saved-pass");
+  const runner = new AiReviewQueue(); queues.push(runner);
+  runner.restore([{ key: aiReviewKey(original), comment: "", result: { ...valid("pass"), status: "already_valid" } }]);
+  const fetcher = vi.fn(); vi.stubGlobal("fetch", fetcher);
+  runner.configure([original]); runner.start();
+  await eventually(() => expect(runner.get(aiReviewKey(original))?.status).toBe("skipped"));
+  expect(runner.get(aiReviewKey(original))?.result).toBeUndefined();
+  runner.regenerate(original);
+  await eventually(() => expect(runTests).toHaveBeenCalledTimes(2));
+  await eventually(() => expect(runner.get(aiReviewKey(original))?.status).toBe("skipped"));
+  expect(fetcher).not.toHaveBeenCalled();
+});
+
+
+it("ignores a late test result after the original answer is replaced", async () => {
+  let release!: (result: TestRunResult) => void;
+  vi.mocked(runTests).mockReturnValueOnce(new Promise(resolve => { release = resolve; }))
+    .mockResolvedValue({ status: "completed", total: 1, passed: 1 } as TestRunResult);
+  const fetcher = vi.fn(); vi.stubGlobal("fetch", fetcher);
+  const old = task("edited", "old code");
+  const updated = task("edited", "new code");
+  const runner = queue([old]);
+  await eventually(() => expect(runTests).toHaveBeenCalledTimes(1));
+  runner.configure([updated]);
+  await eventually(() => expect(runner.get(aiReviewKey(updated))?.status).toBe("skipped"));
+  release({ status: "completed", total: 1, passed: 0 } as TestRunResult);
+  await new Promise(resolve => setTimeout(resolve, 10));
+  expect(runner.get(aiReviewKey(old))).toBeUndefined();
+  expect(fetcher).not.toHaveBeenCalled();
 });

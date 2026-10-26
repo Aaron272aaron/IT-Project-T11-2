@@ -188,7 +188,7 @@ export function Layout({
               ? "Demo workspace"
               : "Local marking workspace"}
           </span>
-          <span>{auth.mode === "demo" ? "Final 2026 saved in SQLite · Other demo exams saved in this browser" : "Exams and confirmed marks are saved to this workspace"}</span>
+          <span>{auth.mode === "demo" ? "Final 2026 saved in SQLite · Other demo changes reset on refresh" : "Exams and confirmed marks are saved to this workspace"}</span>
         </footer>
       </main>
     </div>

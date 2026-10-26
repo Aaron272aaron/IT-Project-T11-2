@@ -1,3 +1,4 @@
+import { runTests } from "../api/testRuns";
 import { recommendFix, AiReviewError, type FixRecommendation, type SavedAiReview } from "../api/ai";
 import { modelDownloadRequest } from "../api/modelDownload";
 
@@ -16,7 +17,8 @@ export const aiReviewKey = (task: AiReviewTask) =>
   ]);
 export type AiReviewRecord = {
   task: AiReviewTask;
-  status: "queued" | "running" | "done" | "error";
+  status: "queued" | "running" | "done" | "skipped" | "error";
+  phase?: "testing" | "generating";
   result?: FixRecommendation;
   error: string;
   comment: string;
@@ -116,8 +118,8 @@ export class AiReviewQueue {
       const saved = this.saved.get(key);
       this.records.set(key, {
         task,
-        status: saved ? "done" : "queued",
-        result: saved?.result,
+        status: "queued",
+        result: undefined,
         error: "",
         comment: saved?.comment ?? "",
         rejected: false,
@@ -145,8 +147,8 @@ export class AiReviewQueue {
       const saved = this.saved.get(key);
       this.records.set(key, {
         task,
-        status: saved ? "done" : "queued",
-        result: saved?.result,
+        status: "queued",
+        result: undefined,
         error: "",
         comment: saved?.comment ?? "",
         rejected: false,
@@ -212,7 +214,7 @@ export class AiReviewQueue {
   progress() {
     const records = [...this.records.values()];
     const finished = records.filter(
-      (record) => record.status === "done" || record.status === "error",
+      (record) => record.status === "done" || record.status === "skipped" || record.status === "error",
     ).length;
     const needsReview = records.filter(
       (record) =>
@@ -269,14 +271,36 @@ export class AiReviewQueue {
     const record = this.records.get(key)!;
     const controller = new AbortController();
     this.active = { key, controller };
-    this.records.set(key, { ...record, status: "running", error: "" });
+    this.records.set(key, { ...record, status: "running", phase: "testing", result: undefined, error: "" });
     this.changed();
     let timedOut = false;
-    const timeout = setTimeout(() => {
+    let phase: "testing" | "generating" = "testing";
+    let timeout = setTimeout(() => {
       timedOut = true;
       controller.abort();
-    }, 120_000);
+    }, 180_000);
     try {
+      // Test the exact original answer before consulting even a saved AI fix.
+      // Missing suites and runner outages are not evidence of a failed answer.
+      const tests = await runTests(record.task.questionKey, record.task.code, "original", controller.signal);
+      if (this.active?.controller !== controller || controller.signal.aborted) return;
+      if (tests.status !== "completed" || !tests.total || tests.passed === undefined) {
+        throw new Error(tests.message || "Original tests could not complete. Retry before requesting an AI correction.");
+      }
+      if (tests.passed === tests.total) {
+        this.records.set(key, { ...record, status: "skipped", phase: undefined, result: undefined, error: "", force: false });
+        return;
+      }
+      const saved = this.saved.get(key);
+      if (saved && !record.force) {
+        this.records.set(key, { ...record, status: "done", phase: undefined, result: saved.result, error: "" });
+        return;
+      }
+      phase = "generating";
+      clearTimeout(timeout);
+      timeout = setTimeout(() => { timedOut = true; controller.abort(); }, 120_000);
+      this.records.set(key, { ...record, status: "running", phase, result: undefined, error: "" });
+      this.changed();
       let result: FixRecommendation;
       for (;;) {
         try {
@@ -307,14 +331,17 @@ export class AiReviewQueue {
         this.records.set(key, {
           ...record,
           status: "error",
+          phase,
           error:
-            "AI review took too long. Retry this response or review it manually.",
+            phase === "testing"
+              ? "Original tests took too long. Retry testing or continue marking manually."
+              : "AI review took too long. Retry this response or review it manually.",
         });
       } else if (!controller.signal.aborted) {
         const message =
           error instanceof Error ? error.message : "AI review is unavailable.";
-        if (error instanceof AiReviewError && error.status === 422) {
-          this.records.set(key, { ...record, status: "error", error: message });
+        if (phase === "testing" || (error instanceof AiReviewError && error.status === 422)) {
+          this.records.set(key, { ...record, status: "error", phase, error: message });
         } else {
           this.blocked = message;
           this.records.set(key, {

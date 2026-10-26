@@ -1,5 +1,5 @@
 import { isDatabaseReviewKey } from "../demo/examStorage";
-import { demoRequest } from "../demo/transport";
+import { demoRequest, resetDemoData } from "../demo/transport";
 export type AccountUser = {
   id: string;
   name: string;
@@ -17,6 +17,7 @@ let csrfToken: string | null = null;
 let demo = false;
 let generation = 0;
 export function setApiSession(session: AccountSession | null, isDemo = false) {
+  if (isDemo && !demo) resetDemoData();
   csrfToken = session?.csrfToken ?? null;
   demo = isDemo;
   generation++;

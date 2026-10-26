@@ -66,7 +66,7 @@ test("creates a rubric and marks answers in a newly created exam", async ({
     .click();
   await expect(page).not.toHaveURL(markingUrl);
   await page.goto(markingUrl);
-  await page.reload();
+
   await expect(page.getByText(/Saved mark: 1 \/ /)).toBeVisible();
   await page.locator(".mark-decision").screenshot({
     path: "test-results/non-grouped-mark-decision.png",
@@ -98,7 +98,7 @@ test("sample tests and rubric draft work without a backend", async ({
   await expect(
     page.getByRole("table", { name: "Original code test cases" }),
   ).toBeVisible();
-  await page.reload();
+
   await expect(page.getByTestId("sample-answer")).toBeVisible();
 });
 
@@ -148,7 +148,7 @@ test("example files create a new exam and upload without selecting local files",
   await expect(
     page.getByRole("button", { name: "Open question 37", exact: true }),
   ).toBeVisible();
-  await page.reload();
+
   await expect(
     page.getByRole("link", { name: "Download rubric", exact: true }),
   ).toBeVisible();
@@ -191,8 +191,7 @@ test('example rubric populates editable options immediately and preserves saved 
   await page.getByRole('button',{name:'Save rubric options',exact:true}).click();
   await page.getByRole('button',{name:'Confirm rubric changes',exact:true}).click();
   await expect(page.getByText('Rubric options saved.', {exact:true})).toBeVisible();
-  await page.reload();
-  await page.getByText('Rubric options by question',{exact:true}).click();
+
   await expect(description).toHaveValue('Coordinator edited example rubric');
 });
 
@@ -207,7 +206,7 @@ test('Tutor role blocks coordinator routes', async ({page}) => {
  }
 });
 
-test('Tutor tests preserve answers and confirmed marks persist with comments', async ({page}) => {
+test('Tutor tests preserve answers and confirmed marks remain during navigation with comments', async ({page}) => {
  await page.getByLabel('Demo perspective').selectOption('Tutor');
  const url='/#/exam/final/question/3081168/mark/1674263';
  await page.goto(url);
@@ -221,7 +220,7 @@ test('Tutor tests preserve answers and confirmed marks persist with comments', a
  await page.getByRole('button',{name:'Confirm and next response',exact:true}).click();
  await expect(page.getByText('Final mark saved for this response.',{exact:true})).toBeVisible();
  await page.goto(url);
- await page.reload();
+
  await expect(page.getByText(/Saved mark:/)).toBeVisible();
  await expect(page.getByLabel('Marker comment (optional)',{exact:true})).toHaveValue('Tutor checked the assigned rubric.');
  await expect(page.getByTestId('sample-answer')).toHaveText(original);
@@ -241,4 +240,34 @@ test('Tutor confirms a group mark after reviewing the confirmation', async ({pag
  await expect(dialog).toBeVisible();
  await dialog.getByRole('button',{name:'Apply group mark',exact:true}).click();
  await expect(page.getByText(/Group mark saved for/)).toBeVisible();
+});
+
+test('refresh resets demo exams, marks, profile and perspective but preserves account storage', async ({page}) => {
+ await page.evaluate(() => sessionStorage.setItem('automarktic-demo-v1:real-user','account-preferences'));
+ const initialName = await page.locator('.account-link b').innerText();
+ await page.goto('/#/user-settings');
+ await page.getByLabel('Display name *',{exact:true}).fill('Temporary demo profile');
+ await page.getByRole('button',{name:'Save changes',exact:true}).click();
+ await expect(page.locator('.account-link b')).toHaveText('Temporary demo profile');
+ await page.goto('/#/create-exam');
+ await page.getByLabel('Exam name *').fill('Temporary presentation exam');
+ await page.getByRole('button',{name:'Create exam',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Temporary presentation exam',exact:true})).toBeVisible();
+ await page.getByLabel('Demo perspective').selectOption('Tutor');
+ await page.goto('/#/exam/final/question/3081168/mark/1674263');
+ await page.getByRole('radio').first().check();
+ await page.getByLabel('Marker comment (optional)',{exact:true}).fill('Temporary comment');
+ await page.getByRole('button',{name:'Confirm and next response',exact:true}).click();
+ await expect(page.getByText('Final mark saved for this response.',{exact:true})).toBeVisible();
+ await page.reload();
+ await expect(page).toHaveURL(/#\/dashboard$/);
+ await expect(page.getByLabel('Demo perspective')).toHaveValue('Coordinator');
+ await expect(page.locator('.account-link b')).toHaveText(initialName);
+ await page.goto('/#/exams');
+ await expect(page.getByText('Temporary presentation exam',{exact:true})).toHaveCount(0);
+ await page.goto('/#/exam/final/question/3081168/mark/1674263');
+ await expect(page.getByTestId('sample-answer')).toBeVisible();
+ await expect(page.getByText(/Saved mark:/)).toHaveCount(0);
+ await expect(page.getByLabel('Marker comment (optional)',{exact:true})).toHaveValue('');
+ expect(await page.evaluate(()=>sessionStorage.getItem('automarktic-demo-v1:real-user'))).toBe('account-preferences');
 });

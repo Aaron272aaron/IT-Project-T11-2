@@ -29,7 +29,11 @@ function useSession() {
   const [mode, setMode] = useState<Mode>(() =>
     {
       const isDemo = remembered(DEMO_KEY);
-      if (isDemo) setApiSession(null, true);
+      if (isDemo) {
+        setApiSession(null, true);
+        // Reopening a presentation always starts at its initial dashboard.
+        window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#/dashboard`);
+      }
       return isDemo ? "demo" : "anonymous";
     },
   );

@@ -27,9 +27,9 @@ import { useAuth } from "./auth/AuthProvider";
 import { AiReviewQueue } from "./services/aiReviewQueue";
 import { collectAiReviewTasks } from "./models/aiReviewTasks";
 const KEY = "automarktic-demo-v1";
-function restore(key = KEY): Data {
+function restore(key = KEY, fresh = false): Data {
   try {
-    const raw = sessionStorage.getItem(key);
+    const raw = fresh ? null : sessionStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw);
       if (
@@ -55,9 +55,9 @@ function restore(key = KEY): Data {
   } catch {}
   return {
     version: 1,
-    workspaces: [initialWorkspace],
+    workspaces: [structuredClone(initialWorkspace)],
     active: initialWorkspace.id,
-    profile: initialProfile,
+    profile: structuredClone(initialProfile),
     answers: { comp10001: seedAnswers() },
     logged: false,
   };
@@ -80,7 +80,7 @@ function useStore() {
       ? `${EXAM_STORAGE_KEY}:workspace:${auth.user!.workspaceId}`
       : EXAM_STORAGE_KEY;
   const [data, setData] = useState<Data>(() => {
-    const restored = restore(dataKey);
+    const restored = restore(dataKey, auth.mode === "demo");
     if (auth.mode !== "account") return restored;
     return {
       ...restored,
@@ -117,7 +117,7 @@ function useStore() {
   });
   // Save exam files separately so older demo sessions remain compatible.
   const [examRegistry, setExamRegistry] = useState(() => {
-    const restored = restoreExams(examKey);
+    const restored = auth.mode === "demo" ? {} : restoreExams(examKey);
     return auth.mode === "account" && !Object.keys(restored).length
       ? { comp10001: [] }
       : restored;
@@ -134,7 +134,7 @@ function useStore() {
       if (!active) return;
       let registry = saved.registry;
       let version = saved.revision;
-      const legacy = restoreExams(examKey);
+      const legacy = auth.mode === "demo" ? {} : restoreExams(examKey);
       if (version === 0 && Object.keys(legacy).length &&
           (auth.mode === "demo" || auth.user?.role === "Coordinator")) {
         version = await saveExamRegistry(legacy, 0);
@@ -254,6 +254,7 @@ function useStore() {
   const [toast, setToast] = useState("");
   const [storageError, setStorageError] = useState(false);
   useEffect(() => {
+    if (auth.mode === "demo") return;
     try {
       sessionStorage.setItem(dataKey, JSON.stringify(data));
       setStorageError(false);
