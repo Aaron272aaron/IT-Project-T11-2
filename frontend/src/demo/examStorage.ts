@@ -1,3 +1,4 @@
+import { markingLockHeaders } from "../api/markingLocks";
 import type { ExamRegistry } from "../models/exams";
 export const DATABASE_EXAM_ID = "7e76b890-ee27-40b6-933f-94569e39ca25";
 type Snapshot = { registry: ExamRegistry; revision: number };
@@ -16,7 +17,7 @@ export function splitExams(registry: ExamRegistry) {
 async function request(value?: Snapshot): Promise<Snapshot> {
   const response = await fetch("/api/exams", {
     method: value ? "POST" : "GET",
-    headers: { "X-App-Request": "AutoMarktic", "X-Automarktic-Demo": "1", "Content-Type": "application/json" },
+    headers: { ...markingLockHeaders(), "X-App-Request": "AutoMarktic", "X-Automarktic-Demo": "1", "Content-Type": "application/json" },
     credentials: "same-origin", cache: "no-store",
     ...(value ? { body: JSON.stringify(value) } : {}),
   });

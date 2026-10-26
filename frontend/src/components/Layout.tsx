@@ -183,12 +183,17 @@ export function Layout({
         <AiPreparation />
         {children}
         <footer className="page-footer">
-          <span>
-            {auth.mode === "demo"
-              ? "Demo workspace"
-              : "Local marking workspace"}
-          </span>
-          <span>{auth.mode === "demo" ? "Final 2026 saved in SQLite · Other demo changes reset on refresh" : "Exams and confirmed marks are saved to this workspace"}</span>
+          {auth.mode === "demo" ? (
+            <div className="demo-workspace-label">
+              <strong>Demo workspace</strong>
+              <small>data is not saved.</small>
+            </div>
+          ) : (
+            <>
+              <span>Local marking workspace</span>
+              <span>Exams and confirmed marks are saved to this workspace</span>
+            </>
+          )}
         </footer>
       </main>
     </div>

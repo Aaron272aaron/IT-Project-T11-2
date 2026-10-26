@@ -75,12 +75,10 @@ export function CreateExam() {
       <Header
         crumb="COMP10001 / Exams / Create exam"
         title="Create exam"
-        subtitle="Create your exam now. Add its rubric whenever it is ready."
       />
       <div className="settings-grid">
         <Card
           title="Exam details"
-          description="Only the exam name is required."
         >
           <form onSubmit={create}>
             <Field label="Exam name *">

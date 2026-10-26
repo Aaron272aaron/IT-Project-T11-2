@@ -59,9 +59,6 @@ export function AiPreparation() {
           </Button>
         )}
       </div>
-      <p className="helper">
-        You can keep marking. Original answers and marks stay unchanged.
-      </p>
     </Card>
   );
 }

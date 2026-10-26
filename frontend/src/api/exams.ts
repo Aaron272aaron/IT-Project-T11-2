@@ -1,3 +1,4 @@
+import { markingLockHeaders } from "./markingLocks";
 import { apiFetch } from './auth';
 import type { ExamRegistry } from '../models/exams';
 
@@ -11,7 +12,7 @@ export async function saveExamRegistry(registry: ExamRegistry, revision: number)
   let response: Response;
   try {
     response = await apiFetch('/api/exams', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...markingLockHeaders() },
       body: JSON.stringify({ registry, revision }),
     });
   } catch {

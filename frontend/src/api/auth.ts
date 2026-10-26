@@ -41,7 +41,7 @@ export async function apiFetch(
     try { realCorrection = isDatabaseReviewKey(JSON.parse(options.body).reviewKey); } catch { /* Let the normal transport validate invalid input. */ }
   }
   const realAi = demoPath === "/api/ai/reviews" || demoPath.startsWith("/api/ai/model") || realCorrection;
-  if (demo && demoPath.startsWith("/api/") && !realTests && !realAi)
+  if (demo && demoPath.startsWith("/api/") && !realTests && !realAi && demoPath !== "/api/marking-locks")
     return demoRequest(demoPath, options);
   const headers = new Headers(options.headers);
   headers.set("X-App-Request", "AutoMarktic");

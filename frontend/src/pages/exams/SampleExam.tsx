@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useAuth } from "../../auth/AuthProvider";
+import { useMarkingLock } from "../../hooks/useMarkingLock";
+import { DATABASE_EXAM_ID } from "../../demo/examStorage";
+import { useEffect, useState } from "react";
 import type { ExamRecord } from "../../models/exams";
 import { useApp, go } from "../../state";
 import {
@@ -135,7 +138,10 @@ export function SampleQuestion({
   questionId: string;
   studentId?: string;
 }) {
-  const { saveExam, notify } = useApp();
+  const { saveExam, notify, refreshExams } = useApp();
+  const auth = useAuth();
+  const shared = auth.mode === "account" || exam.id === DATABASE_EXAM_ID;
+  const lease = useMarkingLock({examId: exam.id, questionId, studentId: studentId ?? ""}, shared && !!studentId && !exam.autoMarkedQuestionIds?.includes(questionId), refreshExams);
   const questions =
     exam.answers?.preview.questions.filter((q) => !q.instruction) ?? [];
   const question = questions.find((q) => q.id === questionId);
@@ -146,7 +152,7 @@ export function SampleQuestion({
   const saved = studentId ? exam.marks?.[questionId]?.[studentId] : undefined;
   const questionOwner = questionLockOwner(exam, questionId);
   const lockedBy =
-    questionOwner ??
+    (shared && studentId && !lease.editable ? lease.lease.owner ?? "Read-only access" : undefined) ?? questionOwner ??
     (studentId ? submissionLockOwner(exam, questionId, studentId) : undefined);
   const lockedStudents = students.filter((s) =>
     submissionLockOwner(exam, questionId, s.id),
@@ -175,6 +181,10 @@ export function SampleQuestion({
   );
 
   const [error, setError] = useState("");
+  useEffect(() => {
+    setCategoryId(saved?.categoryId ?? "");
+    setComment(saved?.comment ?? "");
+  }, [exam.id, questionId, studentId, saved]);
   if (!question || (studentId && !answer))
     return (
       <Card title="Response not found">
@@ -183,6 +193,7 @@ export function SampleQuestion({
     );
   async function save(next: boolean) {
     try {
+      if (lockedBy) throw new Error("This answer is read only. Acquire its marking lock before saving.");
       if (!categoryId)
         throw new Error(
           "Choose a rubric category after checking the document.",
@@ -352,14 +363,13 @@ export function SampleQuestion({
                         )}
                         <td>
                           <Button
-                            disabled={!!owner}
                             onClick={() =>
                               go(
                                 `/exam/${exam.id}/question/${questionId}/mark/${encodeURIComponent(s.id)}`,
                               )
                             }
                           >
-                            {questionOwner ? "View" : owner ? "Locked" : "Mark"}{" "}
+                            {questionOwner || owner ? "View" : "Mark"}{" "}
                             {s.id}
                           </Button>
                         </td>
@@ -435,10 +445,13 @@ export function SampleQuestion({
               <Notice tone="warning">
                 <Badge tone="warning">🔒 Locked</Badge>
                 <p>
-                  {questionOwner
+                  {shared && !lease.editable
+                    ? lease.error || (lease.lease.owner ? `${lease.lease.owner} is marking this answer. You can view it, but cannot change its mark or notes.` : lease.lease.available ? "This answer is available. Start marking to edit it." : "Checking marking access. This answer is read only.")
+                    : questionOwner
                     ? `${questionOwner} is marking this question. All submissions are read only.`
                     : `${lockedBy} is marking ${studentId}'s response to this question. Return to the question to mark another student.`}
                 </p>
+                {shared && (lease.error || lease.lease.available) && <Button onClick={lease.retry}>Start marking</Button>}
               </Notice>
             ) : automatic ? (
               <Notice>
@@ -469,6 +482,7 @@ export function SampleQuestion({
                 )}
               </>
             )}
+            {lockedBy && <fieldset disabled aria-label="Read-only rubric"><RubricOptions options={categories} maxMark={question.maxMark} selected={saved?.categoryId ?? ""} onSelect={() => {}} /></fieldset>}
             <Field label="Marker comment (optional)">
               <textarea
                 aria-label="Marker comment (optional)"

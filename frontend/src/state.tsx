@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   createContext,
   useContext,
@@ -225,6 +226,13 @@ function useStore() {
       controller.abort();
     };
   }, [data.logged, sampleExpected, sampleRetry, examsReady]);
+  const refreshExams = useCallback(async () => {
+    if (saving.current) throw new Error("Wait for the current save before opening an answer.");
+    const loaded = await loadExamRegistry();
+    revision.current = loaded.revision;
+    examRef.current = loaded.registry;
+    setExamRegistry(loaded.registry);
+  }, []);
   async function saveExam(exam: ExamRecord) {
     await commitExams(updateExam(examRef.current, data.active, exam));
   }
@@ -308,6 +316,7 @@ function useStore() {
     retrySample: () => setSampleRetry((n) => n + 1),
     exams: examsFor(examRegistry, data.active),
     saveExam,
+    refreshExams,
     legacyExamCount: legacyExams.filter(
       (exam) =>
         !examsFor(examRegistry, data.active).some(

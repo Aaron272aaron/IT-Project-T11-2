@@ -111,10 +111,6 @@ export function Dashboard({ list = false }: { list?: boolean }) {
             </tbody>
           </table>
         </div>
-        <p className="table-note">
-          Progress counts saved final marks. Final marks are decided by a human
-          marker.
-        </p>
       </Card>
     </>
   );

@@ -1917,3 +1917,8 @@ th {
 .grade-students thead { position: sticky; top: 0; z-index: 1; background: #f4f7fb; }
 .student-question-marks { max-height: 55vh; overflow-y: auto; }
 .student-question-marks thead { position: sticky; top: 0; background: #f4f7fb; z-index: 1; }
+
+/* Keep the demo identity and persistence notice together at the lower left. */
+.demo-workspace-label { display: flex; flex-direction: column; gap: 4px; }
+.demo-workspace-label strong { font-size: 1.125rem; font-weight: 700; }
+.demo-workspace-label small { font-size: 0.875rem; }

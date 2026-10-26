@@ -67,7 +67,6 @@ export function GradeDistribution({ exams }: { exams: ExamRecord[] }) {
         <p className="helper">Only saved confirmed marks are shown. Expand a question to read its text.</p>
         <Button onClick={() => setStudentId(null)}>Close marks</Button>
       </Modal>}
-      <p className="helper">Exam grade bands, not an overall subject result. <a href="https://students.unimelb.edu.au/course-admin/results" target="_blank" rel="noreferrer">University of Melbourne grade thresholds</a>. Pending students are excluded from the average.</p>
     </>}
   </Card>;
 }
