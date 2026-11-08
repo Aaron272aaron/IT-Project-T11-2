@@ -248,7 +248,7 @@ it("skips AI for fully passing originals and only sends failed originals for rep
   expect(runner.get(aiReviewKey(passing))?.status).toBe("skipped");
   expect(fetcher).toHaveBeenCalledTimes(1);
   expect(JSON.parse(String(fetcher.mock.calls[0][1].body)).code).toBe("wrong");
-  expect(runTests).toHaveBeenCalledWith(passing.questionKey, "good", "original", expect.any(AbortSignal));
+  expect(runTests).toHaveBeenCalledWith(passing.questionKey, "good", "original", expect.any(AbortSignal), true);
 });
 
 it("waits for original tests before issuing an AI request", async () => {

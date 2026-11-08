@@ -20,6 +20,10 @@ from ai_tools.model_download import model_download
 from auto_marking.docker_lifecycle import DockerLifecycle, DockerUnavailable
 from auto_marking.jobs import stop_runner
 from backend.security.accounts import AccountStore
+from backend.backup import AutomaticBackups, runtime_lock, paths as database_paths
+from contextlib import ExitStack, closing
+from backend.paths import BACKEND_DATA
+import sqlite3
 
 
 def main():
@@ -45,6 +49,8 @@ def main():
         signal.signal(name, request_stop)
     docker = DockerLifecycle()
     temporary_accounts = None
+    maintenance = ExitStack()
+    backups = None
     try:
         # Bind first so an occupied port does not load a second model.
         with ThreadingHTTPServer(("127.0.0.1", args.port), ApiHandler) as server:
@@ -53,7 +59,16 @@ def main():
                 account_path = Path(temporary_accounts.name) / "accounts.sqlite3"
             else:
                 account_path = None
+            files = database_paths()
+            if temporary_accounts:
+                files = {'accounts': account_path, 'exams': Path(temporary_accounts.name) / 'exams.sqlite3'}
+            maintenance.enter_context(runtime_lock(files))
             server.account_store = AccountStore(account_path)
+            with closing(sqlite3.connect(files['exams'])) as db, db:
+                db.execute('CREATE TABLE IF NOT EXISTS exams (scope TEXT PRIMARY KEY, revision INTEGER NOT NULL, data TEXT NOT NULL)')
+            if not temporary_accounts:
+                backups = AutomaticBackups(files, Path(os.environ.get('BACKUP_DIR', str(BACKEND_DATA / 'private/backups'))))
+                backups.start()
             if temporary_accounts:
                 server.exam_db_path = Path(temporary_accounts.name) / "exams.sqlite3"
             server.allow_demo_api = demo_api_enabled()
@@ -92,6 +107,9 @@ def main():
                     docker.stop()
             print("Python API stopped.", flush=True)
         finally:
+            if backups:
+                backups.stop()
+            maintenance.close()
             if temporary_accounts:
                 temporary_accounts.cleanup()
             for name, handler in previous.items():

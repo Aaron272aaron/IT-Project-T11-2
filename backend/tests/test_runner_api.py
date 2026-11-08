@@ -19,6 +19,8 @@ class RunnerApiTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.server = ThreadingHTTPServer(("127.0.0.1", 0), ApiHandler)
+        cls.temp = tempfile.TemporaryDirectory()
+        cls.server.exam_db_path = Path(cls.temp.name) / "exams.sqlite3"
         cls.server.allow_demo_api = True
         cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.thread.start()
@@ -28,6 +30,7 @@ class RunnerApiTests(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
         cls.thread.join()
+        cls.temp.cleanup()
 
     def request(self, method, path, payload=None):
         connection = http.client.HTTPConnection(*self.server.server_address, timeout=5)

@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from "vitest";
-import { runTests } from "../src/api/testRuns";
+import { loadTestResult, runTests } from "../src/api/testRuns";
 
 const code = "def similarity(board, char):\n    return 0\n";
 async function result(overrides = {}) {
@@ -98,4 +98,16 @@ test("runner failure remains an infrastructure error rather than zero passing te
   );
   expect(received.status).toBe("runner_error");
   expect(received.passed).toBeUndefined();
+});
+
+test("restores exact saved results without starting another run", async () => {
+  const saved = await result();
+  respond({result: saved});
+  expect(await loadTestResult("canvas:3081194", code, "original", new AbortController().signal)).toEqual(saved);
+  expect(vi.mocked(fetch).mock.calls[0][0]).toContain("/api/test-runs?");
+  expect(vi.mocked(fetch).mock.calls[0][1]?.method).not.toBe("POST");
+  respond({result: {...saved, codeDigest: "wrong"}});
+  await expect(loadTestResult("canvas:3081194", code, "original", new AbortController().signal)).rejects.toThrow("different code");
+  respond({result: null});
+  expect(await loadTestResult("canvas:3081194", code, "original", new AbortController().signal)).toBeNull();
 });

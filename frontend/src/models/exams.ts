@@ -72,6 +72,7 @@ export type ExamRecord = {
         categoryDescription?: string;
         comment: string;
         confirmedAt: string;
+        changeReason?: string;
       }
     >
   >;

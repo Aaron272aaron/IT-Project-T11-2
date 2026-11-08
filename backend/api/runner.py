@@ -1,7 +1,10 @@
 """Start isolated test jobs and retrieve their progress/results."""
 
 import json
-from urllib.parse import urlsplit
+import sqlite3
+from urllib.parse import urlsplit, parse_qs
+from .exams import database, database_path, scope
+from auto_marking import results
 
 from auto_marking.jobs import create_run, get_run, RunnerBusy
 
@@ -25,7 +28,7 @@ def start_run(self):
         payload = json.loads(content)
         if not isinstance(payload, dict):
             raise ValueError("Send a JSON test request.")
-        job = create_run(payload.get("questionKey"), payload.get("code"), payload.get("variant"))
+        job = create_run(payload.get("questionKey"), payload.get("code"), payload.get("variant"), storage=(database_path(self), scope(self)))
     except (ValueError, UnicodeError) as error:
         self.send_json(422, {"message": str(error)})
     except TimeoutError:
@@ -39,8 +42,23 @@ def start_run(self):
 
 
 def read_run(self):
-    job = get_run(urlsplit(self.path).path.removeprefix("/api/test-runs/"))
-    if job is None:
-        self.send_json(404, {"message": "This test result has expired. Run the tests again."})
-    else:
-        self.send_json(200, job)
+    try:
+        with database(self):
+            pass
+        url = urlsplit(self.path)
+        run_id = url.path.removeprefix('/api/test-runs/') if url.path != '/api/test-runs' else None
+        if run_id:
+            saved = results.read(database_path(self), scope(self), run_id)
+            job = get_run(run_id) if saved else None
+            if job and job["status"] == "completed" and saved["status"] != "completed":
+                job = saved  # Wait until completion is durable before reporting success.
+            job = job or saved
+            if job and job['status'] in ('queued', 'running') and not get_run(run_id):
+                job.update(status='runner_error', cases=[], message='This run was interrupted by a restart. Run the tests again.')
+            self.send_json(200 if job else 404, job or {'message': 'Test result not found in this workspace.'})
+        else:
+            query = parse_qs(url.query)
+            job = results.read(database_path(self), scope(self), question=query.get('questionKey', [''])[0], digest=query.get('codeDigest', [''])[0], variant=query.get('variant', [''])[0])
+            self.send_json(200, {'result': job})
+    except (OSError, sqlite3.Error, ValueError):
+        self.send_json(503, {'message': 'Saved test results could not be opened. Retry later.'})

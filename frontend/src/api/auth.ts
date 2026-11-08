@@ -35,13 +35,13 @@ export async function apiFetch(
       : input instanceof URL
         ? input.pathname
         : new URL(input.url, location.href).pathname;
-  const realTests = demoPath === "/api/test-runs" || demoPath.startsWith("/api/test-runs/");
+  const realTests = demoPath === "/api/test-runs" || demoPath.startsWith("/api/test-runs?") || demoPath.startsWith("/api/test-runs/");
   let realCorrection = false;
   if (demoPath === "/api/ai/suggest-fix" && typeof options.body === "string") {
     try { realCorrection = isDatabaseReviewKey(JSON.parse(options.body).reviewKey); } catch { /* Let the normal transport validate invalid input. */ }
   }
   const realAi = demoPath === "/api/ai/reviews" || demoPath.startsWith("/api/ai/model") || realCorrection;
-  if (demo && demoPath.startsWith("/api/") && !realTests && !realAi && demoPath !== "/api/marking-locks")
+  if (demo && demoPath.startsWith("/api/") && !realTests && !realAi && demoPath !== "/api/marking-locks" && !demoPath.startsWith("/api/mark-history"))
     return demoRequest(demoPath, options);
   const headers = new Headers(options.headers);
   headers.set("X-App-Request", "AutoMarktic");

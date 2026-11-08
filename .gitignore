@@ -33,3 +33,12 @@ dist/
 *.sqlite3-wal
 *.sqlite3-shm
 *.sqlite3-journal
+
+# Shared marking-lock browser verification output
+/frontend/config/playwright/locking-test-results/
+
+# Private SQLite snapshots and local process locks
+/backend/data/private/backups/
+*.runtime-lock
+
+/frontend/recovery-test-results/

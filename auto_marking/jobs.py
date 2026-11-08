@@ -19,6 +19,7 @@ MANUAL = {item["questionKey"]: item["note"] for item in CATALOG if not item["aut
 _pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix="test-run")
 _lock = Lock()
 _jobs = {}
+_storage = {}
 
 
 class RunnerBusy(RuntimeError):
@@ -30,7 +31,7 @@ def stop_runner():
     _pool.shutdown(wait=True, cancel_futures=True)
 
 
-def create_run(question_key, code, variant):
+def create_run(question_key, code, variant, *, storage=None):
     if isinstance(question_key, str) and question_key in MANUAL:
         raise ValueError("Human review required. " + MANUAL[question_key])
     if not isinstance(question_key, str) or question_key not in SUITES:
@@ -49,6 +50,16 @@ def create_run(question_key, code, variant):
         run_id = uuid4().hex
         _jobs[run_id] = {"runId": run_id, "status": "queued", "questionKey": question_key,
                          "variant": variant, "codeDigest": hashlib.sha256(code.encode()).hexdigest(), "updated": now}
+        if storage:
+            from . import results
+            path, scope = storage
+            version = results.suite_version(question_key)
+            try:
+                results.save(path, scope, version, _jobs[run_id])
+            except Exception:
+                del _jobs[run_id]
+                raise
+            _storage[run_id] = (path, scope, version)
         _pool.submit(_execute, run_id, question_key, code)
         return {key: value for key, value in _jobs[run_id].items() if key != "updated"}
 
@@ -103,4 +114,15 @@ def _execute(run_id, question_key, code):
         with _lock:
             _jobs[run_id].update(status="runner_error", message="The test runner is unavailable. You can continue marking manually.", cases=[], updated=time.monotonic())
     finally:
+        with _lock:
+            storage = _storage.pop(run_id, None)
+            job = dict(_jobs[run_id])
+        if storage:
+            try:
+                from . import results
+                results.save(*storage, job)
+            except Exception:
+                # Do not claim durable success when the disk write failed.
+                with _lock:
+                    _jobs[run_id].update(status='runner_error', message='Test results could not be saved. Check disk space and retry.', cases=[])
         shutil.rmtree(submission_dir, ignore_errors=True)

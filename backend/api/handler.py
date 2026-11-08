@@ -6,6 +6,8 @@ from urllib.parse import urlsplit
 
 from .ai_cache import read_reviews
 from .exams import read_exams, save_exams
+from .mark_history import read_history
+from .marking_locks import lock_request
 from .canvas import preview_canvas
 from .demo import sample_exam
 from .rubric import import_rubric, convert_rubric
@@ -26,13 +28,15 @@ class ApiHandler(BaseHTTPRequestHandler):
             return
         elif path == "/api/ai/reviews":
             read_reviews(self)
+        elif path == "/api/mark-history":
+            read_history(self)
         elif path == "/api/exams":
             read_exams(self)
         elif path == "/api/demo/sample-exam":
             sample_exam(self)
         elif path == "/api/ai/model":
             model_status(self)
-        elif path.startswith("/api/test-runs/"):
+        elif path == "/api/test-runs" or path.startswith("/api/test-runs/"):
             read_run(self)
         else:
             self.send_json(404, {"status": "error", "message": "API route not found."})
@@ -46,6 +50,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             return
         routes = {
             "/api/exams": save_exams,
+            "/api/marking-locks": lock_request,
             "/api/canvas/preview": preview_canvas,
             "/api/rubric/import": import_rubric,
             "/api/rubric/convert": convert_rubric,

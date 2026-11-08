@@ -102,7 +102,12 @@ export async function runTests(
   code: string,
   variant: "original" | "recommendation",
   signal: AbortSignal,
+  reuseCompleted = false,
 ): Promise<TestRunResult> {
+  if (reuseCompleted) {
+    const saved = await loadTestResult(questionKey, code, variant, signal);
+    if (saved) return saved;
+  }
   const digestBytes = await crypto.subtle.digest(
     "SHA-256",
     new TextEncoder().encode(code),
@@ -155,4 +160,12 @@ export async function runTests(
       );
     throw error;
   }
+}
+
+export async function loadTestResult(questionKey: string, code: string, variant: "original" | "recommendation", signal: AbortSignal): Promise<TestRunResult | null> {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(code));
+  const digest = Array.from(new Uint8Array(bytes), b => b.toString(16).padStart(2, "0")).join("");
+  const query = new URLSearchParams({questionKey, codeDigest: digest, variant});
+  const data = await responseJson(await apiFetch(`/api/test-runs?${query}`, {signal}));
+  return data.result ? validate(data.result, questionKey, variant, digest) : null;
 }

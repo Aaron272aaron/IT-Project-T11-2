@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { runTests, type TestRunResult } from "../../api/testRuns";
+import { loadTestResult, runTests, type TestRunResult } from "../../api/testRuns";
 import { Button } from "../UI";
 import { testSuiteFor } from "../../models/testSuites";
 
@@ -27,6 +27,15 @@ export function AutomatedTests({
     setResult(null);
     setError("");
     setLoading(false);
+    const controller = new AbortController();
+    active.current = controller;
+    if (code.trim() && suite?.automated !== false) {
+      void loadTestResult(questionKey, code, variant, controller.signal).then(value => {
+        if (!controller.signal.aborted && active.current === controller) setResult(value);
+      }).catch(reason => {
+        if (!controller.signal.aborted) setError(`Could not restore previous tests: ${reason.message}`);
+      });
+    }
     return () => {
       active.current?.abort();
       active.current = null;

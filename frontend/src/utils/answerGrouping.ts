@@ -15,8 +15,7 @@ export function confirmGroupMark(
   marker: string,
 ): ExamRecord {
   const type = questionType(exam, questionId);
-  // Keep the shared processing utility compatible with older short-answer groups.
-  // The marking UI offers grouping only for expression-output questions.
+  // Both supported types share confirmation and locked-student safeguards.
   if (type !== "short-answer" && type !== "expression-output")
     throw new Error(
       "Group marks are only available for short-answer and expression-output questions.",

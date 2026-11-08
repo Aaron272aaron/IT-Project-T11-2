@@ -177,7 +177,7 @@ export async function requestAnswerGroups(
   const type = questionType(exam, questionId);
   if (!supportsAnswerGrouping(type))
     throw new Error(
-      "Grouping is only available for expression-output questions.",
+      "Grouping is only available for short-answer and expression-output questions.",
     );
   const rows = groupingRows(exam, questionId);
   let response: Response;

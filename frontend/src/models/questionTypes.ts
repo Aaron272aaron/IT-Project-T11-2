@@ -14,7 +14,7 @@ export const QUESTION_TYPES = [
 export type QuestionType = (typeof QUESTION_TYPES)[number]["id"] | "unassigned";
 
 export function supportsAnswerGrouping(type: QuestionType) {
-  return type === "expression-output";
+  return type === "expression-output" || type === "short-answer";
 }
 
 // Stable source IDs provide defaults for older sample sessions without resetting user edits.

@@ -10,9 +10,9 @@ const sample: ExamRecord = {
   description: "",
   sampleVersion: 1,
 };
-it("offers grouping only for expression outputs, not short answers", () => {
+it("offers grouping for expression outputs and short answers", () => {
   expect(supportsAnswerGrouping("expression-output")).toBe(true);
-  expect(supportsAnswerGrouping("short-answer")).toBe(false);
+  expect(supportsAnswerGrouping("short-answer")).toBe(true);
   expect(supportsAnswerGrouping("coding")).toBe(false);
 });
 it("restores old sample defaults without guessing types in unrelated exams", () => {

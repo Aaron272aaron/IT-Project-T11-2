@@ -282,7 +282,7 @@ export class AiReviewQueue {
     try {
       // Test the exact original answer before consulting even a saved AI fix.
       // Missing suites and runner outages are not evidence of a failed answer.
-      const tests = await runTests(record.task.questionKey, record.task.code, "original", controller.signal);
+      const tests = await runTests(record.task.questionKey, record.task.code, "original", controller.signal, !record.force);
       if (this.active?.controller !== controller || controller.signal.aborted) return;
       if (tests.status !== "completed" || !tests.total || tests.passed === undefined) {
         throw new Error(tests.message || "Original tests could not complete. Retry before requesting an AI correction.");

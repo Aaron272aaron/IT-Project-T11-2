@@ -71,3 +71,17 @@ npm run format
 `backend/tests/test_setup_runner.py` checks native platform choices, checksum rejection, Windows paths, restart handling and installer failure. `backend/tests/test_model_download.py` checks byte accounting, resumed transfers, cancellation, partial caches, concurrency and account permissions without downloading weights.
 
 From `frontend/`, `npm run test:e2e:setup` checks the actual interface with synthetic download states, including percentage, bytes, pause/resume, load progress, errors and readiness. Fresh Windows/macOS OS images are still needed for full installer acceptance testing.
+
+## Shared answer locking
+
+`python3 -m unittest backend.tests.test_marking_locks -v` exercises authenticated Tutors with a temporary SQLite database: simultaneous acquisition, read-only access, protected saves, lease renewal/expiry/release, same-account tabs, and group/configuration conflicts.
+
+From `frontend`, `npx playwright test --config config/playwright/locking.ts` starts an isolated backend with AI and Docker disabled. Two real Tutor sessions verify editing versus read-only access, release on navigation, loading the latest confirmed mark before taking over, and fail-closed behavior on a renewal outage without discarding unsaved notes.
+
+Leases are scoped to a workspace, exam, question and student. They last 45 seconds and renew every 10 seconds. Real leases apply to account workspaces and the database-backed Final 2026 demo exam; standalone browser-only examples are not shared workspaces. Marking saves and lease checks run in the same SQLite transaction. Existing workspace revision checks also reject stale snapshots; a stale workspace save must be refreshed and reviewed before retrying.
+
+## Recovery and short-answer grouping
+
+See [recovery.md](recovery.md) for automatic/manual backup and offline restore commands, durable test results, per-answer marking history and short-answer grouping rules. `backend/tests/test_recovery.py` covers cross-process result reads, suite invalidation, authenticated audit events, failed-save exclusion, backup integrity, live-restore refusal, failure rollback, retention and session invalidation. `frontend/config/playwright/recovery.ts` verifies real-account grouping/history and real Docker evidence restored on reload.
+
+Verified on 8 November 2026: 139 backend tests, 96 frontend unit tests, production build, 7 account browser tests, the two-tutor locking browser test and the recovery browser workflow passed. The recovery test uses real Docker execution; it does not run model inference. Existing unrelated demo browser-suite failures from the release audit are outside this fix.

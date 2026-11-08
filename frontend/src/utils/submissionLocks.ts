@@ -14,6 +14,7 @@ export function submissionLockOwner(
   questionId: string,
   studentId: string,
 ): string | undefined {
-  if (supportsAnswerGrouping(questionType(exam, questionId))) return undefined;
+  // Short-answer grouping must still preserve existing individual locks.
+  if (questionType(exam, questionId) === "expression-output") return undefined;
   return exam.submissionLocks?.[questionId]?.[studentId];
 }

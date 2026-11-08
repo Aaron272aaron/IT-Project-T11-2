@@ -147,6 +147,7 @@ class AccountApiTests(unittest.TestCase):
         cls.store = AccountStore(Path(cls.directory.name) / "accounts.sqlite3")
         cls.server = ThreadingHTTPServer(("127.0.0.1", 0), ApiHandler)
         cls.server.account_store = cls.store
+        cls.server.exam_db_path = Path(cls.directory.name) / "exams.sqlite3"
         cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.thread.start()
         cls.token, session = cls.store.register({"name": "Coordinator", "email": "coordinator@example.edu", "username": "coordinator", "password": PASSWORD})

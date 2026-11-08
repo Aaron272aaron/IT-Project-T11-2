@@ -16,6 +16,7 @@ import {
 import { RubricAccess } from "../../components/rubric/RubricWindow";
 import { ExamFiles } from "./ExamSetup";
 import { AiSuggestedFixes } from "../../components/marking/AiSuggestedFixes";
+import { MarkHistory } from "../../components/marking/MarkHistory";
 import { AutomatedTests } from "../../components/marking/AutomatedTests";
 import { AnswerGroups } from "../../components/marking/AnswerGroups";
 import {
@@ -181,7 +182,9 @@ export function SampleQuestion({
   );
 
   const [error, setError] = useState("");
+  const [changeReason, setChangeReason] = useState("");
   useEffect(() => {
+    setChangeReason("");
     setCategoryId(saved?.categoryId ?? "");
     setComment(saved?.comment ?? "");
   }, [exam.id, questionId, studentId, saved]);
@@ -205,6 +208,7 @@ export function SampleQuestion({
         categoryId,
         comment,
       );
+      if (updated.marks?.[questionId]?.[studentId!]) updated.marks[questionId][studentId!].changeReason = changeReason.trim();
       await saveExam(updated);
       setError("");
       notify("Final mark saved for this response.");
@@ -491,6 +495,8 @@ export function SampleQuestion({
                 onChange={(e) => setComment(e.target.value)}
               />
             </Field>
+            {shared && saved && <Field label="Reason for mark change (optional)"><textarea value={changeReason} maxLength={2000} disabled={!!lockedBy || !!automatic} onChange={event => setChangeReason(event.target.value)} /></Field>}
+            {shared && studentId && <MarkHistory key={`${exam.id}/${questionId}/${studentId}`} examId={exam.id} questionId={questionId} studentId={studentId} version={JSON.stringify(saved)} />}
             {saved && (
               <p>
                 Saved mark: {saved.score} / {question.maxMark}

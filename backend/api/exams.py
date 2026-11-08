@@ -5,13 +5,18 @@ import os
 import sqlite3
 from pathlib import Path
 from backend.paths import BACKEND_DATA
+from .marking_locks import check_marking_locks
 
 MAX_BYTES = 128 * 1024 * 1024
 
 
+def database_path(handler):
+    return Path(getattr(handler.server, 'exam_db_path', None) or os.environ.get('EXAM_DB_PATH', str(BACKEND_DATA / 'private/exams.sqlite3')))
+
+
 @contextmanager
 def database(handler):
-    path = Path(getattr(handler.server, 'exam_db_path', None) or os.environ.get('EXAM_DB_PATH', str(BACKEND_DATA / 'private/exams.sqlite3')))
+    path = database_path(handler)
     path.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(path, timeout=30)
     connection.execute('CREATE TABLE IF NOT EXISTS exams (scope TEXT PRIMARY KEY, revision INTEGER NOT NULL, data TEXT NOT NULL)')
@@ -75,7 +80,13 @@ def save_exams(handler):
                 if structure(payload['registry']) != structure(json.loads(row[1]) if row else {}):
                     handler.send_json(403, {'message': 'Coordinator access is required to change exam setup.'})
                     return
+            conflict = check_marking_locks(handler, db, json.loads(row[1]) if row else {}, payload['registry'])
+            if conflict:
+                handler.send_json(409, {'message': conflict})
+                return
             revision = payload['revision'] + 1
+            from .mark_history import record
+            record(db, scope(handler), json.loads(row[1]) if row else {}, payload['registry'], account or {}, revision)
             db.execute('INSERT INTO exams VALUES (?, ?, ?) ON CONFLICT(scope) DO UPDATE SET revision=excluded.revision, data=excluded.data', (scope(handler), revision, encoded))
         handler.send_json(200, {'revision': revision})
     except (ValueError, UnicodeError):
