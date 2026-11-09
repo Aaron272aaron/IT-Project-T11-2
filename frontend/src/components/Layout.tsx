@@ -191,7 +191,6 @@ export function Layout({
           ) : (
             <>
               <span>Local marking workspace</span>
-              <span>Exams and confirmed marks are saved to this workspace</span>
             </>
           )}
         </footer>

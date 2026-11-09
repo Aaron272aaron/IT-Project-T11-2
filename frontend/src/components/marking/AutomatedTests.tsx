@@ -70,7 +70,7 @@ export function AutomatedTests({
       className="runner-results"
       aria-label={`${resultLabel} test results`}
     >
-      {suite && <p className="helper">{suite.note}</p>}
+      {suite?.note && <p className="helper">{suite.note}</p>}
       {suite?.automated === false ? (
         <>
           <strong>Human review required</strong>

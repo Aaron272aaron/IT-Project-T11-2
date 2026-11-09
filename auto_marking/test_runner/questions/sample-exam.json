@@ -10,7 +10,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081159",
@@ -20,7 +20,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081160",
@@ -30,7 +30,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081161",
@@ -40,7 +40,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. The CSV omits the operator; the DOCX specifies set intersection (&)."
+      "note": "The CSV omits the operator; the DOCX specifies set intersection (&)."
     },
     {
       "questionKey": "canvas:3081162",
@@ -50,7 +50,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081163",
@@ -60,7 +60,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081164",
@@ -70,7 +70,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081165",
@@ -80,7 +80,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081166",
@@ -90,7 +90,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081168",
@@ -100,7 +100,7 @@
       "automated": true,
       "caseCount": 7,
       "mode": "assignment",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081169",
@@ -110,7 +110,7 @@
       "automated": true,
       "caseCount": 7,
       "mode": "assignment",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081170",
@@ -120,7 +120,7 @@
       "automated": true,
       "caseCount": 7,
       "mode": "assignment",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081171",
@@ -130,7 +130,7 @@
       "automated": true,
       "caseCount": 8,
       "mode": "assignment",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081173",
@@ -196,7 +196,7 @@
       "automated": true,
       "caseCount": 8,
       "mode": "completion",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+      "note": "Your line is inserted into the supplied function, with the other four lines completed."
     },
     {
       "questionKey": "canvas:3081179",
@@ -206,7 +206,7 @@
       "automated": true,
       "caseCount": 8,
       "mode": "completion",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+      "note": "Your line is inserted into the supplied function, with the other four lines completed."
     },
     {
       "questionKey": "canvas:3081180",
@@ -216,7 +216,7 @@
       "automated": true,
       "caseCount": 8,
       "mode": "completion",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+      "note": "Your line is inserted into the supplied function, with the other four lines completed."
     },
     {
       "questionKey": "canvas:3081181",
@@ -226,7 +226,7 @@
       "automated": true,
       "caseCount": 8,
       "mode": "completion",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+      "note": "Your line is inserted into the supplied function, with the other four lines completed."
     },
     {
       "questionKey": "canvas:3081182",
@@ -236,7 +236,7 @@
       "automated": true,
       "caseCount": 8,
       "mode": "completion",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Your line is inserted into the supplied function, with the other four lines completed."
+      "note": "Your line is inserted into the supplied function, with the other four lines completed."
     },
     {
       "questionKey": "canvas:3081184",
@@ -246,7 +246,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081185",
@@ -256,7 +256,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081186",
@@ -266,7 +266,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081187",
@@ -276,7 +276,7 @@
       "automated": true,
       "caseCount": 2,
       "mode": "literal-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081188",
@@ -301,7 +301,7 @@
       "automated": true,
       "caseCount": 1,
       "mode": "counterexample",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Enter a literal match_prefix(...) call. This check isolates the two remaining bugs after the Q27 slicing fix."
+      "note": "Enter a literal match_prefix(...) call. This check isolates the two remaining bugs after the Q27 slicing fix."
     },
     {
       "questionKey": "canvas:3081190",
@@ -355,7 +355,7 @@
       "automated": true,
       "caseCount": 6,
       "mode": "function",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081195",
@@ -365,7 +365,7 @@
       "automated": true,
       "caseCount": 7,
       "mode": "function",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081196",
@@ -375,7 +375,7 @@
       "automated": true,
       "caseCount": 7,
       "mode": "function",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself. Orthogonal neighbours only; any optimal tied word is accepted. These cases do not enforce a tile-reuse policy; the highest score is the same with or without reuse."
+      "note": "Orthogonal neighbours only; any optimal tied word is accepted. These cases do not enforce a tile-reuse policy; the highest score is the same with or without reuse."
     },
     {
       "questionKey": "canvas:3081198",
@@ -399,7 +399,7 @@
       "automated": true,
       "caseCount": 1,
       "mode": "text-answer",
-      "note": "Automated checks provide evidence only; confirm the final rubric mark yourself."
+      "note": ""
     },
     {
       "questionKey": "canvas:3081200",

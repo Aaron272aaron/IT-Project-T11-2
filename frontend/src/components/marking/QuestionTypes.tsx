@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ExamRecord } from "../../models/exams";
 import {
   QUESTION_TYPES,
@@ -16,6 +16,15 @@ export function QuestionTypes({ exam }: { exam: ExamRecord }) {
   const saved = () =>
     Object.fromEntries(questions.map((q) => [q.id, questionType(exam, q.id)]));
   const [draft, setDraft] = useState<Record<string, QuestionType>>(saved);
+  const previousTypes = useRef(saved());
+  useEffect(() => {
+    const next = saved();
+    const previous = previousTypes.current;
+    // Refresh untouched selectors after rubric import; preserve manual drafts.
+    setDraft(current => Object.fromEntries(Object.entries(next).map(([id, type]) =>
+      [id, current[id] === undefined || current[id] === previous[id] ? type : current[id]])));
+    previousTypes.current = next;
+  }, [exam.questionTypes, exam.answers]);
   const [error, setError] = useState("");
   if (!isCoordinator) return null;
   async function save() {

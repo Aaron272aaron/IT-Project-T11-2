@@ -1922,3 +1922,27 @@ th {
 .demo-workspace-label { display: flex; flex-direction: column; gap: 4px; }
 .demo-workspace-label strong { font-size: 1.125rem; font-weight: 700; }
 .demo-workspace-label small { font-size: 0.875rem; }
+
+/* Keep setup controls compact and give question editing visual priority. */
+.rubric-editor > details > .notice {
+  padding: 10px 16px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+.rubric-editor .rubric-import {
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.rubric-import > p { margin: 6px 0 12px; }
+.rubric-import > .field { margin: 8px 0; }
+.rubric-import > .form-actions { margin-top: 10px; }
+.rubric-import input[type="file"] { padding: 8px 12px; }
+.rubric-editor .rubric-question-selector {
+  padding: clamp(24px, 3vw, 36px);
+  margin: 18px 0 24px;
+}
+.rubric-question-selector > .field > span:first-child { font-size: 22px; }
+.rubric-question-selector select { min-height: 54px; font-size: 18px; }
+.rubric-question-selector .rubric-question-numbers { margin: 24px 0; }
+.rubric-question-selector .rubric-question-numbers strong { font-size: 30px; }

@@ -9,6 +9,8 @@ import {
 } from "../../utils/rubricEditor";
 import { groupCategories, groupCategoryMap } from "../../utils/rubricScores";
 import { importRubric, type RubricImport } from "../../api/rubric";
+import { isCodingRubric, applyCodingSuggestions } from "../../utils/rubricClassification";
+import { questionType } from "../../models/questionTypes";
 import { Button, Card, Field, Notice } from "../UI";
 
 // Coordinator-only drafts: document parsing never writes to saved exam state.
@@ -26,6 +28,7 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
   const [busy, setBusy] = useState(false);
   const [imported, setImported] = useState<RubricImport | null>(null);
   const [targets, setTargets] = useState<Record<string, string>>({});
+  const [codingSuggestions, setCodingSuggestions] = useState<string[]>([]);
   const request = useRef<AbortController | null>(null);
   useEffect(() => () => request.current?.abort(), []);
   // A selected example immediately populates the editor, but saving still
@@ -108,6 +111,7 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
     try {
       const next = structuredClone(draft);
       const used = new Set<string>();
+      const coding = new Set(codingSuggestions);
       for (const block of imported?.blocks ?? []) {
         const input = targets[block.id]?.trim();
         if (!input) continue;
@@ -123,6 +127,8 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
               `Question ${number} is assigned to more than one imported section.`,
             );
           used.add(q.id);
+          coding.delete(q.id);
+          if (isCodingRubric(block.title) && questionType(exam, q.id) === "unassigned") coding.add(q.id);
           const matched = new Set<string>();
           next[q.id] = groupCategories(
             block.categories.map((c) => ({ ...c, id: crypto.randomUUID() })),
@@ -149,6 +155,7 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
         );
       validateCategories(exam, next);
       setDraft(groupCategoryMap(next));
+      setCodingSuggestions([...coding]);
       setQid([...used][0]);
       setImported(null);
       setReview(false);
@@ -176,12 +183,13 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
     try {
       if (!isCoordinator) return;
       await saveExam(
-        saveCategories(exam, draft, exam.autoMarkedQuestionIds ?? [], reason),
+        applyCodingSuggestions(saveCategories(exam, draft, exam.autoMarkedQuestionIds ?? [], reason), codingSuggestions),
       );
       setReview(false);
       setReason("");
       setError("");
-      notify("Rubric options saved.");
+      setCodingSuggestions([]);
+      notify("Rubric options and suggested Coding classifications saved.");
     } catch (e) {
       setError((e as Error).message);
     }
@@ -249,6 +257,7 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
                       <b>
                         Section {i + 1} · {b.categories.length} options
                       </b>
+                      {isCodingRubric(b.title) && <Notice>Suggested type: Coding. Associated unassigned questions will be classified when you confirm rubric changes.</Notice>}
                       <Field
                         label={`Questions for section ${i + 1}`}
                         hint="Comma-separated exam question numbers; blank means skip."
@@ -394,6 +403,7 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
               <Button
                 onClick={() => {
                   setDraft(groupCategoryMap(exam.categories));
+                  setCodingSuggestions([]);
                   setReview(false);
                   setError("");
                 }}
@@ -450,6 +460,7 @@ export function RubricEditor({ exam, exampleRubric }: { exam: ExamRecord; exampl
                     </p>
                   </>
                 )}
+                {!!codingSuggestions.length && <Notice>Classify unassigned questions as Coding: {codingSuggestions.map(id => questions.findIndex(q => q.id === id) + 1).join(", ")}. Existing classifications will be preserved.</Notice>}
                 <Button variant="primary" onClick={save}>
                   Confirm rubric changes
                 </Button>

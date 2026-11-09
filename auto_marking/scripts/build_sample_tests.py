@@ -143,7 +143,7 @@ def build():
             directory.mkdir(exist_ok=True)
             (directory / "cases.yaml").write_text(json.dumps(suite, ensure_ascii=False, indent=2) + "\n")
             (references / f"canvas-{qid}.py").write_text(reference[n] + "\n")
-            entry.update(caseCount=len(suite["cases"]), mode=suite["mode"], note="Automated checks provide evidence only; confirm the final rubric mark yourself.")
+            entry.update(caseCount=len(suite["cases"]), mode=suite["mode"], note="")
             if n == 4:
                 entry["note"] += " The CSV omits the operator; the DOCX specifies set intersection (&)."
             if 18 <= n <= 22:
