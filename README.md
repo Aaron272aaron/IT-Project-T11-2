@@ -75,3 +75,7 @@ its workspace, exam/student, question, exact source code and model revision.
 Editing source code or choosing Retry AI correction generates a new review.
 Unavailable-model errors remain retryable; completed but invalid suggestions are
 remembered for manual review rather than automatically regenerated on reload.
+
+## Documentation
+
+See [docs/README.md](docs/README.md) for current architecture, requirements, accounts, testing and recovery documentation.

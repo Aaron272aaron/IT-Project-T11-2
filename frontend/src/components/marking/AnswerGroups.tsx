@@ -242,11 +242,11 @@ export function AnswerGroups({
             Retry grouping
           </Button>
         </div>
-        <p className="helper">
-          {exactOutput
-            ? "Only identical outputs are grouped. Spaces, quotes, case, punctuation and line breaks stay significant. Original responses are preserved."
-            : "Only ordinary spaces are ignored by default. Case, punctuation, tabs and line breaks stay significant. Review whitespace variants before applying a group mark."}
-        </p>
+        {!exactOutput && (
+          <p className="helper">
+            Only ordinary spaces are ignored by default. Case, punctuation, tabs and line breaks stay significant. Review whitespace variants before applying a group mark.
+          </p>
+        )}
         {!exactOutput && (
           <details className="group-rules">
             <summary>Pre-processing rules</summary>

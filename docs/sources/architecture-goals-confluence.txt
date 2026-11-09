@@ -1,0 +1,313 @@
+Architecture Goals
+AG1 — Protect student data
+
+All student submissions, identifiers, marks, rubrics, test results, and AI suggestions must remain within the locally controlled environment.
+
+The architecture must:
+
+Avoid external AI APIs and cloud processing.
+
+Store marking data locally.
+
+restrict marking data to authorised tutors and subject coordinators.
+
+Maintain an audit history of important marking changes.
+
+Delete temporary AI-corrected code when the marking project is completed.
+
+AG2 — Keep humans in control
+
+Automated results must support rather than replace tutors.
+
+The architecture must ensure that:
+
+Test results and AI suggestions never automatically become final marks.
+
+Tutors can reject AI suggestions and mark submissions manually.
+
+AI suggestions, test results, and human decisions are visually distinguished.
+
+Original student code is preserved and displayed alongside suggested corrections.
+
+Tutors can modify previously assigned marks.
+
+AG3 — Execute student code safely
+
+Student code is untrusted and must not execute directly inside the main application.
+
+Code execution must:
+
+Run in an isolated environment, a Docker container.
+
+Apply configurable time and memory limits.
+
+Prevent access to host files, application data, credentials, and the network.
+
+Capture compilation errors, runtime errors, test results, and timeouts.
+
+Continue processing other submissions when one submission fails.
+
+AG4 — Preserve marking integrity
+
+The system must prevent lost work and conflicting updates.
+
+The architecture must provide:
+
+Automatic saving of marks and marking status.
+
+A save response time of no more than one second under normal use.
+
+Restoration of marking progress after restarting the application.
+
+Submission-level or question-answer-level locking when a tutor begins marking.
+
+Protection against race conditions and overwritten marks.
+
+Controlled access for approximately three typical concurrent tutors and up to ten tutors working within the same marking project.
+
+The ability to review submissions marked by other tutors.
+
+AG5 — Support large marking workloads
+
+The application must operate efficiently for university-scale cohorts.
+
+It must support:
+
+Canvas CSV imports of up to 10,000 rows.
+
+Marking projects containing more than 1,000 submissions.
+
+Batch validation, grouping, AI processing, and test execution.
+
+Navigation through questions and submissions without interface failure.
+
+Progress indicators for long-running operations.
+
+Partial failure handling so one invalid submission does not stop the complete batch.
+
+AG6 — Provide an efficient marking workflow
+
+The application should reduce repetitive tutor work while remaining understandable after a short onboarding process.
+
+The interface should provide three navigation levels:
+
+Exam questions and overall marking progress.
+
+Individual or grouped answers and their marking status.
+
+Detailed answer view containing the original answer, tests, AI suggestion, corrected-code tests, rubric, and final mark.
+
+Short answers should be grouped. Uncertain answers must remain separate until reviewed by a tutor.
+
+AG7 — Support configurable assessments
+
+Rubrics, test cases, questions, and marking rules may change between exams.
+
+Therefore:
+
+Rubrics and test cases must be stored separately from submissions and execution logic.
+
+Question configuration must be replaceable without redesigning the application.
+
+The initial question types are short-answer grouping, executable code, and AI-assisted function questions.
+
+New programming languages and question types should be addable through separate execution or marking components.
+
+The local AI model should be replaceable without changing the tutor interface or marking records.
+
+AG8 — Remain deployable on available hardware
+
+The system should run on ordinary tutor computers where possible, while supporting more capable local hardware for AI processing.
+
+The currently identified reference hardware is:
+
+AMD Radeon RX 7900 XTX
+
+24 GB VRAM
+
+64 GB system RAM
+
+AI inference, batch size, concurrency, and model precision must be configurable according to the host machine.
+
+Architecture Constraints
+
+ID
+
+	
+
+Constraint
+
+	
+
+Architectural impact
+
+
+
+
+AC1
+
+	
+
+Student data must not be sent to third-party AI or external processing services.
+
+	
+
+AI inference and marking-data processing must run locally.
+
+
+
+
+AC2
+
+	
+
+The intended model is Qwen2.5-Coder 7B BF16.
+
+	
+
+The AI component must support its runtime and available AMD hardware.
+
+
+
+
+AC3
+
+	
+
+The final mark must always be confirmed by a human tutor.
+
+	
+
+Automated components may only recommend outcomes.
+
+
+
+
+AC4
+
+	
+
+Student Python code is untrusted.
+
+	
+
+Test execution requires sandboxing, resource limits, and network isolation.
+
+
+
+
+AC5
+
+	
+
+Canvas-exported CSV is the initial submission format.
+
+	
+
+A robust import and validation component is required.
+
+
+
+
+AC6
+
+	
+
+Results must be exported as CSV.
+
+	
+
+Exported records must contain student IDs, question marks, and totals.
+
+
+
+
+AC7
+
+	
+
+Data must survive application restarts.
+
+	
+
+Persistent local storage and recovery mechanisms are required.
+
+
+
+
+AC8
+
+	
+
+Multiple tutors may mark concurrently.
+
+	
+
+Locking, transactions, and conflict prevention are required.
+
+
+
+
+AC9
+
+	
+
+Rubrics and test cases change between exams.
+
+	
+
+They must be external configuration rather than hard-coded logic.
+
+
+
+
+AC10
+
+	
+
+The system begins as a web application.
+
+	
+
+A locally hosted application server and browser-based interface are expected.
+
+
+
+
+AC11
+
+	
+
+The application must support large batches.
+
+	
+
+Import, grouping, testing, and AI work should use background jobs rather than block the interface.
+
+
+
+
+AC12
+
+	
+
+Authentication is required, but the final authentication approach has not been selected.
+
+	
+
+Authentication must remain separable from marking logic; SSO is currently being considered.
+
+
+
+
+AC13
+
+	
+
+Grouping must be risk-averse.
+
+	
+
+False grouping is considered more harmful than leaving answers ungrouped.
+
+

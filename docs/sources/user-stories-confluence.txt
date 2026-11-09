@@ -1,0 +1,1640 @@
+Note: For user stories with multiple sub stories labelled by letters, they are listed in order of decreasing priority.
+
+Table of Contents
+  Epic 1:  Import and Validate Student Submissions
+  Epic 2: Mark short-answer questions
+   Epic 3: Evaluate Test Cases Automatically
+    Epic 4: AI-Assisted Function Marking
+     Epic 5: Mark Student Responses
+      Epic 6: Export Final Results
+Epic 7:  Teamwork Management  
+Epic 8: Create and Configure Exams  
+Epic 9: Explore Product   
+  Epic 1:  Import and Validate Student Submissions
+
+All of them have high priority righnow and I think that’s smth we’ll need to fix 
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+1A
+
+	
+
+As a coordinator, I want to import student submissions from Canvas so that I can begin marking without manually entering student responses.
+
+	
+
+Given a valid Canvas CSV file exists on the coordinator's device
+
+When the tutor selects the file and clicks Import
+
+Then all submissions are imported and displayed in the marking system
+
+Given the CSV contains 100 records
+
+When the import completes
+
+Then 100 submissions are available in the system
+
+	
+
+Given an invalid file type is selected
+
+When the coordinator selects the file and clicks Import
+
+Then the import is rejected
+
+AND
+
+Then an error message explaining the issue is displayed
+
+	
+
+High
+
+
+
+
+1B
+
+	
+
+As a tutor, I want to view each student's responses under the correct student and question so that I can confidently assign marks to the correct submission.
+
+	
+
+Given a valid submission record exists
+
+When the data is imported
+
+Then the response is linked to the correct student ID and question
+
+	
+
+Given duplicate or ambiguous record exist
+
+When the import process is executed
+
+Then the affected records are flagged for review
+
+	
+
+High
+
+
+
+
+1C
+
+	
+
+As a coordinator, I want to be notified of missing or invalid submission data during import so that I can resolve issues before marking begins.
+
+	
+
+Given a CSV file contains all required columns and valid records
+
+When the coordinator imports the file
+
+Then all valid records are read and stored
+
+AND
+
+Then the coordinator is informed that no validation issues were detected
+
+	
+
+Given data in a required column is missing
+
+When the coordinator imports the CSV file
+
+Then the import is rejected
+
+AND
+
+Then missing column(s) is/are identified and reported to the tutor
+
+	
+
+High
+
+
+
+
+1D
+
+	
+
+As a tutor, I want student responses to preserve their original formatting after import so that I can accurately review code and written answers.
+
+	
+
+Given a student submission contains spaces, tabs, and line breaks
+
+When the response is imported
+
+Then the displayed response matches the original submission content
+
+	
+
+Given formatting information is lost during import
+
+When the response is displayed
+
+Then the tutor is notified that the imported response may differ from the original submission
+
+Given a submission contains formatting that cannot be displayed correctly
+
+When the response is imported
+
+Then the affected response is flagged for tutor review
+
+	
+
+Med
+
+
+
+  Epic 2: Mark short-answer questions
+
+
+
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+2A
+
+	
+
+As a tutor, I want identical short-answer responses grouped together so that I can mark common answers more efficiently.
+
+	
+
+Given multiple student responses contain the same answer
+
+When the tutor views the answer groups for a question
+
+Then the same responses are displayed in a single answer group
+
+Given two student responses contain different answers
+
+When responses are grouped
+
+Then the responses are placed in separate groups
+
+	
+
+Given two responses appear similar but may receive different marks under the rubric
+
+When responses are grouped
+
+Then the responses are flagged for tutor review AND the tutor can decide whether they should remain in the same group
+
+Given student responses have been imported
+
+When the system is unable to generate answer groups
+
+Then the tutor is informed that grouping could not be completed.
+
+	
+
+High
+
+
+
+
+2B
+
+	
+
+As a tutor, I want to view the students associated with an answer group so that I can verify the students' answers that will be affected before assigning marks.
+
+	
+
+Given an answer group exists
+
+When the tutor opens the group
+
+Then all students belonging to that group are displayed AND each student's response can be viewed
+
+	
+
+Given the system cannot load the students associated with an answer group
+
+When the tutor opens the answer group
+
+Then the system displays an error message AND the tutor is prompted to retry or refresh the page
+
+	
+
+High
+
+
+
+
+2C
+
+	
+
+As a tutor, I want the system to apply configured pre-processing rules before grouping short-answer responses so that equivalent answers  can be grouped consistently.
+
+	
+
+Given a pre-processing rule replaces non-ASCII space characters with standard spaces
+ 
+
+When two responses differ only by the type of space character used
+
+Then the system groups them together after pre processing.
+
+	
+
+Given the tutor has configured a pre-processing rule that removes or replaces certain characters before grouping And the imported short-answer responses include two answers that are mathematically or semantically different 
+
+When the system applies the pre-processing rule and detects that the two different answers would be grouped together
+
+Then the tutor can review configuration and redo this action on the system.
+
+	
+
+Medium
+
+
+
+
+2D
+
+	
+
+As a tutor, I want to apply a mark to an entire answer group so that I can reduce repetitive marking effort.
+
+	
+
+Given an answer group has been selected
+
+When the tutor assigns a mark to the group
+
+Then the mark is applied to all students within that group AND the tutor is shown how many students were affected
+
+Given a group mark has been applied
+
+When the tutor views a student's submission within the group
+
+Then the assigned mark is displayed for that student
+
+	
+
+Given a group contains some students whose marks have been manually and individually marked 
+
+When the tutor applies a group mark
+
+Then the tutor is warned that manual marks may be affected AND the group mark is not applied until the tutor confirms the action
+
+	
+
+High
+
+
+
+   Epic 3: Evaluate Test Cases Automatically
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+3A
+
+	
+
+As a tutor, I want to evaluate student code against predefined test cases so that I can quickly identify submissions that produce the expected results.
+
+	
+
+Given a submission and one or more predefined test cases exist
+
+When the student's submission is imported into the system
+
+Then the submission is evaluated against all test cases AND the outcome of each test case is displayed
+
+	
+
+Given a submission contains syntax errors or cannot be executed
+
+When test cases are run
+
+Then the submission is marked as having an execution failure AND the failure details are displayed to the tutor
+
+	
+
+High
+
+
+
+
+3B
+
+	
+
+As a tutor, I want to access test results for each submission so that I can review and justify marking decisions at any time.
+
+	
+
+Given a submission has been evaluated against test cases
+
+When the tutor opens the submission
+
+Then the associated test results are displayed
+
+	
+
+Given test results are unavailable for a submission
+
+When the tutor attempts to view the results
+
+Then a notification is displayed indicating that no test results are available
+
+Given the given answer fails some tests 
+
+When system detects the failure
+
+Then AI-suggested minimal fix is initiated 
+
+	
+
+Medium
+
+
+
+
+3C
+
+	
+
+As a tutor, I want submissions that pass all test cases clearly highlighted so that I can quickly identify candidates for full marks before reviewing submissions that require more detailed assessment.
+
+	
+
+Given multiple submissions have been evaluated
+
+When the tutor views the submission list
+
+Then submissions that passed all test cases are highlighted.
+
+AND Passing all tests does not automatically assign a final mark.
+
+	
+
+Given a submission fails one or more test cases
+
+When the tutor views the submission list
+
+Then the test results are displayed.
+
+	
+
+High
+
+
+
+    Epic 4: AI-Assisted Function Marking
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+4A
+
+	
+
+As a coordinator, I want AI to suggest minimal change that corrects the student's answer so that tutors can quickly see the students' mistakes without sending students' data to third party LLM.
+
+	
+
+Given a student submission fails to build
+
+When the submissions are imported
+
+Then an AI-suggested minimal fix is generated and shown to the tutor AND the suggested correction contains only the changes required to compile and run the code successfully. The original student submission remains unchanged.
+
+Given the student's code runs successfully
+
+When the tutor opens the submission
+
+Then the tutor is informed that the original code can be run with no modifications. No AI suggestion needed.
+
+	
+
+Given the AI model cannot generate a correction
+
+When the tutor opens the submission for review
+
+Then the tutor is informed that AI-corrected version is unavailable due to system error.
+
+Given a question does not need correction
+
+When the tutor opens the submission for review
+
+Then no AI suggestion is needed.
+
+	
+
+High
+
+
+
+
+4B
+
+	
+
+As a tutor, I want to compare the original submission and the AI-suggested correction side-by-side so that I can understand the student's mistake and evaluate the proposed fix.
+
+	
+
+Given an AI-generated correction exists
+
+When the tutor views the submission
+
+Then the original answer and suggested correction are displayed side-by-side
+
+	
+
+Given the AI model cannot generate a correction
+
+When the tutor opens the submission
+
+Then a notification is displayed indicating that AI-suggested fix is unavailable due to system error.
+
+Given a question does not need correction
+
+When the tutor opens the submission for review
+
+Then no AI suggestion is needed.
+
+	
+
+High
+
+
+
+
+4C
+
+	
+
+As a tutor, I want AI-generated code changes clearly highlighted so that I can quickly identify what was modified.
+
+	
+
+Given an AI-generated correction exists for a student's submission
+
+When the tutor views the submission
+
+Then added, removed, and modified code sections are clearly highlighted
+
+	
+
+Given the AI model cannot generate a correction
+
+When the tutor views the submission
+
+Then the tutor is informed that AI-suggested fix is unavailable due to system error.
+
+	
+
+High
+
+
+
+
+4D
+
+	
+
+As a coordinator, I want explanations for AI-generated fixes and display them to tutors when I switch this function on so that I can understand the reasoning behind the proposed changes.
+
+	
+
+Given an AI-generated correction exists
+
+When the tutor views the recommendation
+
+Then an explanation describing the purpose of the proposed changes is displayed
+
+	
+
+Given an explanation cannot be generated
+
+When the tutor views the recommendation
+
+Then the tutor is informed that no explanation is available
+
+Given the coordinator has switched off this option and no explanation is generated
+
+When the tutor views the AI-generated fixes
+
+Then the tutor is informed no explanation is provided 
+
+	
+
+Low/Optional
+
+
+
+
+4E
+
+	
+
+As a tutor, I want test cases re-run against AI suggestion code so that I can determine whether the proposed fix passes expected test cases.
+
+	
+
+Given an AI-suggested fix exists
+
+When the tutor opens the submission
+
+Then they can see all the results of predefined test cases against the suggested code
+
+	
+
+Given the AI model cannot generate a suggestion
+
+When the tutor views the submission
+
+Then the tutor is informed that there is no test case results because AI-suggested fix is unavailable due to system error.
+
+	
+
+High
+
+
+
+
+4F
+
+	
+
+As a tutor, I want to make the final marking decision for each submission so that students receive a fair mark determined by a human marker.
+
+	
+
+Given AI recommendations and test results are available
+
+When the tutor reviews a submission
+
+Then the tutor can assign the final mark AND the assigned mark is recorded for the submission AND the status of the submission is marked.
+
+	
+
+Given a final mark has not yet been assigned for a submission
+
+When the tutor reviews a submission
+
+Then the system shows the status of the submission as unmarked AND prompts the tutor to provide a final mark for the student
+
+
+
+
+Given AI suggestions or automated test results are unavailable
+
+When the tutor selects a valid rubric option and confirms the mark
+
+Then the mark is saved successfully.
+
+	
+
+High
+
+
+
+
+4G
+
+	
+
+As a marker, I want eligible submissions to be processed for AI review in the background so that I can continue marking while suggestions are prepared.
+
+	
+
+Given an exam contains eligible coding submissions and the local AI service is available
+
+When background preparation starts
+
+Then submissions are added to a processing queue
+
+And the interface displays progress and completion status
+
+And the marker can continue reviewing and marking other responses
+
+And processing does not automatically change original answers or confirmed marks.
+
+
+
+
+Given background preparation is in progress
+
+When the marker pauses and later resumes processing
+
+Then completed results remain available
+
+And processing continues for outstanding submissions without unnecessarily regenerating completed results.
+
+	
+
+Given an individual review fails or the local AI service becomes unavailable
+
+When the system encounters the error
+
+Then completed results are retained
+
+And affected submissions or the paused queue are clearly identified
+
+And retrying is possible when the problem is resolved
+
+And manual marking remains available.
+
+	
+
+
+
+
+
+
+     Epic 5: Mark Student Responses
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+5A
+
+	
+
+As a tutor, I want to access relevant tools for a specific submission such as  answer groups, AI-generated suggestions, and test results in one place so that I can make informed marking decisions efficiently.
+
+	
+
+Given a student submission has been loaded
+
+When the tutor opens the marking app
+
+Then the relevant tool to the question type is displayed 
+
+	
+
+Given one or more of submission information are unavailable
+
+When the tutor opens the marking app
+
+Then a warning message is displayed identifying the unavailable information AND the remaining available information can still be viewed
+
+	
+
+High
+
+
+
+
+5B
+
+	
+
+As a tutor, I want to adjust marks at any stage of the marking process so that individual circumstances can be considered and the final mark reflects my academic judgement.
+
+	
+
+Given a submission already has a mark assigned
+
+When the tutor opens the submission again 
+
+Then the tutor can assign a new mark AND the updated mark is saved AND the updated mark is displayed for the submission
+
+	
+
+Given a tutor enters a mark outside the permitted range for the question
+
+When the tutor attempts to save the mark
+
+Then the mark is rejected AND an error message explains the reason
+
+	
+
+High
+
+
+
+
+5C
+
+	
+
+As a tutor, I want to make optional comments on some questions so that I can review my marking decision later.
+
+	
+
+Given a student answer
+
+When the tutor enters and saves a comment
+
+Then the comment is stored with the student's answer AND tutor is notified comment saved successfully
+
+	
+
+Given a comment cannot be saved
+
+When the tutor attempts to save the comment
+
+Then the tutor is notified that the comment was not recorded due to system error.
+
+	
+
+Medium
+
+
+
+
+5D
+
+	
+
+As a tutor, I want to access the marking rubric while reviewing submissions so that I can apply assessment criteria consistently.
+
+	
+
+Given a tutor is reviewing a submission
+
+When the tutor opens the rubric
+
+Then the assessment criteria for the relevant question are displayed
+
+	
+
+Given the rubric is unavailable
+
+When the tutor attempts to access it
+
+Then a message is displayed indicating that the rubric cannot be loaded
+
+	
+
+Medium
+
+
+
+
+5E
+
+	
+
+As a tutor, I want my marking progress saved automatically so that I can pause and resume marking without losing my work.
+
+	
+
+Given marks or comments have been entered
+
+When the tutor closes and reopens the application
+
+Then all previously saved marks and comments remain available
+
+	
+
+Given an automatic save operation fails
+
+When the tutor's progress cannot be saved automatically
+
+Then the tutor is informed that the automatic save was unsuccessful
+
+AND the tutor need to manually save their current marking progress
+
+	
+
+High
+
+
+
+
+5F
+
+	
+
+As a coordinator, I want the system to automatically back up all marking data regularly so that marking work can be recovered if the application crashes or database becomes corrupted.
+
+	
+
+Given marking data has been saved in the system
+
+When the configured backup interval is reached
+
+Then the system automatically creates a backup containing marking progress, marks, comments, answer groups, test results, AI assistance records, and audit logs
+
+	
+
+Given the active database is corrupted or unavailable And no  backup is available
+
+When the coordinator attempts to restore marking data
+
+Then the system informs the coordinator that recovery cannot be completed
+
+	
+
+High
+
+
+
+
+5G
+
+	
+
+As a subject coordinator, I want to view marking progress and the distribution of confirmed results so that I can monitor completion and identify submissions requiring review.
+
+	
+
+Given an exam contains imported submissions and saved marking decisions
+
+When the coordinator opens the dashboard
+
+Then the system displays student counts, marking completion, and a distribution based on confirmed marks
+
+And students with incomplete marking are clearly distinguished from fully marked students.
+
+	
+
+Given the required marking data cannot be retrieved
+
+When the coordinator opens the dashboard
+
+Then the system identifies the unavailable information
+
+And does not present missing data as zero marks or completed marking.
+
+	
+
+
+
+
+
+
+      Epic 6: Export Final Results
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+6A
+
+	
+
+As a subject coordinator, I want to export final marks in a format compatible with existing university workflows so that final results can be reviewed and uploaded efficiently.
+
+	
+
+Given all marks have been recorded for students
+
+When the subject coordinator exports the results
+
+Then a CSV file is generated in a format compatible with existing university workflows AND includes the timestamp of generated time
+
+	
+
+Given one or more student records contain incomplete marking information
+
+When the subject coordinator attempts to export the results
+
+Then the incomplete records are identified AND the subject coordinator is notified and need to confirm before the export proceeds.
+
+	
+
+High
+
+
+
+
+6B
+
+	
+
+As a coordinator, I want exported results to include student IDs, question marks, and total marks so that I can verify grades before submission.
+
+	
+
+ Given results have been exported
+
+When the coordinator opens the export file
+
+Then each record includes the student ID, question marks, and total mark which match the values recorded in the marking app
+
+	
+
+Given some result information is missing from one or more records
+
+When the coordinator exports the results
+
+Then the affected records are identified AND the coordinator is informed that the export may be incomplete
+
+	
+
+High
+
+
+
+
+
+
+
+Epic 7:  Teamwork Management  
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+7A
+
+	
+
+As a user, I want to sign in with my assigned role so that I can access only the workspaces and actions I am authorised to use.
+
+	
+
+Given an active account has been assigned a role and workspace access
+
+When the user signs in with valid credentials
+
+Then the system opens the authorised workspace
+
+And the available actions match the user’s assigned permissions.
+
+	
+
+Given the supplied credentials are invalid
+
+When the user attempts to sign in
+
+Then access is denied
+
+And an error message is displayed without revealing whether a particular account exists.
+
+	
+
+High
+
+
+
+
+7B
+
+	
+
+As a subject coordinator, I want to create workspaces and manage team membership so that tutors can access the exams they should mark.
+
+	
+
+ Given the coordinator has permission to manage workspaces
+
+When the coordinator creates a workspace and adds an eligible tutor
+
+Then the workspace is created with the supplied details
+
+And the tutor appears in its member list with the assigned role
+
+And the tutor can access the exams permitted by that membership.
+
+Given a tutor belongs to a workspace
+
+When the coordinator removes that tutor’s membership
+
+Then the tutor can no longer access protected workspace data or submit changes
+
+And previously recorded marking history remains available to authorised users.
+
+	
+
+Given the selected account is ineligible or already belongs to the workspace
+
+When the coordinator attempts to add it
+
+Then the system rejects the invalid or duplicate addition
+
+And explains the issue without creating a duplicate membership.
+
+	
+
+High
+
+
+
+
+7C
+
+	
+
+As a subject coordinator, I want to generate a time-limited, single-use password reset code for an authorised account so that its owner can regain access.
+
+	
+
+Given the coordinator is authorised to recover the selected account
+
+When the coordinator generates a recovery code
+
+Then the system displays the code and its expiry time And the account owner can use the valid code to set a new password
+
+And the code becomes invalid after successful use.
+
+	
+
+Given a recovery code is incorrect, expired, already used, or belongs to another account
+
+When a user submits it to reset a password
+
+Then the reset is rejected And the existing password remains unchanged
+
+And the user is informed that a valid recovery code is required.
+
+Given a coordinator tries to generate recovery code for an account that does not belong to their workspace
+
+When the coordinator generates password reset code
+
+Then the reset is rejected And the reason is displayed
+
+	
+
+High
+
+
+
+
+7D
+
+	
+
+As a user, I want to update my profile and avatar so that my identity is displayed consistently throughout the workspace.
+
+	
+
+Given the user is signed in
+
+When the user saves valid profile changes
+
+Then the updated details are saved And the user’s name and avatar are displayed consistently in the sidebar, account settings, and workspace member list
+
+And the saved details remain available after signing in again.
+
+	
+
+Given the selected image is unsupported, exceeds the permitted size, or cannot be saved
+
+When the user attempts to update the avatar
+
+Then an explanatory error is displayed
+
+And the previous saved avatar remains unchanged.
+
+	
+
+High
+
+
+
+
+7E
+
+	
+
+As a tutor, I want submissions being marked by another tutor to be protected from conflicting edits so that our team can work simultaneously without overwriting each other’s decisions.
+
+	
+
+Given two authorised tutors are working in the same exam
+
+When they mark different submissions simultaneously
+
+Then both can save their decisions And each decision is stored against the correct submission without affecting the other tutor’s work.
+
+Given a tutor opens a submission that’s already locked
+
+When they click on the submission 
+
+Then system notifies the user the submission is opened as a read only submission 
+
+	
+
+Given a tutor’s editing lock has expired or the submission has changed since it was opened
+
+When the tutor attempts to save an outdated decision
+
+Then the system rejects the conflicting update And the latest saved decision remains unchanged
+
+And the tutor is asked to reload or reacquire access before continuing.
+
+	
+
+
+
+
+
+
+
+
+
+
+Epic 8: Create and Configure Exams  
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+8A
+
+	
+
+As a subject coordinator, I want to create an exam with an optional rubric document so that I can prepare the exam before all marking materials are ready.
+
+
+
+
+	
+
+Given the coordinator has selected an authorised workspace
+
+When the coordinator enters a valid exam name and creates the exam without uploading a rubric
+
+Then the exam is created in that workspace
+
+And it appears in the exam list
+
+And the coordinator can upload its answers and rubric later.
+
+	
+
+Given the exam name is empty or invalid
+
+When the coordinator attempts to create the exam
+
+Then creation is rejected
+
+And the relevant field is identified
+
+And the entered information remains available for correction.
+
+	
+
+High
+
+
+
+
+8B
+
+	
+
+As a subject coordinator, I want to assign a type to each question so that tutors are shown the appropriate marking tools.
+
+	
+
+Given an exam contains imported questions
+
+When the coordinator assigns a supported type and saves the configuration
+
+Then the selected type is displayed for that question
+
+And the marking interface provides the tools configured for that type.
+
+	
+
+Given an unsupported type is submitted or the configuration cannot be saved
+
+When the coordinator attempts to apply the change
+
+Then the change is rejected
+
+And the previous saved classification remains active
+
+And an error message is displayed.
+
+	
+
+High
+
+
+
+
+8C
+
+	
+
+As a subject coordinator, I want to upload or replace a PDF or DOCX rubric document for an exam so that the marking team can use the appropriate reference material.
+
+	
+
+Given an exam exists and the coordinator selects a valid PDF or DOCX file within the permitted size limit
+
+When the coordinator confirms the upload
+
+Then the document is associated with the selected exam
+
+And its filename and available viewing or download controls are displayed.
+
+	
+
+Given the file is unsupported, unreadable, too large, or cannot be uploaded
+
+When the coordinator attempts the upload
+
+Then the upload is rejected with an explanatory message
+
+And the previously saved document and marking data remain unchanged.
+
+	
+
+High
+
+
+
+
+8D
+
+	
+
+As a subject coordinator, I want to generate an editable rubric draft from a document that follows the supported template so that I can prepare question rubrics without entering every option manually.
+
+	
+
+Given a supported rubric document contains identifiable questions, scores, and descriptions
+
+When the coordinator selects automatic rubric generation
+
+Then the system creates a draft containing the recognised question rubrics
+
+And each score option includes its score and description
+
+And the coordinator can inspect, correct, and confirm the draft before it becomes active.
+
+	
+
+Given some document sections can be recognised but others cannot
+
+When generation completes
+
+Then recognised sections are presented as a draft
+
+And unrecognised or ambiguous sections are identified for manual review
+
+And the coordinator can complete the missing information manually.
+
+
+
+
+Given the document cannot be parsed or does not follow the supported structure
+
+When the coordinator requests automatic generation
+
+Then the system explains that a usable draft could not be generated
+
+And existing active rubrics and confirmed marks remain unchanged
+
+And manual rubric editing remains available.
+
+	
+
+High
+
+
+
+
+8E
+
+	
+
+As a subject coordinator, I want to add, edit, and remove score options for each question so that the rubric reflects the intended marking criteria.
+
+	
+
+Given the coordinator has selected a question
+
+When the coordinator edits its score options and confirms valid changes
+
+Then the updated rubric is saved for that question
+
+And every option contains a score and description
+
+And the tutor can use the updated options during marking.
+
+
+
+
+Given multiple descriptions belong to the same score level
+
+When the rubric options are prepared for display
+
+Then that score level is presented as one selectable option
+
+And its associated descriptions are retained within that option.
+
+	
+
+Given an option is linked to previously confirmed marks
+
+When the coordinator attempts to remove it
+
+Then the affected records are identified
+
+And the system prevents silent deletion of their scoring association
+
+And the coordinator must resolve those records through the agreed reassignment or review process before completing the removal.
+
+	
+
+
+
+
+
+
+
+8F
+
+	
+
+As a subject coordinator, I want confirmed changes to a rubric option’s score to update all linked marks so that previously marked responses remain consistent with the revised rubric.
+
+
+
+
+	
+
+Given a rubric option has been used to mark student responses
+
+When the coordinator changes its score
+
+Then the system previews the affected responses and their proposed score changes
+
+And when the coordinator confirms the update, all marks linked to that option are updated
+
+And affected totals and result summaries are recalculated
+
+And the previous and updated values, coordinator identity, and timestamp are recorded.
+
+	
+
+Given a save failure or conflicting update occurs
+
+When the coordinator confirms the score change
+
+Then the operation is not reported as successful
+
+And the system does not leave the rubric and linked marks in a partially updated state
+
+And the coordinator receives an explanation and a recovery or retry option.
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epic 9: Explore Product   
+
+ID
+
+	
+
+Stories
+
+	
+
+Acceptance Criteria 
+
+(Success Scenarios)
+
+	
+
+Acceptance Criteria 
+
+(Failure Scenarios)
+
+	
+
+Priority
+
+
+
+
+9A
+
+	
+
+As a prospective client, I want to explore a demonstration with the same interface as the production product so that I can evaluate its workflows quickly 
+
+
+
+
+	
+
+Given the client has a supported browser and internet access
+
+When the client opens the public demonstration link
+
+Then the login page uses the production product’s layout and controls
+
+And the client can enter the demonstration without a real account
+
+And the interface clearly explains that there is no real backend connection and data will not be saved.
+
+	
+
+Given required demonstration assets are unavailable
+
+When the client attempts to open the workspace
+
+Then an explanatory loading error and retry option are displayed
+
+And the application does not attempt to connect to a real marking backend or modify production data.
+
+	
+
+High
+
+
+
+
+
