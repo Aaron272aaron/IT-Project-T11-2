@@ -158,9 +158,6 @@ export function AutomatedTests({
           </div>
         </>
       )}
-      <p className="helper">
-        These tests provide evidence; the final mark remains your decision.
-      </p>
     </section>
   );
 }
