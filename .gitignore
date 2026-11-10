@@ -45,3 +45,10 @@ dist/
 
 # Private account credentials and sessions must remain local
 /backend/data/private/accounts.sqlite3
+
+# Local database tooling and secrets
+database/.env
+database/backups/
+database/local_tools/
+database/dbeaver_workspace/
+database/verification/
