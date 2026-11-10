@@ -1,0 +1,1131 @@
+Table of Contents
+Project Overview
+1. Functional Requirements
+FR 1: Submission Processing
+FR 2: Answer Grouping
+FR 3: Automatic Test Cases
+FR 4: AI-Assisted Function Marking
+FR 5: Marking functions
+FR 6: Concurrent Marking
+FR 7: Result Export
+2. Quality Requirements
+QR 1: Security, Privacy & Compliance
+QR 2: Reliability
+QR 3: Usability
+QR 4: Performance
+QR 5: Maintainability & Extensibility
+Project Overview
+
+This project aims to build a locally hosted, AI-assisted marking system for programming exams. Subject coordinators can manage workspaces and teams, create exams, import Canvas submissions, and configure question types and marking rubrics. Tutors can review individual or grouped responses, inspect automated test results and AI-suggested code corrections, and confirm rubric-based marks. Original submissions must remain unchanged, and final marks must always be confirmed by an authorised human marker
+
+1. Functional Requirements
+FR 1: Submission Processing
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority
+
+
+
+
+FR1.1
+
+	
+
+Importing students' submissions
+
+	
+
+The system must allow the subject coordinator (1 user) to import student submissions from Canvas-exported CSV files (up to 10,000 rows).
+
+	
+
+Essential / High
+
+
+
+
+FR1.2
+
+	
+
+Parsing Data
+
+	
+
+The system must parse student IDs, question numbers, and answer data correctly (including answers containing spaces, line breaks, indentation, or code formatting).
+
+	
+
+Essential / High
+
+
+
+
+FR1.3
+
+	
+
+Detect incomplete data
+
+	
+
+The system must detect malformed, incomplete, in valid or corrupted CSV rows and report them to the subject coordinator. 
+
+The system must handle non-standard Unicode whitespace characters using configured pre-processing rules where appropriate.
+
+	
+
+Essential / High
+
+
+
+
+FR1.4
+
+	
+
+Handle Whitespace
+
+	
+
+The system must preserve the original imported answer exactly. Any approved normalisation must be applied only to a separate comparison representation used for grouping.
+
+	
+
+Essential / High
+
+
+
+
+FR1.5
+
+	
+
+Storing submissions
+
+	
+
+Store imported submissions of each exam (up to 10,000 submissions) for marking purposes (including student ID, questions, answers, marking status, and final marks) in the database. 
+
+	
+
+Essential / High
+
+
+
+
+FR1.6
+
+	
+
+Canvas Integration
+
+	
+
+The system could support automated retrieval of submissions through Canvas APIs and modify their format for parsing into the database in future versions.
+
+	
+
+Optional / Low
+
+
+
+FR 2: Answer Grouping
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority / Note
+
+
+
+
+FR2.1
+
+	
+
+Exact Match Grouping
+
+	
+
+The system must identify and group identical short-answer responses together for short-answer questions.
+
+Answers are considered identical if they differ only in spaces.
+
+	
+
+Essential / High
+
+
+
+
+FR2.2
+
+	
+
+Group View
+
+	
+
+The system must display an overview of all answer groups to the marker in a bar graph. Higher bar means more students in that group. 
+
+If the tutor clicks on a specific answer group, they can see the answer text, the number of students in the group, and the students belonging to that group
+
+	
+
+Essential / High
+
+
+
+
+FR2.3
+
+	
+
+Manual Configuration 
+
+	
+
+The system should allow tutors to manually configure pre-processing rules to handle non-ASCII unicode characters. The system must not remove punctuation or other meaningful characters unless explicitly configured and approved.
+
+	
+
+Optional 
+
+
+
+
+FR2.4
+
+	
+
+Marking 
+
+	
+
+The system must allow markers to assign marks to an answer group or individual student in one step.
+
+	
+
+Essential / High
+
+
+
+
+FR2.5
+
+	
+
+Marking
+
+	
+
+Once the tutor assigns a mark to a group answer, that mark is applied to all students within that selected group.
+
+	
+
+Essential / High
+
+
+
+FR 3: Automatic Test Cases
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority / Note
+
+
+
+
+FR3.1
+
+	
+
+Running test cases
+
+	
+
+The system must execute student Python submissions against predefined test cases with pre-defined time and memory limitations in the rubric in an isolated environment such as a docker container. 
+
+	
+
+Essential / High
+
+
+
+
+FR3.4
+
+	
+
+Variation 
+
+	
+
+Automated tests must evaluate observable behaviour rather than require the submitted code to match a reference implementation. Required function names, parameters, and interfaces must still be respected.
+
+	
+
+Essential / High
+
+
+
+
+FR3.2
+
+	
+
+Storing results
+
+	
+
+The system must record all test outcomes for each student's answers in the database for later review if needed.
+
+	
+
+Essential / High
+
+
+
+
+FR3.3
+
+	
+
+Full-Marks Recommendation
+
+	
+
+The system should recommend full marks for submissions passing all required tests to the tutors, but must not assign the marks automatically to the students.
+
+	
+
+Essential / Medium
+
+
+
+FR 4: AI-Assisted Function Marking
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority / Note
+
+
+
+
+FR4.1
+
+	
+
+Flagging
+
+	
+
+The system must detect submissions that fail to compile or run and forward them to a locally hosted LLM, Qwen2.5 coder 7B BF16, to generate a minimal fix.
+
+	
+
+Essential / High
+
+
+
+
+FR4.2
+
+	
+
+Generate Minimum Fixes
+
+	
+
+The system must request local LLM to propose the minimum code modification required for the code to be compiled and run successfully. The system must then run the modified code against the same predefined tests and display the result to the tutor. This process should happen upon the creation of the exam. 
+
+	
+
+Essential / High
+
+
+
+
+FR4.3
+
+	
+
+Present Changes
+
+	
+
+AI corrections must remain separate from the original submission. Tutors must be able to review the changes, compare available test evidence, and request regeneration without changing the original answer or automatically changing a confirmed mark.
+
+	
+
+Essential / High
+
+
+
+
+FR4.4
+
+	
+
+Explain Changes
+
+	
+
+The system should display concise one-sentence explanations for suggested modifications.
+
+	
+
+Optional / Low
+
+
+
+
+FR4.5
+
+	
+
+Re-running test cases
+
+	
+
+The system must show test case results of both the student's original code and  the AI-corrected code side by side. 
+
+	
+
+Essential / High
+
+
+
+
+FR 4.6
+
+	
+
+Re-running AI suggestions
+
+	
+
+The system should allow the tutor to regenerate AI suggestions.
+
+	
+
+Optional / Medium
+
+
+
+
+FR4.7
+
+	
+
+Human Approval
+
+	
+
+Only authorised human markers, including tutors and subject coordinators with marking permission, may confirm final marks.
+
+	
+
+Essential / High
+
+
+
+
+FR4.8
+
+	
+
+Storing recommendations
+
+	
+
+AI suggestions and associated test results must be retained according to the agreed data-retention policy and linked to the relevant submission and review history.
+
+	
+
+Essential / High
+
+
+
+
+FR4.9
+
+	
+
+Local LLM only
+
+	
+
+The LLM must be run locally. The system must not call third-party hosted AI services such as ChatGPT, Claude, Gemini, or other external AI APIs.
+
+	
+
+Essential / High
+
+
+
+FR 5: Marking functions
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority / Note
+
+
+
+
+FR5.1
+
+	
+
+Interface
+
+	
+
+The system must provide a graphical interface for tutors and markers.
+
+	
+
+Essential / High
+
+
+
+
+FR5.2
+
+	
+
+Question types
+
+	
+
+The system must support seven initial question types: 
+
+Expression output
+
+Single assignment statement
+
+Multiple choice
+
+Code completion
+
+Debugging
+
+Coding questions
+
+Short answer 
+
+	
+
+Essential / High
+
+
+
+
+FR5.3
+
+	
+
+Review
+
+	
+
+The system must provide a hierarchical review interface with three navigation levels. Level 1 lists all exam questions with marking progress. Selecting a question opens Level 2, listing that question's student answers (individually or grouped by identical/similar code) with mark status. Selecting an answer opens Level 3, which displays the question text, the student's submitted code, test case results for the original code, the AI-recommended correction as a minimal changeset with its own test case results, and the mark assigned to that answer. The marker must be able to navigate back up at any level.
+
+	
+
+Essential / High
+
+
+
+
+FR5.4
+
+	
+
+Manual Marking
+
+	
+
+The system must allow tutor to manually mark at any point. All final marks should be decided by human marker. 
+
+	
+
+Essential / High
+
+
+
+
+FR5.5
+
+	
+
+Rubric View
+
+	
+
+The system must display rubric options when tutors mark the exam 
+
+	
+
+Essential / High
+
+
+
+
+FR5.6
+
+	
+
+Record Marking
+
+	
+
+The system must record and save all marking progress automatically for each student and question (so tutor can stop and resume). Saving the progress should not take longer than 1s.
+
+	
+
+Essential / High
+
+
+
+
+ 
+
+FR 6: Concurrent Marking
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority / Note
+
+
+
+
+FR6.1
+
+	
+
+Multiple markers condition 
+
+	
+
+The system must support multiple tutors working on the same marking project at the same time. Each tutor may open any student's answer for any question. 
+
+	
+
+Essential / High
+
+
+
+
+FR6.2
+
+	
+
+Locking
+
+	
+
+When one tutor is working on one submission from a student, the system must lock that question submission to prevent other tutors from accessing it at the same time. 
+
+	
+
+Essential / High
+
+
+
+
+FR6.3
+
+	
+
+Race Condition 
+
+	
+
+The system must ensure that final marks and marking status are saved without race conditions. 
+
+	
+
+Essential / High
+
+
+
+
+FR6.4
+
+	
+
+Review 
+
+	
+
+The system should allow tutors to view the mark assigned to a submission marked by another tutor
+
+	
+
+Optional / Medium
+
+
+
+
+FR6.5
+
+	
+
+Record
+
+	
+
+The system should record which tutor marked or modified each student's answer, including timestamp, marks and marking status changes.
+
+	
+
+Optional / Medium
+
+
+
+
+ 
+
+FR 7: Result Export
+
+ID
+
+	
+
+Feature
+
+	
+
+Description
+
+	
+
+Priority / Note
+
+
+
+
+FR7.1
+
+	
+
+Export Marks
+
+	
+
+The system must allow the marker to export recorded final marks as a CSV file.
+
+	
+
+Essential / High
+
+
+
+
+FR7.2
+
+	
+
+Export Format
+
+	
+
+For every student in the marking, Exported data must contain:
+
+Student ID number
+
+Marks for each student’s questions / subquestions The recorded mark for each question and subquestion
+
+Total marks for each student
+
+	
+
+Essential / High
+
+
+
+2. Quality Requirements
+QR 1: Security, Privacy & Compliance
+
+ID
+
+	
+
+Feature Description
+
+	
+
+Priority / Note
+
+
+
+
+QR1.1
+
+	
+
+The system must not send student submissions, student identifier, marks, rubric information, testing results to external third-party AI services. AI processing must be performed by the locally deployed model.
+
+	
+
+Essential / High
+
+
+
+
+QR1.2
+
+	
+
+Production marking data must be stored on the authorised local host, such as the coordinator’s device or an approved local server. Authorised tutors access the shared marking workspace through a browser.
+
+Within the application, marking data must only be accessible to authorised Tutor and Subject Coordinator.
+
+	
+
+Essential / High
+
+
+
+
+QR1.3
+
+	
+
+The system must maintain an auditable history of marking decisions (who associated students and questions/when date and time of the change), including test results and AI suggestions.
+
+	
+
+Essential / High
+
+
+
+QR 2: Reliability
+
+ID
+
+	
+
+Feature Description
+
+	
+
+Priority / Note
+
+
+
+
+QR2.1
+
+	
+
+The system should detect a CSV file that cannot be analyzed and or is missing the required columns, reject the import malformed or messy CSV data gracefully, including spacing, indentation, and formatting issues. (display the import error to the markers maybe)
+
+	
+
+Essential / High
+
+
+
+
+QR2.2
+
+	
+
+The system must preserve marking progress between sessions. 
+
+After a maker saves a marking progress and closes the application, the system must restore the saved marks, marking status, answer groups, test results, and recorded AI decisions when the same marking session is reopened.
+
+	
+
+Essential / High
+
+
+
+
+QR2.3
+
+	
+
+The system must not automatically finalise a student's mark from test results or AI output where final marks are decided and confirmed by human tutors/markers.
+
+	
+
+Essential / High
+
+
+
+
+QR2.4
+
+	
+
+Risk-averse grouping. The system must prioritise avoiding incorrect groupings over maximising efficiency. The answers that cannot be identified in the same group must remain separate and waiting for markers to review.
+
+	
+
+Essential / High
+
+
+
+
+QR 2.5
+
+	
+
+The system must automatically back up all marking data at regular intervals while marking is in progress. Backups must include marking progress, final marks, comments, answer groups, test results, AI suggestions, and audit logs. 
+
+The coordinator must be able to restore the system from a valid backup if the application crashes, the database becomes corrupted, or the server fails.
+
+	
+
+Essential / High
+
+
+
+QR 3: Usability
+
+ID
+
+	
+
+Feature Description
+
+	
+
+Priority / Note
+
+
+
+
+QR3.1
+
+	
+
+Tutors should be able to use the system without developer assistance after a short onboarding guide.
+
+	
+
+Essential / High
+
+
+
+
+QR3.2
+
+	
+
+The interface should support efficient review of large numbers of submissions (over 1000). With a required marking dataset containing more than 1,000 student submissions, the system must allow marker to open the submission list, select a student submission, and access its marking information without interface failure.
+
+	
+
+Essential / High
+
+
+
+
+QR3.3
+
+	
+
+The system should clearly distinguish between automated test results, AI-generated suggestions, and human marker decisions. with distinct source labels that each type of information can be distinguished from others.
+
+	
+
+Essential / High
+
+
+
+QR 4: Performance
+
+ID
+
+	
+
+Feature Description
+
+	
+
+Priority / Note
+
+
+
+
+QR4.1
+
+	
+
+The system must allow submission analysis and test execution to be performed as a batch process without requiring the marker to manually initiate processing for each individual submission.
+
+	
+
+Essential / High
+
+
+
+
+QR4.2
+
+	
+
+The system must support batch processing of large cohorts. The system must be able to process a marking batch containing more than 1,000 student submissions without requiring the batch to be manually divided into smaller batches.
+
+	
+
+Essential / High
+
+
+
+
+QR4.3
+
+	
+
+Tutor must only require a modern web browser and network access to the marking interface .
+
+The local LLM and database must be able to run coordinator’s device.
+
+	
+
+Essential / High
+
+
+
+
+QR4.4
+
+	
+
+The selected local LLM and runtime should be chosen based on the available hardware, including Chris’s GPU or the marker machine’s capabilities.
+
+	
+
+Optional / Medium
+
+
+
+QR 5: Maintainability & Extensibility
+
+ID
+
+	
+
+Feature Description
+
+	
+
+Priority / Note
+
+
+
+
+QR5.1
+
+	
+
+The system should be structured so that question types, rubrics, and test cases can be updated without redesigning the whole application. not require changes to the processing logic of existing.
+
+	
+
+Optional / Low
+
+
+
+
+QR5.2
+
+	
+
+Additional programming languages should be supportable in future versions without changing the marking logic for already supported languages.
+
+	
+
+Optional / Low 
+
+
+
+
+QR5.3
+
+	
+
+Rubrics and test cases should be configurable.
+
+Rubrics and test cases must be stored separately from student submissions and executable marking logic so that they can be replaced for a question without modifying the initial code.
+
+	
+
+Optional / Low 
+
+
+
+
+
+
+
+
+
+
+

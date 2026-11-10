@@ -1,0 +1,1 @@
+return has_query and is_larger_than_previous

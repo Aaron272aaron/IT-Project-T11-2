@@ -1,0 +1,8 @@
+# Last official PyTorch wheel line for Intel macOS; keep Transformers compatible.
+-r ../requirements.txt
+torch==2.2.2
+numpy>=1.26,<2
+transformers==4.44.2
+accelerate>=1.1,<2
+safetensors>=0.5,<1
+huggingface_hub>=0.36,<1

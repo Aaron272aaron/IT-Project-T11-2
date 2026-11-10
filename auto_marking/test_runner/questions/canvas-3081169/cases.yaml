@@ -1,0 +1,77 @@
+{
+  "question_key": "canvas:3081169",
+  "title": "Q11 · assignment-statement",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "assignment",
+  "target": "t",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "one_assignment_statement",
+      "expected": true,
+      "marks": 0,
+      "check": "structure",
+      "input": "One assignment to t"
+    },
+    {
+      "name": "assignment_1",
+      "expected": "''",
+      "marks": 0,
+      "expected_literal": "''",
+      "context_literals": {
+        "s": "''"
+      },
+      "input": "s = ''"
+    },
+    {
+      "name": "assignment_2",
+      "expected": "'hello-world'",
+      "marks": 0,
+      "expected_literal": "'hello-world'",
+      "context_literals": {
+        "s": "'hello world'"
+      },
+      "input": "s = 'hello world'"
+    },
+    {
+      "name": "assignment_3",
+      "expected": "'-a--b-'",
+      "marks": 0,
+      "expected_literal": "'-a--b-'",
+      "context_literals": {
+        "s": "' a  b '"
+      },
+      "input": "s = ' a  b '"
+    },
+    {
+      "name": "assignment_4",
+      "expected": "'a\\tb\\nc'",
+      "marks": 0,
+      "expected_literal": "'a\\tb\\nc'",
+      "context_literals": {
+        "s": "'a\\tb\\nc'"
+      },
+      "input": "s = 'a\\tb\\nc'"
+    },
+    {
+      "name": "assignment_5",
+      "expected": "'a\\xa0b'",
+      "marks": 0,
+      "expected_literal": "'a\\xa0b'",
+      "context_literals": {
+        "s": "'a\\xa0b'"
+      },
+      "input": "s = 'a\\xa0b'"
+    },
+    {
+      "name": "assignment_6",
+      "expected": "'already-hyphenated'",
+      "marks": 0,
+      "expected_literal": "'already-hyphenated'",
+      "context_literals": {
+        "s": "'already-hyphenated'"
+      },
+      "input": "s = 'already-hyphenated'"
+    }
+  ]
+}

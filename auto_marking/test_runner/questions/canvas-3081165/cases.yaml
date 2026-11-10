@@ -1,0 +1,24 @@
+{
+  "question_key": "canvas:3081165",
+  "title": "Q8 · expression-output",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "literal-answer",
+  "cases": [
+    {
+      "name": "answer_value",
+      "expected": "'0b10101'",
+      "marks": 0,
+      "check": "value",
+      "expected_literal": "'0b10101'",
+      "input": "Submitted answer value"
+    },
+    {
+      "name": "answer_type",
+      "expected": "str",
+      "marks": 0,
+      "check": "type",
+      "expected_literal": "'0b10101'",
+      "input": "Submitted answer type (including list element types)"
+    }
+  ]
+}

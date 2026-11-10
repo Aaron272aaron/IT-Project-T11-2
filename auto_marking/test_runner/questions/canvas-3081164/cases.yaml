@@ -1,0 +1,24 @@
+{
+  "question_key": "canvas:3081164",
+  "title": "Q7 · expression-output",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "literal-answer",
+  "cases": [
+    {
+      "name": "answer_value",
+      "expected": "11.0",
+      "marks": 0,
+      "check": "value",
+      "expected_literal": "11.0",
+      "input": "Submitted answer value"
+    },
+    {
+      "name": "answer_type",
+      "expected": "float",
+      "marks": 0,
+      "check": "type",
+      "expected_literal": "11.0",
+      "input": "Submitted answer type (including list element types)"
+    }
+  ]
+}

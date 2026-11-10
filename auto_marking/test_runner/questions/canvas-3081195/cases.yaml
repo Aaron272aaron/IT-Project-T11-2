@@ -1,0 +1,156 @@
+{
+  "question_key": "canvas:3081195",
+  "title": "Q33 · coding",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "function",
+  "entry": "most_common_letter",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "provided_unique_winner",
+      "expected": "B",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "D",
+            "E",
+            "F"
+          ],
+          [
+            "A",
+            "B",
+            "B"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "provided_alphabetical_tie",
+      "expected": "A",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "A",
+            "B",
+            "C"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "tie_not_first_seen",
+      "expected": "A",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "Z",
+            "A"
+          ],
+          [
+            "A",
+            "Z"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "all_same_letter",
+      "expected": "Q",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "Q",
+            "Q"
+          ],
+          [
+            "Q",
+            "Q"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "winner_in_last_row",
+      "expected": "Z",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "D",
+            "E",
+            "F"
+          ],
+          [
+            "Z",
+            "Z",
+            "Z"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "three_way_tie",
+      "expected": "A",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "C",
+            "B",
+            "A"
+          ],
+          [
+            "A",
+            "C",
+            "B"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "rectangular_board",
+      "expected": "M",
+      "marks": 0,
+      "args": [
+        [
+          [
+            "M",
+            "N",
+            "N",
+            "N"
+          ],
+          [
+            "M",
+            "M",
+            "M",
+            "N"
+          ]
+        ]
+      ]
+    }
+  ]
+}

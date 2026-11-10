@@ -1,0 +1,393 @@
+{
+  "canvas:3081186": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "[]"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "[]"
+    }
+  ],
+  "canvas:3081181": [
+    {
+      "name": "completion_1",
+      "input": "[[1, 3, 5], 5]",
+      "expected": "True"
+    },
+    {
+      "name": "completion_2",
+      "input": "[[4, 1, 3], 3]",
+      "expected": "False"
+    },
+    {
+      "name": "completion_3",
+      "input": "[[5, 1, 3], 5]",
+      "expected": "True"
+    }
+  ],
+  "canvas:3081180": [
+    {
+      "name": "completion_1",
+      "input": "[[1, 3, 5], 5]",
+      "expected": "True"
+    },
+    {
+      "name": "completion_2",
+      "input": "[[4, 1, 3], 3]",
+      "expected": "False"
+    },
+    {
+      "name": "completion_3",
+      "input": "[[5, 1, 3], 5]",
+      "expected": "True"
+    }
+  ],
+  "canvas:3081187": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "['beginning']"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "['beginning']"
+    }
+  ],
+  "canvas:3081189": [
+    {
+      "name": "reveals_a_further_bug",
+      "input": "Your example call, with the slicing error already repaired",
+      "expected": "Different actual and required outputs after the Q27 slicing fix"
+    }
+  ],
+  "canvas:3081194": [
+    {
+      "name": "provided_repeated_B",
+      "input": "[[['A', 'B', 'C'], ['B', 'B', 'C'], ['A', 'A', 'A']], 'B']",
+      "expected": "3"
+    },
+    {
+      "name": "provided_absent_E",
+      "input": "[[['A', 'B', 'C'], ['C', 'D', 'A'], ['A', 'A', 'A']], 'E']",
+      "expected": "0"
+    },
+    {
+      "name": "smallest_board_one_match",
+      "input": "[[['A', 'B'], ['C', 'D']], 'D']",
+      "expected": "1"
+    }
+  ],
+  "canvas:3081160": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "[20, 30]"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "[20, 30]"
+    }
+  ],
+  "canvas:3081158": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "5"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "5"
+    }
+  ],
+  "canvas:3081169": [
+    {
+      "name": "one_assignment_statement",
+      "input": "One assignment to t",
+      "expected": "True"
+    },
+    {
+      "name": "assignment_1",
+      "input": "s = ''",
+      "expected": "''"
+    },
+    {
+      "name": "assignment_2",
+      "input": "s = 'hello world'",
+      "expected": "'hello-world'"
+    }
+  ],
+  "canvas:3081168": [
+    {
+      "name": "one_assignment_statement",
+      "input": "One assignment to has_zero",
+      "expected": "True"
+    },
+    {
+      "name": "assignment_1",
+      "input": "values = []",
+      "expected": "False"
+    },
+    {
+      "name": "assignment_2",
+      "input": "values = [0]",
+      "expected": "True"
+    }
+  ],
+  "canvas:3081159": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "'Pyho'"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "'Pyho'"
+    }
+  ],
+  "canvas:3081166": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "[1, 2, 0, 1]"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "[1, 2, 0, 1]"
+    }
+  ],
+  "canvas:3081161": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "{3}"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "{3}"
+    }
+  ],
+  "canvas:3081195": [
+    {
+      "name": "provided_unique_winner",
+      "input": "[[['A', 'B', 'C'], ['D', 'E', 'F'], ['A', 'B', 'B']]]",
+      "expected": "B"
+    },
+    {
+      "name": "provided_alphabetical_tie",
+      "input": "[[['A', 'B', 'C'], ['A', 'B', 'C'], ['A', 'B', 'C']]]",
+      "expected": "A"
+    },
+    {
+      "name": "tie_not_first_seen",
+      "input": "[[['Z', 'A'], ['A', 'Z']]]",
+      "expected": "A"
+    }
+  ],
+  "canvas:3081178": [
+    {
+      "name": "completion_1",
+      "input": "[[1, 3, 5], 5]",
+      "expected": "True"
+    },
+    {
+      "name": "completion_2",
+      "input": "[[4, 1, 3], 3]",
+      "expected": "False"
+    },
+    {
+      "name": "completion_3",
+      "input": "[[5, 1, 3], 5]",
+      "expected": "True"
+    }
+  ],
+  "canvas:3081182": [
+    {
+      "name": "completion_1",
+      "input": "[[1, 3, 5], 5]",
+      "expected": "True"
+    },
+    {
+      "name": "completion_2",
+      "input": "[[4, 1, 3], 3]",
+      "expected": "False"
+    },
+    {
+      "name": "completion_3",
+      "input": "[[5, 1, 3], 5]",
+      "expected": "True"
+    }
+  ],
+  "canvas:3081185": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "['application']"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "['application']"
+    }
+  ],
+  "canvas:3081171": [
+    {
+      "name": "one_assignment_statement",
+      "input": "One assignment to secure_pw",
+      "expected": "True"
+    },
+    {
+      "name": "assignment_1",
+      "input": "password = ''",
+      "expected": "''"
+    },
+    {
+      "name": "assignment_2",
+      "input": "password = 'aeiou'",
+      "expected": "'*****'"
+    }
+  ],
+  "canvas:3081170": [
+    {
+      "name": "one_assignment_statement",
+      "input": "One assignment to swapped",
+      "expected": "True"
+    },
+    {
+      "name": "assignment_1",
+      "input": "data = {}",
+      "expected": "{}"
+    },
+    {
+      "name": "assignment_2",
+      "input": "data = {'a': 1}",
+      "expected": "{1: 'a'}"
+    }
+  ],
+  "canvas:3081184": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "[]"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "[]"
+    }
+  ],
+  "canvas:3081179": [
+    {
+      "name": "completion_1",
+      "input": "[[1, 3, 5], 5]",
+      "expected": "True"
+    },
+    {
+      "name": "completion_2",
+      "input": "[[4, 1, 3], 3]",
+      "expected": "False"
+    },
+    {
+      "name": "completion_3",
+      "input": "[[5, 1, 3], 5]",
+      "expected": "True"
+    }
+  ],
+  "demo:5": [
+    {
+      "name": "leading_and_trailing_spaces",
+      "input": "[' HELLO ']",
+      "expected": "hello"
+    },
+    {
+      "name": "mixed_case",
+      "input": "['PyThOn']",
+      "expected": "python"
+    },
+    {
+      "name": "empty_string",
+      "input": "['']",
+      "expected": ""
+    }
+  ],
+  "canvas:3081164": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "11.0"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "11.0"
+    }
+  ],
+  "canvas:3081163": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "[1, 2, 1, 2, 1, 2]"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "[1, 2, 1, 2, 1, 2]"
+    }
+  ],
+  "canvas:3081199": [
+    {
+      "name": "recursive_output",
+      "input": "The returned string from my_func(4)",
+      "expected": "1010"
+    }
+  ],
+  "canvas:3081162": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "'HELLO WORLD'"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "'HELLO WORLD'"
+    }
+  ],
+  "canvas:3081196": [
+    {
+      "name": "provided_AAA",
+      "input": "[[['A', 'B', 'C'], ['A', 'B', 'C'], ['A', 'B', 'C']], {'A': 7, 'B': 1, 'C': 5}]",
+      "expected": "Any legal three-letter word scoring 21"
+    },
+    {
+      "name": "provided_CCC",
+      "input": "[[['A', 'B', 'B'], ['B', 'B', 'B'], ['C', 'C', 'C']], {'A': 7, 'B': 1, 'C': 5}]",
+      "expected": "Any legal three-letter word scoring 15"
+    },
+    {
+      "name": "smallest_board_ties",
+      "input": "[[['A', 'B'], ['B', 'A']], {'A': 1, 'B': 1}]",
+      "expected": "Any legal three-letter word scoring 3"
+    }
+  ],
+  "canvas:3081165": [
+    {
+      "name": "answer_value",
+      "input": "Submitted answer value",
+      "expected": "'0b10101'"
+    },
+    {
+      "name": "answer_type",
+      "input": "Submitted answer type (including list element types)",
+      "expected": "'0b10101'"
+    }
+  ]
+}

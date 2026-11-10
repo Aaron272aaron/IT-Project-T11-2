@@ -1,0 +1,5 @@
+-r ../requirements.txt
+-r ../ai_tools/code_repair/requirements.txt
+torch>=2.6,<3
+numpy>=1.26,<3
+huggingface_hub>=0.36,<2

@@ -1,0 +1,77 @@
+{
+  "question_key": "canvas:3081170",
+  "title": "Q12 · assignment-statement",
+  "source": "Supplied sample CSV question and DOCX marking guide; see sample-test-coverage.md",
+  "mode": "assignment",
+  "target": "swapped",
+  "strict_types": true,
+  "cases": [
+    {
+      "name": "one_assignment_statement",
+      "expected": true,
+      "marks": 0,
+      "check": "structure",
+      "input": "One assignment to swapped"
+    },
+    {
+      "name": "assignment_1",
+      "expected": "{}",
+      "marks": 0,
+      "expected_literal": "{}",
+      "context_literals": {
+        "data": "{}"
+      },
+      "input": "data = {}"
+    },
+    {
+      "name": "assignment_2",
+      "expected": "{1: 'a'}",
+      "marks": 0,
+      "expected_literal": "{1: 'a'}",
+      "context_literals": {
+        "data": "{'a': 1}"
+      },
+      "input": "data = {'a': 1}"
+    },
+    {
+      "name": "assignment_3",
+      "expected": "{1: 'a', 2: 'b'}",
+      "marks": 0,
+      "expected_literal": "{1: 'a', 2: 'b'}",
+      "context_literals": {
+        "data": "{'a': 1, 'b': 2}"
+      },
+      "input": "data = {'a': 1, 'b': 2}"
+    },
+    {
+      "name": "assignment_4",
+      "expected": "{'a': 1, 'b': 2}",
+      "marks": 0,
+      "expected_literal": "{'a': 1, 'b': 2}",
+      "context_literals": {
+        "data": "{1: 'a', 2: 'b'}"
+      },
+      "input": "data = {1: 'a', 2: 'b'}"
+    },
+    {
+      "name": "assignment_5",
+      "expected": "{-2: 'left', 0: 'right'}",
+      "marks": 0,
+      "expected_literal": "{-2: 'left', 0: 'right'}",
+      "context_literals": {
+        "data": "{'left': -2, 'right': 0}"
+      },
+      "input": "data = {'left': -2, 'right': 0}"
+    },
+    {
+      "name": "assignment_6",
+      "expected": "{(1, 2): 'a', (3, 4): 'b'}",
+      "marks": 0,
+      "expected_literal": "{(1, 2): 'a', (3, 4): 'b'}",
+      "context_literals": {
+        "data": "{'a': (1, 2), 'b': (3, 4)}"
+      },
+      "input": "data = {'a': (1, 2), 'b': (3, 4)}"
+    }
+  ]
+}
